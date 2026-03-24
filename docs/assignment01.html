@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>About Me – Muhammad Al Hasib</title>
+<title>Assignment 01: Brush up R and Quarto – Muhammad Al Hasib</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -69,6 +69,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -95,7 +124,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./about.html" aria-current="page"> 
+    <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
@@ -125,15 +154,25 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#epps-6323-knowledge-mining" id="toc-epps-6323-knowledge-mining" class="nav-link active" data-scroll-target="#epps-6323-knowledge-mining">EPPS 6323 – Knowledge Mining</a></li>
+  <li><a href="#review-of-r-programming" id="toc-review-of-r-programming" class="nav-link" data-scroll-target="#review-of-r-programming">1. Review of R Programming</a></li>
+  <li><a href="#lab-exercises" id="toc-lab-exercises" class="nav-link" data-scroll-target="#lab-exercises">2. Lab Exercises</a></li>
+  <li><a href="#load-the-teds2016-dataset" id="toc-load-the-teds2016-dataset" class="nav-link" data-scroll-target="#load-the-teds2016-dataset">3. Load the TEDS2016 Dataset</a></li>
+  <li><a href="#handling-missing-values" id="toc-handling-missing-values" class="nav-link" data-scroll-target="#handling-missing-values">3. Handling Missing Values</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">About Me</h1>
+<h1 class="title">Assignment 01: Brush up R and Quarto</h1>
 </div>
 
 
@@ -150,12 +189,56 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>I am a PhD student in Public and Nonprofit Management, driven by a deep interest in research, policy analysis, and public management. My academic journey has been shaped by a passion for understanding complex governance systems, the impact of public policy, and the relationship between institutions and the people they serve.</p>
-<p>Currently, I work as a Teaching Assistant and actively contribute to the research areas of education policy, social equity, behavioral public administration, and social welfare. I am particularly interested in using evidence-based approaches to evaluate programs and design inclusive, effective policies.</p>
-<p>My professional experience spans from BRAC University and Stanford University to Oxfam GB. Also, my experience encompasses academic writing, data analysis, and cross-cultural collaboration. I’m also committed to mentoring students and contributing to an engaged educational environment.</p>
-<p>I welcome connections and conversations around research collaboration, program and policy development, and consulting opportunities.</p>
+<section id="epps-6323-knowledge-mining" class="level2">
+<h2 class="anchored" data-anchor-id="epps-6323-knowledge-mining">EPPS 6323 – Knowledge Mining</h2>
+<p><strong>Assignment 01</strong></p>
+<p>This assignment reviews basic R programming and performs exploratory data analysis (EDA) using the <strong>TEDS2016 dataset</strong>.</p>
+<hr>
+</section>
+<section id="review-of-r-programming" class="level2">
+<h2 class="anchored" data-anchor-id="review-of-r-programming">1. Review of R Programming</h2>
+<p>To refresh R programming skills, the following resources were reviewed:</p>
+<ul>
+<li>Introduction to R (University of Southern California)</li>
+<li>EPPS Math and Coding Camp materials</li>
+<li>Chapters 3–7 of <em>R for Data Science (R4DS)</em></li>
+</ul>
+<hr>
+</section>
+<section id="lab-exercises" class="level2">
+<h2 class="anchored" data-anchor-id="lab-exercises">2. Lab Exercises</h2>
+<p>The following lab exercises were completed and published on this website.</p>
+<ul>
+<li><a href="Lab01.html">Lab 01: R Programming Basics I</a></li>
+<li><a href="Lab02.html">Lab 02: R Programming Basics II</a></li>
+</ul>
+<hr>
+</section>
+<section id="load-the-teds2016-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="load-the-teds2016-dataset">3. Load the TEDS2016 Dataset</h2>
+<p>The dataset was loaded directly from GitHub using the <strong>haven</strong> package.</p>
+<p>library(haven)</p>
+<p>TEDS_2016 &lt;- haven::read_dta( “https://github.com/datageneration/home/blob/master/DataProgramming/data/TEDS_2016.dta?raw=true” )</p>
+<p>head(TEDS_2016)</p>
+<p>Problems encountered when working with the dataset</p>
+<p>Several issues were encountered:</p>
+<p>Missing values in multiple variables</p>
+<p>Some variables are stored as labelled values</p>
+<p>Need to convert variables to numeric or factor types before analysis</p>
+<p>Understanding variable meanings required consulting documentation</p>
+<p>These issues required cleaning and transforming the dataset before analysis.</p>
+<hr>
+</section>
+<section id="handling-missing-values" class="level2">
+<h2 class="anchored" data-anchor-id="handling-missing-values">3. Handling Missing Values</h2>
+<p>TEDS_clean &lt;- na.omit(TEDS_2016)</p>
+<p>TEDS_2016<span class="math inline">\(Tondu &lt;- as.numeric(TEDS_2016\)</span>Tondu)</p>
+<p>table(TEDS_2016$Tondu)</p>
+<p>table(TEDS_2016$Tondu)</p>
+<p>barplot( table(TEDS_2016$Tondu), main = “Distribution of Tondu”, xlab = “Tondu Categories”, ylab = “Frequency” )</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
