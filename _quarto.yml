@@ -25,13 +25,9 @@ website:
             href: assignments.qmd
           - text: "---" # Visual separator
           - text: "Assignment 01"
-            href: assignment01.qmd
+            href: Assignment01.qmd
           - text: "Assignment 02"
-            href: assignment02.qmd
-          - text: "Assignment 03"
-            href: assignment03.qmd
-          - text: "Assignment 04 (APSA Analysis)"
-            href: assignment04.qmd
+            href: Assignment02.qmd
           - text: "---" # Visual separator for Labs
           - text: "Lab 01: R Programming Basics I"
             href: Lab01.html
