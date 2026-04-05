@@ -23,7 +23,7 @@ website:
         menu:
           - text: "Coursework"
             href: assignments.qmd
-          - text: "---------" # Visual separator
+          - text: "---" # Visual separator
           - text: "Assignment 01"
             href: assignment01.qmd
           - text: "Assignment 02"
@@ -32,7 +32,7 @@ website:
             href: assignment03.qmd
           - text: "Assignment 04 (APSA Analysis)"
             href: assignment04.qmd
-          - text: "---------" # Visual separator for Labs
+          - text: "---" # Visual separator for Labs
           - text: "Lab 01: R Programming Basics I"
             href: Lab01.html
           - text: "Lab 02: R Programming Basics II"
