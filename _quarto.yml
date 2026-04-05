@@ -18,13 +18,26 @@ website:
 
       - text: CV
         href: cv.qmd
+
+      - text: "EPPS 6323"
+        menu:
+          - text: "Coursework"
+            href: assignments.qmd
+          - text: "---------" # Visual separator
+          - text: "Assignment 01"
+            href: assignment01.qmd
+          - text: "Assignment 02"
+            href: assignment02.qmd
+          - text: "Assignment 03"
+            href: assignment03.qmd
+          - text: "Assignment 04 (APSA Analysis)"
+            href: assignment04.qmd
+          - text: "---------" # Visual separator for Labs
+          - text: "Lab 01: R Programming Basics I"
+            href: Lab01.html
+          - text: "Lab 02: R Programming Basics II"
+            href: Lab02.html
         
-      - text: Coursework
-        href: coursework.qmd
-
-      - text: EPPS 6323 Assignments
-        href: assignments.qmd
-
   page-footer:
     center: "© 2026 Muhammad Al Hasib"
 

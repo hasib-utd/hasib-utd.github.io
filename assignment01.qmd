@@ -12,7 +12,7 @@ This assignment reviews basic R programming and performs exploratory data analys
 
 ## 1. Review of R Programming
 
-To refresh R programming skills, the following resources were reviewed:
+The following resources were reviewed:
 
 - Introduction to R (University of Southern California)
 - EPPS Math and Coding Camp materials
@@ -42,17 +42,15 @@ TEDS_2016 <- haven::read_dta(
 
 head(TEDS_2016)
 
-Problems encountered when working with the dataset
+Several issues were encountered when working with the dataset:
 
-Several issues were encountered:
+Missing values in multiple variables.
 
-Missing values in multiple variables
+Some variables are stored as labelled values.
 
-Some variables are stored as labelled values
+Need to convert variables to numeric or factor types before analysis.
 
-Need to convert variables to numeric or factor types before analysis
-
-Understanding variable meanings required consulting documentation
+Understanding variable meanings required consulting documentation.
 
 These issues required cleaning and transforming the dataset before analysis.
 

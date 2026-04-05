@@ -135,14 +135,43 @@ window.Quarto = {
     <a class="nav-link" href="./cv.html"> 
 <span class="menu-text">CV</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./coursework.html"> 
-<span class="menu-text">Coursework</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-epps-6323" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">EPPS 6323</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-epps-6323">    
+        <li>
+    <a class="dropdown-item" href="./assignments.html">
+ <span class="dropdown-text">Coursework</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./assignments.html"> 
-<span class="menu-text">EPPS 6323 Assignments</span></a>
+        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="./assignment01.html">
+ <span class="dropdown-text">Assignment 01</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./assignment02.html">
+ <span class="dropdown-text">Assignment 02</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./assignment03.qmd">
+ <span class="dropdown-text">Assignment 03</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./assignment04.qmd">
+ <span class="dropdown-text">Assignment 04 (APSA Analysis)</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="./Lab01.html">
+ <span class="dropdown-text">Lab 01: R Programming Basics I</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Lab02.html">
+ <span class="dropdown-text">Lab 02: R Programming Basics II</span></a>
+  </li>  
+    </ul>
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -197,7 +226,7 @@ window.Quarto = {
 </section>
 <section id="review-of-r-programming" class="level2">
 <h2 class="anchored" data-anchor-id="review-of-r-programming">1. Review of R Programming</h2>
-<p>To refresh R programming skills, the following resources were reviewed:</p>
+<p>The following resources were reviewed:</p>
 <ul>
 <li>Introduction to R (University of Southern California)</li>
 <li>EPPS Math and Coding Camp materials</li>
@@ -220,12 +249,11 @@ window.Quarto = {
 <p>library(haven)</p>
 <p>TEDS_2016 &lt;- haven::read_dta( “https://github.com/datageneration/home/blob/master/DataProgramming/data/TEDS_2016.dta?raw=true” )</p>
 <p>head(TEDS_2016)</p>
-<p>Problems encountered when working with the dataset</p>
-<p>Several issues were encountered:</p>
-<p>Missing values in multiple variables</p>
-<p>Some variables are stored as labelled values</p>
-<p>Need to convert variables to numeric or factor types before analysis</p>
-<p>Understanding variable meanings required consulting documentation</p>
+<p>Several issues were encountered when working with the dataset:</p>
+<p>Missing values in multiple variables.</p>
+<p>Some variables are stored as labelled values.</p>
+<p>Need to convert variables to numeric or factor types before analysis.</p>
+<p>Understanding variable meanings required consulting documentation.</p>
 <p>These issues required cleaning and transforming the dataset before analysis.</p>
 <hr>
 </section>
