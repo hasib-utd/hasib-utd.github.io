@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lab_ML01 – Muhammad Al Hasib</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-e31584831b205ffbb2d98406f31c2a5b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Muhammad Al Hasib</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./research.html"> 
+<span class="menu-text">Research</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./cv.html"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-epps-6323" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">EPPS 6323</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-epps-6323">    
+        <li>
+    <a class="dropdown-item" href="./assignments.html">
+ <span class="dropdown-text">Coursework</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="./assignment01.html">
+ <span class="dropdown-text">Assignment 01</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./assignment02.html">
+ <span class="dropdown-text">Assignment 02</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="./Lab01.html">
+ <span class="dropdown-text">Lab 01: R Programming Basics I</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Lab02.html">
+ <span class="dropdown-text">Lab 02: R Programming Basics II</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Lab ML01.R.html">
+ <span class="dropdown-text">Lab ML01.R: Simple and Multiple Linear Regression</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section">============================================================================</a></li>
+  <li><a href="#workshop-machine-learning-with-survey-data-teds-2016" id="toc-workshop-machine-learning-with-survey-data-teds-2016" class="nav-link" data-scroll-target="#workshop-machine-learning-with-survey-data-teds-2016">Workshop: Machine Learning with Survey Data (TEDS 2016)</a></li>
+  <li><a href="#epps-6323-knowledge-mining" id="toc-epps-6323-knowledge-mining" class="nav-link" data-scroll-target="#epps-6323-knowledge-mining">EPPS 6323 Knowledge Mining</a></li>
+  <li><a href="#karl-ho-university-of-texas-at-dallas" id="toc-karl-ho-university-of-texas-at-dallas" class="nav-link" data-scroll-target="#karl-ho-university-of-texas-at-dallas">Karl Ho, University of Texas at Dallas</a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1">============================================================================</a></li>
+  <li><a href="#install-packages" id="toc-install-packages" class="nav-link" data-scroll-target="#install-packages">Install Packages</a></li>
+  <li><a href="#load-data" id="toc-load-data" class="nav-link" data-scroll-target="#load-data">Load data</a></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2">============================================================================</a></li>
+  <li><a href="#part-i-exploratory-data-analysis" id="toc-part-i-exploratory-data-analysis" class="nav-link" data-scroll-target="#part-i-exploratory-data-analysis">PART I: EXPLORATORY DATA ANALYSIS</a></li>
+  <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3">============================================================================</a></li>
+  <li><a href="#section-4" id="toc-section-4" class="nav-link" data-scroll-target="#section-4">—————————————————————————-</a></li>
+  <li><a href="#q1.-data-overview" id="toc-q1.-data-overview" class="nav-link" data-scroll-target="#q1.-data-overview">Q1. Data overview</a></li>
+  <li><a href="#section-5" id="toc-section-5" class="nav-link" data-scroll-target="#section-5">—————————————————————————-</a></li>
+  <li><a href="#section-6" id="toc-section-6" class="nav-link" data-scroll-target="#section-6">—————————————————————————-</a></li>
+  <li><a href="#q2.-missing-data-assessment" id="toc-q2.-missing-data-assessment" class="nav-link" data-scroll-target="#q2.-missing-data-assessment">Q2. Missing data assessment</a></li>
+  <li><a href="#section-7" id="toc-section-7" class="nav-link" data-scroll-target="#section-7">—————————————————————————-</a></li>
+  <li><a href="#visualize-missingness" id="toc-visualize-missingness" class="nav-link" data-scroll-target="#visualize-missingness">Visualize missingness</a></li>
+  <li><a href="#section-8" id="toc-section-8" class="nav-link" data-scroll-target="#section-8">—————————————————————————-</a></li>
+  <li><a href="#q3.-variable-recoding" id="toc-q3.-variable-recoding" class="nav-link" data-scroll-target="#q3.-variable-recoding">Q3. Variable recoding</a></li>
+  <li><a href="#section-9" id="toc-section-9" class="nav-link" data-scroll-target="#section-9">—————————————————————————-</a></li>
+  <li><a href="#section-10" id="toc-section-10" class="nav-link" data-scroll-target="#section-10">—————————————————————————-</a></li>
+  <li><a href="#q4.-vote-choice-distribution" id="toc-q4.-vote-choice-distribution" class="nav-link" data-scroll-target="#q4.-vote-choice-distribution">Q4. Vote choice distribution</a></li>
+  <li><a href="#section-11" id="toc-section-11" class="nav-link" data-scroll-target="#section-11">—————————————————————————-</a></li>
+  <li><a href="#section-12" id="toc-section-12" class="nav-link" data-scroll-target="#section-12">—————————————————————————-</a></li>
+  <li><a href="#q5.-age-distribution" id="toc-q5.-age-distribution" class="nav-link" data-scroll-target="#q5.-age-distribution">Q5. Age distribution</a></li>
+  <li><a href="#section-13" id="toc-section-13" class="nav-link" data-scroll-target="#section-13">—————————————————————————-</a></li>
+  <li><a href="#section-14" id="toc-section-14" class="nav-link" data-scroll-target="#section-14">—————————————————————————-</a></li>
+  <li><a href="#q6.-vote-by-gender" id="toc-q6.-vote-by-gender" class="nav-link" data-scroll-target="#q6.-vote-by-gender">Q6. Vote by gender</a></li>
+  <li><a href="#section-15" id="toc-section-15" class="nav-link" data-scroll-target="#section-15">—————————————————————————-</a></li>
+  <li><a href="#section-16" id="toc-section-16" class="nav-link" data-scroll-target="#section-16">—————————————————————————-</a></li>
+  <li><a href="#q7.-age-by-vote-choice" id="toc-q7.-age-by-vote-choice" class="nav-link" data-scroll-target="#q7.-age-by-vote-choice">Q7. Age by vote choice</a></li>
+  <li><a href="#section-17" id="toc-section-17" class="nav-link" data-scroll-target="#section-17">—————————————————————————-</a></li>
+  <li><a href="#section-18" id="toc-section-18" class="nav-link" data-scroll-target="#section-18">—————————————————————————-</a></li>
+  <li><a href="#q8.-correlation-matrix" id="toc-q8.-correlation-matrix" class="nav-link" data-scroll-target="#q8.-correlation-matrix">Q8. Correlation matrix</a></li>
+  <li><a href="#section-19" id="toc-section-19" class="nav-link" data-scroll-target="#section-19">—————————————————————————-</a></li>
+  <li><a href="#section-20" id="toc-section-20" class="nav-link" data-scroll-target="#section-20">—————————————————————————-</a></li>
+  <li><a href="#q9.-pairs-plot" id="toc-q9.-pairs-plot" class="nav-link" data-scroll-target="#q9.-pairs-plot">Q9. Pairs plot</a></li>
+  <li><a href="#section-21" id="toc-section-21" class="nav-link" data-scroll-target="#section-21">—————————————————————————-</a></li>
+  <li><a href="#section-22" id="toc-section-22" class="nav-link" data-scroll-target="#section-22">============================================================================</a></li>
+  <li><a href="#part-ii-unsupervised-learning" id="toc-part-ii-unsupervised-learning" class="nav-link" data-scroll-target="#part-ii-unsupervised-learning">PART II: UNSUPERVISED LEARNING</a></li>
+  <li><a href="#section-23" id="toc-section-23" class="nav-link" data-scroll-target="#section-23">============================================================================</a></li>
+  <li><a href="#section-24" id="toc-section-24" class="nav-link" data-scroll-target="#section-24">—————————————————————————-</a></li>
+  <li><a href="#prepare-data-for-clustering" id="toc-prepare-data-for-clustering" class="nav-link" data-scroll-target="#prepare-data-for-clustering">Prepare data for clustering</a></li>
+  <li><a href="#section-25" id="toc-section-25" class="nav-link" data-scroll-target="#section-25">—————————————————————————-</a></li>
+  <li><a href="#section-26" id="toc-section-26" class="nav-link" data-scroll-target="#section-26">—————————————————————————-</a></li>
+  <li><a href="#q10.-choosing-k-elbow-method" id="toc-q10.-choosing-k-elbow-method" class="nav-link" data-scroll-target="#q10.-choosing-k-elbow-method">Q10. Choosing k: Elbow method</a></li>
+  <li><a href="#section-27" id="toc-section-27" class="nav-link" data-scroll-target="#section-27">—————————————————————————-</a></li>
+  <li><a href="#silhouette-method" id="toc-silhouette-method" class="nav-link" data-scroll-target="#silhouette-method">Silhouette method</a></li>
+  <li><a href="#section-28" id="toc-section-28" class="nav-link" data-scroll-target="#section-28">—————————————————————————-</a></li>
+  <li><a href="#q11.-k-means-clustering" id="toc-q11.-k-means-clustering" class="nav-link" data-scroll-target="#q11.-k-means-clustering">Q11. K-Means clustering</a></li>
+  <li><a href="#section-29" id="toc-section-29" class="nav-link" data-scroll-target="#section-29">—————————————————————————-</a></li>
+  <li><a href="#visualize-clusters" id="toc-visualize-clusters" class="nav-link" data-scroll-target="#visualize-clusters">Visualize clusters</a></li>
+  <li><a href="#section-30" id="toc-section-30" class="nav-link" data-scroll-target="#section-30">—————————————————————————-</a></li>
+  <li><a href="#q12.-cluster-profiling" id="toc-q12.-cluster-profiling" class="nav-link" data-scroll-target="#q12.-cluster-profiling">Q12. Cluster profiling</a></li>
+  <li><a href="#section-31" id="toc-section-31" class="nav-link" data-scroll-target="#section-31">—————————————————————————-</a></li>
+  <li><a href="#section-32" id="toc-section-32" class="nav-link" data-scroll-target="#section-32">—————————————————————————-</a></li>
+  <li><a href="#q13.-clusters-vs.-vote-choice" id="toc-q13.-clusters-vs.-vote-choice" class="nav-link" data-scroll-target="#q13.-clusters-vs.-vote-choice">Q13. Clusters vs.&nbsp;vote choice</a></li>
+  <li><a href="#section-33" id="toc-section-33" class="nav-link" data-scroll-target="#section-33">—————————————————————————-</a></li>
+  <li><a href="#section-34" id="toc-section-34" class="nav-link" data-scroll-target="#section-34">—————————————————————————-</a></li>
+  <li><a href="#q14.-principal-component-analysis" id="toc-q14.-principal-component-analysis" class="nav-link" data-scroll-target="#q14.-principal-component-analysis">Q14. Principal Component Analysis</a></li>
+  <li><a href="#section-35" id="toc-section-35" class="nav-link" data-scroll-target="#section-35">—————————————————————————-</a></li>
+  <li><a href="#scree-plot" id="toc-scree-plot" class="nav-link" data-scroll-target="#scree-plot">Scree plot</a></li>
+  <li><a href="#section-36" id="toc-section-36" class="nav-link" data-scroll-target="#section-36">—————————————————————————-</a></li>
+  <li><a href="#q15.-pca-variable-contributions" id="toc-q15.-pca-variable-contributions" class="nav-link" data-scroll-target="#q15.-pca-variable-contributions">Q15. PCA variable contributions</a></li>
+  <li><a href="#section-37" id="toc-section-37" class="nav-link" data-scroll-target="#section-37">—————————————————————————-</a></li>
+  <li><a href="#pca-individuals-by-vote" id="toc-pca-individuals-by-vote" class="nav-link" data-scroll-target="#pca-individuals-by-vote">PCA individuals by vote</a></li>
+  <li><a href="#section-38" id="toc-section-38" class="nav-link" data-scroll-target="#section-38">============================================================================</a></li>
+  <li><a href="#part-iii-supervised-learning" id="toc-part-iii-supervised-learning" class="nav-link" data-scroll-target="#part-iii-supervised-learning">PART III: SUPERVISED LEARNING</a></li>
+  <li><a href="#section-39" id="toc-section-39" class="nav-link" data-scroll-target="#section-39">============================================================================</a></li>
+  <li><a href="#section-40" id="toc-section-40" class="nav-link" data-scroll-target="#section-40">—————————————————————————-</a></li>
+  <li><a href="#q16.-train-test-split" id="toc-q16.-train-test-split" class="nav-link" data-scroll-target="#q16.-train-test-split">Q16. Train-test split</a></li>
+  <li><a href="#section-41" id="toc-section-41" class="nav-link" data-scroll-target="#section-41">—————————————————————————-</a></li>
+  <li><a href="#section-42" id="toc-section-42" class="nav-link" data-scroll-target="#section-42">—————————————————————————-</a></li>
+  <li><a href="#q17.-logistic-regression" id="toc-q17.-logistic-regression" class="nav-link" data-scroll-target="#q17.-logistic-regression">Q17. Logistic regression</a></li>
+  <li><a href="#section-43" id="toc-section-43" class="nav-link" data-scroll-target="#section-43">—————————————————————————-</a></li>
+  <li><a href="#evaluation" id="toc-evaluation" class="nav-link" data-scroll-target="#evaluation">Evaluation</a></li>
+  <li><a href="#section-44" id="toc-section-44" class="nav-link" data-scroll-target="#section-44">—————————————————————————-</a></li>
+  <li><a href="#q18.-decision-tree" id="toc-q18.-decision-tree" class="nav-link" data-scroll-target="#q18.-decision-tree">Q18. Decision tree</a></li>
+  <li><a href="#section-45" id="toc-section-45" class="nav-link" data-scroll-target="#section-45">—————————————————————————-</a></li>
+  <li><a href="#evaluation-1" id="toc-evaluation-1" class="nav-link" data-scroll-target="#evaluation-1">Evaluation</a></li>
+  <li><a href="#section-46" id="toc-section-46" class="nav-link" data-scroll-target="#section-46">—————————————————————————-</a></li>
+  <li><a href="#q19.-random-forest" id="toc-q19.-random-forest" class="nav-link" data-scroll-target="#q19.-random-forest">Q19. Random forest</a></li>
+  <li><a href="#section-47" id="toc-section-47" class="nav-link" data-scroll-target="#section-47">—————————————————————————-</a></li>
+  <li><a href="#evaluation-2" id="toc-evaluation-2" class="nav-link" data-scroll-target="#evaluation-2">Evaluation</a></li>
+  <li><a href="#section-48" id="toc-section-48" class="nav-link" data-scroll-target="#section-48">—————————————————————————-</a></li>
+  <li><a href="#q20.-variable-importance" id="toc-q20.-variable-importance" class="nav-link" data-scroll-target="#q20.-variable-importance">Q20. Variable importance</a></li>
+  <li><a href="#section-49" id="toc-section-49" class="nav-link" data-scroll-target="#section-49">—————————————————————————-</a></li>
+  <li><a href="#section-50" id="toc-section-50" class="nav-link" data-scroll-target="#section-50">—————————————————————————-</a></li>
+  <li><a href="#q21.-model-comparison" id="toc-q21.-model-comparison" class="nav-link" data-scroll-target="#q21.-model-comparison">Q21. Model comparison</a></li>
+  <li><a href="#section-51" id="toc-section-51" class="nav-link" data-scroll-target="#section-51">—————————————————————————-</a></li>
+  <li><a href="#comparison-plot" id="toc-comparison-plot" class="nav-link" data-scroll-target="#comparison-plot">Comparison plot</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lab_ML01</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="section" class="level1">
+<h1>============================================================================</h1>
+</section>
+<section id="workshop-machine-learning-with-survey-data-teds-2016" class="level1">
+<h1>Workshop: Machine Learning with Survey Data (TEDS 2016)</h1>
+</section>
+<section id="epps-6323-knowledge-mining" class="level1">
+<h1>EPPS 6323 Knowledge Mining</h1>
+</section>
+<section id="karl-ho-university-of-texas-at-dallas" class="level1">
+<h1>Karl Ho, University of Texas at Dallas</h1>
+</section>
+<section id="section-1" class="level1">
+<h1>============================================================================</h1>
+</section>
+<section id="install-packages" class="level1">
+<h1>Install Packages</h1>
+<p>install.packages(“GGally”) install.packages(“factoextra”) install.packages(“rpart.plot”) install.packages (“randomForest”) install.packages (“caret”) # —————————————————————————- # 0. Setup: Packages and Data # —————————————————————————-</p>
+<p>library(haven) # Read Stata files library(tidyverse) # Data wrangling and visualization library(GGally) # Pairs plots library(cluster) # Clustering library(factoextra) # Visualize clusters and PCA library(rpart) # Decision trees library(rpart.plot) # Plot decision trees library(randomForest) # Random forest library(caret) # Model training and evaluation library(e1071) # SVM and Naive Bayes</p>
+</section>
+<section id="load-data" class="level1">
+<h1>Load data</h1>
+<p>TEDS_2016 &lt;- read_stata(“<a href="https://github.com/datageneration/home/blob/master/DataProgramming/data/TEDS_2016.dta?raw=true%22">https://github.com/datageneration/home/blob/master/DataProgramming/data/TEDS_2016.dta?raw=true”)</a>)</p>
+</section>
+<section id="section-2" class="level1">
+<h1>============================================================================</h1>
+</section>
+<section id="part-i-exploratory-data-analysis" class="level1">
+<h1>PART I: EXPLORATORY DATA ANALYSIS</h1>
+</section>
+<section id="section-3" class="level1">
+<h1>============================================================================</h1>
+</section>
+<section id="section-4" class="level1">
+<h1>—————————————————————————-</h1>
+</section>
+<section id="q1.-data-overview" class="level1">
+<h1>Q1. Data overview</h1>
+</section>
+<section id="section-5" class="level1">
+<h1>—————————————————————————-</h1>
+<p>dim(TEDS_2016) names(TEDS_2016) summary(TEDS_2016)</p>
+</section>
+<section id="section-6" class="level1">
+<h1>—————————————————————————-</h1>
+</section>
+<section id="q2.-missing-data-assessment" class="level1">
+<h1>Q2. Missing data assessment</h1>
+</section>
+<section id="section-7" class="level1">
+<h1>—————————————————————————-</h1>
+<p>TEDS_2016 %&gt;% summarise(across(everything(), ~sum(is.na(.)))) %&gt;% pivot_longer(everything(), names_to = “variable”, values_to = “n_missing”) %&gt;% filter(n_missing &gt; 0) %&gt;% arrange(desc(n_missing))</p>
+</section>
+<section id="visualize-missingness" class="level1">
+<h1>Visualize missingness</h1>
+<p>TEDS_2016 %&gt;% summarise(across(everything(), ~sum(is.na(.)))) %&gt;% pivot_longer(everything(), names_to = “variable”, values_to = “n_missing”) %&gt;% filter(n_missing &gt; 0) %&gt;% ggplot(aes(x = reorder(variable, n_missing), y = n_missing)) + geom_col(fill = “steelblue”) + coord_flip() + labs(title = “Missing Values by Variable”, x = NULL, y = “Count of Missing Values”) + theme_minimal(base_size = 18)</p>
+</section>
+<section id="section-8" class="level1">
+<h1>—————————————————————————-</h1>
+</section>
+<section id="q3.-variable-recoding" class="level1">
+<h1>Q3. Variable recoding</h1>
+</section>
+<section id="section-9" class="level1">
+<h1>—————————————————————————-</h1>
+<p>teds &lt;- TEDS_2016 %&gt;% mutate( vote = factor(votetsai, levels = c(0, 1), labels = c(“Other”, “Tsai”)), gender = factor(female, levels = c(0, 1), labels = c(“Male”, “Female”)), Tondu = as.factor(Tondu), Party = as.factor(Party) ) %&gt;% dplyr::select(vote, gender, age, edu, income, Taiwanese, Econ_worse, Tondu, Party, DPP) %&gt;% drop_na()</p>
+<p>glimpse(teds)</p>
+</section>
+<section id="section-10" class="level1">
+<h1>—————————————————————————-</h1>
+</section>
+<section id="q4.-vote-choice-distribution" class="level1">
+<h1>Q4. Vote choice distribution</h1>
+</section>
+<section id="section-11" class="level1">
+<h1>—————————————————————————-</h1>
+<p>ggplot(teds, aes(x = vote, fill = vote)) + geom_bar() + scale_fill_manual(values = c(“Other” = “#2980b9”, “Tsai” = “#27ae60”)) + labs(title = “Vote Choice Distribution”, subtitle = “TEDS 2016: Tsai Ing-wen vs.&nbsp;Other Candidates”, x = “Vote Choice”, y = “Count”) + theme_minimal(base_size = 18) + theme(legend.position = “none”)</p>
+</section>
+<section id="section-12" class="level1">
+<h1>—————————————————————————-</h1>
+</section>
+<section id="q5.-age-distribution" class="level1">
+<h1>Q5. Age distribution</h1>
+</section>
+<section id="section-13" class="level1">
+<h1>—————————————————————————-</h1>
+<p>ggplot(teds, aes(x = age)) + geom_histogram(binwidth = 5, fill = “steelblue”, color = “white”) + labs(title = “Age Distribution of Respondents”, x = “Age”, y = “Count”) + theme_minimal(base_size = 18)</p>
+</section>
+<section id="section-14" class="level1">
+<h1>—————————————————————————-</h1>
+</section>
+<section id="q6.-vote-by-gender" class="level1">
+<h1>Q6. Vote by gender</h1>
+</section>
+<section id="section-15" class="level1">
+<h1>—————————————————————————-</h1>
+<p>ggplot(teds, aes(x = gender, fill = vote)) + geom_bar(position = “fill”) + scale_fill_manual(values = c(“Other” = “#2980b9”, “Tsai” = “#27ae60”)) + labs(title = “Vote Choice by Gender”, x = “Gender”, y = “Proportion”, fill = “Vote”) + theme_minimal(base_size = 18)</p>
+</section>
+<section id="section-16" class="level1">
+<h1>—————————————————————————-</h1>
+</section>
+<section id="q7.-age-by-vote-choice" class="level1">
+<h1>Q7. Age by vote choice</h1>
+</section>
+<section id="section-17" class="level1">
+<h1>—————————————————————————-</h1>
+<p>ggplot(teds, aes(x = vote, y = age, fill = vote)) + geom_boxplot() + scale_fill_manual(values = c(“Other” = “#2980b9”, “Tsai” = “#27ae60”)) + labs(title = “Age Distribution by Vote Choice”, x = “Vote Choice”, y = “Age”) + theme_minimal(base_size = 18) + theme(legend.position = “none”)</p>
+</section>
+<section id="section-18" class="level1">
+<h1>—————————————————————————-</h1>
+</section>
+<section id="q8.-correlation-matrix" class="level1">
+<h1>Q8. Correlation matrix</h1>
+</section>
+<section id="section-19" class="level1">
+<h1>—————————————————————————-</h1>
+<p>teds %&gt;% dplyr::select(age, edu, income, Taiwanese, Econ_worse, DPP) %&gt;% cor(use = “complete.obs”) %&gt;% as.data.frame() %&gt;% rownames_to_column(“var1”) %&gt;% pivot_longer(-var1, names_to = “var2”, values_to = “cor”) %&gt;% ggplot(aes(x = var1, y = var2, fill = cor)) + geom_tile() + geom_text(aes(label = round(cor, 2)), size = 6) + scale_fill_gradient2(low = “#e74c3c”, mid = “white”, high = “#2980b9”, midpoint = 0, limits = c(-1, 1)) + labs(title = “Correlation Matrix of Numeric Variables”, x = NULL, y = NULL) + theme_minimal(base_size = 18) + theme(axis.text.x = element_text(angle = 45, hjust = 1))</p>
+</section>
+<section id="section-20" class="level1">
+<h1>—————————————————————————-</h1>
+</section>
+<section id="q9.-pairs-plot" class="level1">
+<h1>Q9. Pairs plot</h1>
+</section>
+<section id="section-21" class="level1">
+<h1>—————————————————————————-</h1>
+<p>teds %&gt;% dplyr::select(age, edu, income, Taiwanese, Econ_worse, vote) %&gt;% ggpairs(aes(color = vote, alpha = 0.5), upper = list(continuous = wrap(“cor”, size = 4)), lower = list(continuous = wrap(“points”, size = 0.5))) + scale_color_manual(values = c(“Other” = “#2980b9”, “Tsai” = “#27ae60”)) + scale_fill_manual(values = c(“Other” = “#2980b9”, “Tsai” = “#27ae60”)) + theme_minimal(base_size = 14)</p>
+</section>
+<section id="section-22" class="level1">
+<h1>============================================================================</h1>
+</section>
+<section id="part-ii-unsupervised-learning" class="level1">
+<h1>PART II: UNSUPERVISED LEARNING</h1>
+</section>
+<section id="section-23" class="level1">
+<h1>============================================================================</h1>
+</section>
+<section id="section-24" class="level1">
+<h1>—————————————————————————-</h1>
+</section>
+<section id="prepare-data-for-clustering" class="level1">
+<h1>Prepare data for clustering</h1>
+</section>
+<section id="section-25" class="level1">
+<h1>—————————————————————————-</h1>
+<p>teds_numeric &lt;- teds %&gt;% dplyr::select(age, edu, income, Taiwanese, Econ_worse, DPP) %&gt;% scale() %&gt;% as.data.frame()</p>
+<p>head(teds_numeric)</p>
+</section>
+<section id="section-26" class="level1">
+<h1>—————————————————————————-</h1>
+</section>
+<section id="q10.-choosing-k-elbow-method" class="level1">
+<h1>Q10. Choosing k: Elbow method</h1>
+</section>
+<section id="section-27" class="level1">
+<h1>—————————————————————————-</h1>
+<p>fviz_nbclust(teds_numeric, kmeans, method = “wss”, k.max = 10) + labs(title = “Elbow Method: Optimal Number of Clusters”) + theme_minimal(base_size = 18)</p>
+</section>
+<section id="silhouette-method" class="level1">
+<h1>Silhouette method</h1>
+<p>fviz_nbclust(teds_numeric, kmeans, method = “silhouette”, k.max = 10) + labs(title = “Silhouette Method: Optimal Number of Clusters”) + theme_minimal(base_size = 18)</p>
+</section>
+<section id="section-28" class="level1">
+<h1>—————————————————————————-</h1>
+</section>
+<section id="q11.-k-means-clustering" class="level1">
+<h1>Q11. K-Means clustering</h1>
+</section>
+<section id="section-29" class="level1">
+<h1>—————————————————————————-</h1>
+<p>set.seed(6323) km_result &lt;- kmeans(teds_numeric, centers = 3, nstart = 25)</p>
+<p>table(km_result<span class="math inline">\(cluster)
+round(km_result\)</span>centers, 2)</p>
+</section>
+<section id="visualize-clusters" class="level1">
+<h1>Visualize clusters</h1>
+<p>fviz_cluster(km_result, data = teds_numeric, geom = “point”, ellipse.type = “convex”, palette = c(“#e74c3c”, “#2980b9”, “#27ae60”), ggtheme = theme_minimal(base_size = 18)) + labs(title = “K-Means Clustering of TEDS 2016 Voters (k = 3)”)</p>
+</section>
+<section id="section-30" class="level1">
+<h1>—————————————————————————-</h1>
+</section>
+<section id="q12.-cluster-profiling" class="level1">
+<h1>Q12. Cluster profiling</h1>
+</section>
+<section id="section-31" class="level1">
+<h1>—————————————————————————-</h1>
+<p>teds<span class="math inline">\(cluster &lt;- as.factor(km_result\)</span>cluster)</p>
+<p>teds %&gt;% group_by(cluster) %&gt;% summarise( n = n(), mean_age = round(mean(age), 1), mean_edu = round(mean(edu), 1), mean_income = round(mean(income), 1), pct_Taiwanese = round(mean(Taiwanese) * 100, 1), pct_Econ_worse = round(mean(Econ_worse) * 100, 1), mean_DPP = round(mean(DPP), 2), pct_Tsai = round(mean(vote == “Tsai”) * 100, 1) )</p>
+</section>
+<section id="section-32" class="level1">
+<h1>—————————————————————————-</h1>
+</section>
+<section id="q13.-clusters-vs.-vote-choice" class="level1">
+<h1>Q13. Clusters vs.&nbsp;vote choice</h1>
+</section>
+<section id="section-33" class="level1">
+<h1>—————————————————————————-</h1>
+<p>ggplot(teds, aes(x = cluster, fill = vote)) + geom_bar(position = “fill”) + scale_fill_manual(values = c(“Other” = “#2980b9”, “Tsai” = “#27ae60”)) + labs(title = “Vote Choice Distribution by Cluster”, x = “Cluster”, y = “Proportion”, fill = “Vote”) + theme_minimal(base_size = 18)</p>
+</section>
+<section id="section-34" class="level1">
+<h1>—————————————————————————-</h1>
+</section>
+<section id="q14.-principal-component-analysis" class="level1">
+<h1>Q14. Principal Component Analysis</h1>
+</section>
+<section id="section-35" class="level1">
+<h1>—————————————————————————-</h1>
+<p>pca_result &lt;- prcomp(teds_numeric, scale. = TRUE) summary(pca_result)</p>
+</section>
+<section id="scree-plot" class="level1">
+<h1>Scree plot</h1>
+<p>fviz_eig(pca_result, addlabels = TRUE) + labs(title = “Scree Plot: Variance Explained by Each PC”) + theme_minimal(base_size = 18)</p>
+</section>
+<section id="section-36" class="level1">
+<h1>—————————————————————————-</h1>
+</section>
+<section id="q15.-pca-variable-contributions" class="level1">
+<h1>Q15. PCA variable contributions</h1>
+</section>
+<section id="section-37" class="level1">
+<h1>—————————————————————————-</h1>
+<p>fviz_pca_var(pca_result, col.var = “contrib”, gradient.cols = c(“#00AFBB”, “#E7B800”, “#FC4E07”), repel = TRUE) + labs(title = “PCA: Variable Contributions”) + theme_minimal(base_size = 18)</p>
+</section>
+<section id="pca-individuals-by-vote" class="level1">
+<h1>PCA individuals by vote</h1>
+<p>fviz_pca_ind(pca_result, geom = “point”, col.ind = teds$vote, palette = c(“#2980b9”, “#27ae60”), addEllipses = TRUE, legend.title = “Vote”) + labs(title = “PCA: Voters Projected onto First Two PCs”) + theme_minimal(base_size = 18)</p>
+</section>
+<section id="section-38" class="level1">
+<h1>============================================================================</h1>
+</section>
+<section id="part-iii-supervised-learning" class="level1">
+<h1>PART III: SUPERVISED LEARNING</h1>
+</section>
+<section id="section-39" class="level1">
+<h1>============================================================================</h1>
+</section>
+<section id="section-40" class="level1">
+<h1>—————————————————————————-</h1>
+</section>
+<section id="q16.-train-test-split" class="level1">
+<h1>Q16. Train-test split</h1>
+</section>
+<section id="section-41" class="level1">
+<h1>—————————————————————————-</h1>
+<p>set.seed(6323)</p>
+<p>train_index &lt;- createDataPartition(teds$vote, p = 0.7, list = FALSE) train_data &lt;- teds[train_index, ] %&gt;% dplyr::select(-cluster) test_data &lt;- teds[-train_index, ] %&gt;% dplyr::select(-cluster)</p>
+<p>cat(“Training set:”, nrow(train_data), “observations”) cat(“Test set:”, nrow(test_data), “observations”) prop.table(table(train_data$vote))</p>
+</section>
+<section id="section-42" class="level1">
+<h1>—————————————————————————-</h1>
+</section>
+<section id="q17.-logistic-regression" class="level1">
+<h1>Q17. Logistic regression</h1>
+</section>
+<section id="section-43" class="level1">
+<h1>—————————————————————————-</h1>
+<p>logit_model &lt;- glm(vote ~ age + gender + edu + income + Taiwanese + Econ_worse + DPP, data = train_data, family = binomial)</p>
+<p>summary(logit_model)</p>
+</section>
+<section id="evaluation" class="level1">
+<h1>Evaluation</h1>
+<p>logit_probs &lt;- predict(logit_model, newdata = test_data, type = “response”) logit_pred &lt;- ifelse(logit_probs &gt; 0.5, “Tsai”, “Other”) logit_pred &lt;- factor(logit_pred, levels = c(“Other”, “Tsai”))</p>
+<p>confusionMatrix(logit_pred, test_data$vote)</p>
+</section>
+<section id="section-44" class="level1">
+<h1>—————————————————————————-</h1>
+</section>
+<section id="q18.-decision-tree" class="level1">
+<h1>Q18. Decision tree</h1>
+</section>
+<section id="section-45" class="level1">
+<h1>—————————————————————————-</h1>
+<p>tree_model &lt;- rpart(vote ~ age + gender + edu + income + Taiwanese + Econ_worse + DPP, data = train_data, method = “class”)</p>
+<p>rpart.plot(tree_model, type = 4, extra = 104, main = “Decision Tree: Predicting Vote Choice”, box.palette = “BuGn”, cex = 1.2)</p>
+</section>
+<section id="evaluation-1" class="level1">
+<h1>Evaluation</h1>
+<p>tree_pred &lt;- predict(tree_model, newdata = test_data, type = “class”) confusionMatrix(tree_pred, test_data$vote)</p>
+</section>
+<section id="section-46" class="level1">
+<h1>—————————————————————————-</h1>
+</section>
+<section id="q19.-random-forest" class="level1">
+<h1>Q19. Random forest</h1>
+</section>
+<section id="section-47" class="level1">
+<h1>—————————————————————————-</h1>
+<p>set.seed(6323)</p>
+<p>rf_model &lt;- randomForest(vote ~ age + gender + edu + income + Taiwanese + Econ_worse + DPP, data = train_data, ntree = 500, importance = TRUE)</p>
+<p>print(rf_model)</p>
+</section>
+<section id="evaluation-2" class="level1">
+<h1>Evaluation</h1>
+<p>rf_pred &lt;- predict(rf_model, newdata = test_data) confusionMatrix(rf_pred, test_data$vote)</p>
+</section>
+<section id="section-48" class="level1">
+<h1>—————————————————————————-</h1>
+</section>
+<section id="q20.-variable-importance" class="level1">
+<h1>Q20. Variable importance</h1>
+</section>
+<section id="section-49" class="level1">
+<h1>—————————————————————————-</h1>
+<p>importance_df &lt;- as.data.frame(importance(rf_model)) %&gt;% rownames_to_column(“variable”) %&gt;% arrange(desc(MeanDecreaseGini))</p>
+<p>ggplot(importance_df, aes(x = reorder(variable, MeanDecreaseGini), y = MeanDecreaseGini)) + geom_col(fill = “steelblue”) + coord_flip() + labs(title = “Random Forest: Variable Importance”, subtitle = “Mean Decrease in Gini Index”, x = NULL, y = “Importance”) + theme_minimal(base_size = 18)</p>
+</section>
+<section id="section-50" class="level1">
+<h1>—————————————————————————-</h1>
+</section>
+<section id="q21.-model-comparison" class="level1">
+<h1>Q21. Model comparison</h1>
+</section>
+<section id="section-51" class="level1">
+<h1>—————————————————————————-</h1>
+<p>results &lt;- tibble( Model = c(“Logistic Regression”, “Decision Tree”, “Random Forest”), Accuracy = c( confusionMatrix(logit_pred, test_data<span class="math inline">\(vote)\)</span>overall[“Accuracy”], confusionMatrix(tree_pred, test_data<span class="math inline">\(vote)\)</span>overall[“Accuracy”], confusionMatrix(rf_pred, test_data<span class="math inline">\(vote)\)</span>overall[“Accuracy”] ) )</p>
+<p>results %&gt;% arrange(desc(Accuracy))</p>
+</section>
+<section id="comparison-plot" class="level1">
+<h1>Comparison plot</h1>
+<p>ggplot(results, aes(x = reorder(Model, Accuracy), y = Accuracy, fill = Model)) + geom_col(width = 0.6) + geom_text(aes(label = paste0(round(Accuracy * 100, 1), “%”)), hjust = -0.1, size = 7) + coord_flip() + scale_fill_manual(values = c(“#e74c3c”, “#2980b9”, “#27ae60”)) + scale_y_continuous(limits = c(0, 1), labels = scales::percent) + labs(title = “Model Comparison: Prediction Accuracy”, x = NULL, y = “Accuracy”) + theme_minimal(base_size = 18) + theme(legend.position = “none”)</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>© 2026 Muhammad Al Hasib</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
