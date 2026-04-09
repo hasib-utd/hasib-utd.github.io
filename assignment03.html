@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>EPPS 6323 Assignments – Muhammad Al Hasib</title>
+<title>Assignment 03: Regression Analysis (TEDS2016) – Muhammad Al Hasib</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -155,8 +155,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#assignments" id="toc-assignments" class="nav-link active" data-scroll-target="#assignments">Assignments</a></li>
-  <li><a href="#labs" id="toc-labs" class="nav-link" data-scroll-target="#labs">Labs</a></li>
+  <li><a href="#epps-6323-knowledge-mining" id="toc-epps-6323-knowledge-mining" class="nav-link active" data-scroll-target="#epps-6323-knowledge-mining">EPPS 6323 – Knowledge Mining</a></li>
+  <li><a href="#review-of-methodology" id="toc-review-of-methodology" class="nav-link" data-scroll-target="#review-of-methodology">1. Review of Methodology</a></li>
+  <li><a href="#load-the-teds2016-dataset" id="toc-load-the-teds2016-dataset" class="nav-link" data-scroll-target="#load-the-teds2016-dataset">2. Load the TEDS2016 Dataset</a></li>
+  <li><a href="#regression-analysis-regplot" id="toc-regression-analysis-regplot" class="nav-link" data-scroll-target="#regression-analysis-regplot">3. Regression Analysis (regplot)</a></li>
+  <li><a href="#analytical-questions" id="toc-analytical-questions" class="nav-link" data-scroll-target="#analytical-questions">4. Analytical Questions</a></li>
+  <li><a href="#peer-reviewed-references" id="toc-peer-reviewed-references" class="nav-link" data-scroll-target="#peer-reviewed-references">5. Peer-Reviewed References</a></li>
   </ul>
 </nav>
     </div>
@@ -165,7 +169,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">EPPS 6323 Assignments</h1>
+<h1 class="title">Assignment 03: Regression Analysis (TEDS2016)</h1>
 </div>
 
 
@@ -182,21 +186,48 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Below are the links to my coursework for <strong>EPPS 6323 – Knowledge Mining</strong>.</p>
-<section id="assignments" class="level2">
-<h2 class="anchored" data-anchor-id="assignments">Assignments</h2>
+<section id="epps-6323-knowledge-mining" class="level2">
+<h2 class="anchored" data-anchor-id="epps-6323-knowledge-mining">EPPS 6323 – Knowledge Mining</h2>
+<p>This exercise explores the application of multiple regression models using the Taiwan Election and Democratization Study (TEDS2016). Following the instructions in ISLR Chapter 3, we evaluate the correlation between socioeconomic variables (Age, Education, Income) and a categorical dependent variable to identify the limitations of Ordinary Least Squares (OLS) when applied to non-continuous data.</p>
+</section>
+<section id="review-of-methodology" class="level2">
+<h2 class="anchored" data-anchor-id="review-of-methodology">1. Review of Methodology</h2>
+<p>The following resources and methods were reviewed to conduct this analysis:</p>
 <ul>
-<li><a href="Assignment01.html">Assignment 01: Brush up R and Quarto</a></li>
-<li><a href="Assignment02.html">Assignment 02: Prompt Exercise</a></li>
-<li><a href="Assignment03.html">Assignment 03: ML exercise</a></li>
+<li><p><em>An Introduction to Statistical Learning (ISLR)</em>, Chapter 3</p></li>
+<li><p>Lab ML01.R (Multiple Linear Regression)</p></li>
+<li><p>Principles of Reproducible Research (Gentleman, 2005)</p></li>
 </ul>
 </section>
-<section id="labs" class="level2">
-<h2 class="anchored" data-anchor-id="labs">Labs</h2>
+<section id="load-the-teds2016-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="load-the-teds2016-dataset">2. Load the TEDS2016 Dataset</h2>
+<p>The dataset was loaded directly from GitHub using the <strong>haven</strong> package for Stata compatibility.</p>
+<pre><code>#| message: false #| warning: false library(haven) library(tidyverse)  TEDS_2016 &lt;- read_stata(   "[https://github.com/datageneration/home/blob/master/DataProgramming/data/TEDS_2016.dta?raw=true](https://github.com/datageneration/home/blob/master/DataProgramming/data/TEDS_2016.dta?raw=true)" )  head(TEDS_2016) </code></pre>
+<p>Several data characteristics were noted during ingestion:</p>
 <ul>
-<li><a href="Lab01.html">Lab 01: R Programming Basics I</a></li>
-<li><a href="Lab02.html">Lab 02: R Programming Basics II</a></li>
-<li><a href="Lab ML01.R.html">Lab ML01.R: Simple and Multiple Linear Regression</a></li>
+<li><p>The dependent variable <code>votetsai</code> is categorical.</p></li>
+<li><p>Socioeconomic predictors (Age, Education, Income) require numeric handling.</p></li>
+<li><p>The dataset includes 1,690 observations and 169 variables.</p></li>
+</ul>
+</section>
+<section id="regression-analysis-regplot" class="level2">
+<h2 class="anchored" data-anchor-id="regression-analysis-regplot">3. Regression Analysis (regplot)</h2>
+<p>We define a custom function <code>regplot</code> to combine linear modeling, scatter plotting, and the addition of a regression line into a single command.</p>
+<pre><code># Define the function regplot &lt;- function(x, y, title = "Regression Fit") {   fit &lt;- lm(y ~ x)   plot(x, y, main = title, xlab = "Independent Variable", ylab = "Vote Choice (DV)")   abline(fit, col = "red", lwd = 2) }  # Run regplot for specific variables par(mfrow = c(3, 1))  # a. Age regplot(TEDS_2016$age, TEDS_2016$votetsai, "Age vs. Voter Choice")  # b. Education regplot(TEDS_2016$edu, TEDS_2016$votetsai, "Education vs. Voter Choice")  # c. Income regplot(TEDS_2016$income, TEDS_2016$votetsai, "Income vs. Voter Choice")</code></pre>
+</section>
+<section id="analytical-questions" class="level2">
+<h2 class="anchored" data-anchor-id="analytical-questions">4. Analytical Questions</h2>
+<p><strong>Q6. What is the problem? Why?</strong></p>
+<p>The primary problem is that the Dependent Variable (DV), <code>votetsai</code>, is <strong>categorical</strong> (binary). As hinted in the assignment, there are only a few categories (0 or 1). Linear regression assumes a continuous DV; when applied to categorical data, the “best fit” line fails to capture the probability of categories and results in residuals that violate the assumption of normality and homoscedasticity.</p>
+<p><strong>Q7. What can be done to improve prediction of the dependent variable?</strong></p>
+<p>To improve prediction for a categorical outcome, we should utilize <strong>Logistic Regression</strong> (GLM with a binomial family) or advanced machine learning techniques such as <strong>Gradient Boosting Models (GBM)</strong>. These models are designed to handle non-linear relationships and binary classification tasks more effectively than Ordinary Least Squares (OLS).</p>
+</section>
+<section id="peer-reviewed-references" class="level2">
+<h2 class="anchored" data-anchor-id="peer-reviewed-references">5. Peer-Reviewed References</h2>
+<ul>
+<li><p><strong>Abbott, D. (2008).</strong> <em>What is Digital Curation?</em> Digital Curation Centre.</p></li>
+<li><p><strong>Gentleman, R. (2005).</strong> Reproducible Research: A Case Study. <em>Statistical Applications in Genetics and Molecular Biology</em>.</p></li>
+<li><p><strong>Wickham, H., &amp; Grolemund, G. (2016).</strong> <em>R for Data Science</em>. O’Reilly Media.</p></li>
 </ul>
 
 
