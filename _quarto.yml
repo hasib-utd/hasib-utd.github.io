@@ -34,7 +34,7 @@ website:
           - text: "Lab 02: R Programming Basics II"
             href: Lab02.html
           - text: "Lab ML01: Simple and Multiple Linear Regression"
-            href: Lab_ML01.html
+            href: Lab_ML01.qmd
         
   page-footer:
     center: "© 2026 Muhammad Al Hasib"
