@@ -342,30 +342,6 @@ window.Quarto = {
 <section id="section-5" class="level1">
 <h1>———————————————————</h1>
 <p>dim(TEDS_2016) names(TEDS_2016) summary(TEDS_2016)</p>
-<pre><code>&gt; dim(TEDS_2016) [1] 1690   54 &gt; The TEDS2016 dataset contains `r nrow(TEDS_2016)` observations and `r ncol(TEDS_2016)` variables.</code></pre>
-<pre><code>&gt; # Table of variable names
-&gt; knitr::kable(matrix(names(TEDS_2016), ncol = 4), caption = "Variable Names in TEDS2016")
-
-
-Table: Variable Names in TEDS2016
-
-|         |             |                |               |
-|:--------|:------------|:---------------|:--------------|
-|District |green        |KMT             |pubwelf5       |
-|Sex      |votetsai_nm  |DPP             |Govt_dont_care |
-|Age      |votetsai_all |npp             |highincome     |
-|Edu      |Independence |noparty         |votekmt        |
-|Arear    |Unification  |pfp             |votekmt_nm     |
-|Career   |sq           |South           |Blue           |
-|Career8  |Taiwanese    |north           |Green          |
-|Ethnic   |edu          |Minnan_father   |No_Party       |
-|Party    |female       |Mainland_father |voteblue       |
-|PartyID  |whitecollar  |Econ_worse      |voteblue_nm    |
-|Tondu    |lowincome    |Inequality      |votedpp_1      |
-|Tondu3   |income       |inequality5     |votekmt_1      |
-|nI2      |income_nm    |econworse5      |District       |
-|votetsai |age          |Govt_for_public |Sex            |</code></pre>
-<pre><code>&gt; library(pander) &gt; pander(summary(TEDS_2016[, 1:5])) # Summarizing first 5 variables  ----------------------------------------------------------------------------    District          Sex            Age            Edu            Arear      -------------- --------------- ------------- --------------- ---------------  Min.  : 201    Min.  :1.000    Min.  :1.0    Min.  :1.000    Min.  :1.000     1st Qu.:1401   1st Qu.:1.000   1st Qu.:2.0   1st Qu.:2.000   1st Qu.:1.000    Median :6406   Median :1.000   Median :3.0   Median :3.000   Median :3.000     Mean :4661     Mean :1.486     Mean :3.3     Mean :3.334     Mean :2.744     3rd Qu.:6604   3rd Qu.:2.000   3rd Qu.:5.0   3rd Qu.:5.000   3rd Qu.:4.000    Max.  :6806    Max.  :2.000    Max.  :5.0    Max.  :9.000    Max.  :6.000   ----------------------------------------------------------------------------</code></pre>
 </section>
 <section id="section-6" class="level1">
 <h1>———————————————————</h1>
@@ -376,24 +352,10 @@ Table: Variable Names in TEDS2016
 <section id="section-7" class="level1">
 <h1>———————————————————</h1>
 <p>TEDS_2016 %&gt;% summarise(across(everything(), ~sum(is.na(.)))) %&gt;% pivot_longer(everything(), names_to = “variable”, values_to = “n_missing”) %&gt;% filter(n_missing &gt; 0) %&gt;% arrange(desc(n_missing))</p>
-<pre><code># A tibble: 10 × 2    
-variable     n_missing   
-&lt;chr&gt;            &lt;int&gt;  1 
-votetsai           429  2 
-votetsai_nm        429  3 
-votekmt_nm         429  4 
-voteblue_nm        429  5 
-income_nm          330  6 
-highincome         330  7 
-votetsai_all       248  8 
-votedpp_1          187  9 
-votekmt_1          187 10 
-edu                 10</code></pre>
 </section>
 <section id="visualize-missingness" class="level1">
 <h1>Visualize missingness</h1>
 <p>TEDS_2016 %&gt;% summarise(across(everything(), ~sum(is.na(.)))) %&gt;% pivot_longer(everything(), names_to = “variable”, values_to = “n_missing”) %&gt;% filter(n_missing &gt; 0) %&gt;% ggplot(aes(x = reorder(variable, n_missing), y = n_missing)) + geom_col(fill = “steelblue”) + coord_flip() + labs(title = “Missing Values by Variable”, x = NULL, y = “Count of Missing Values”) + theme_minimal(base_size = 18)</p>
-<p><img src="images/clipboard-969556893.jpeg" class="img-fluid" width="566"></p>
 </section>
 <section id="section-8" class="level1">
 <h1>———————————————————</h1>
@@ -405,19 +367,6 @@ edu                 10</code></pre>
 <h1>———————————————————</h1>
 <p>teds &lt;- TEDS_2016 %&gt;% mutate( vote = factor(votetsai, levels = c(0, 1), labels = c(“Other”, “Tsai”)), gender = factor(female, levels = c(0, 1), labels = c(“Male”, “Female”)), Tondu = as.factor(Tondu), Party = as.factor(Party) ) %&gt;% dplyr::select(vote, gender, age, edu, income, Taiwanese, Econ_worse, Tondu, Party, DPP) %&gt;% drop_na()</p>
 <p>glimpse(teds)</p>
-<pre><code>Table: Data Dictionary and Variable Structure (teds)  
-|Variable   |Class   |Sample_Values        | 
-|:----------|:-------|:--------------------| 
-|vote       |factor  |Tsai, Other, Tsai    | 
-|gender     |factor  |Female, Male, Female | 
-|age        |numeric |39, 63, 64           | 
-|edu        |numeric |5, 5, 2              | 
-|income     |numeric |7, 8, 9              | 
-|Taiwanese  |numeric |0, 0, 1              | 
-|Econ_worse |numeric |0, 1, 1              | 
-|Tondu      |factor  |5, 3, 4              | 
-|Party      |factor  |25, 3, 6             | 
-|DPP        |numeric |0, 0, 1              |</code></pre>
 </section>
 <section id="section-10" class="level1">
 <h1>———————————————————</h1>
@@ -428,7 +377,6 @@ edu                 10</code></pre>
 <section id="section-11" class="level1">
 <h1>———————————————————</h1>
 <p>ggplot(teds, aes(x = vote, fill = vote)) + geom_bar() + scale_fill_manual(values = c(“Other” = “#2980b9”, “Tsai” = “#27ae60”)) + labs(title = “Vote Choice Distribution”, subtitle = “TEDS 2016: Tsai Ing-wen vs.&nbsp;Other Candidates”, x = “Vote Choice”, y = “Count”) + theme_minimal(base_size = 18) + theme(legend.position = “none”)</p>
-<p><img src="images/clipboard-591841469.jpeg" class="img-fluid"></p>
 </section>
 <section id="section-12" class="level1">
 <h1>———————————————————</h1>
@@ -439,7 +387,6 @@ edu                 10</code></pre>
 <section id="section-13" class="level1">
 <h1>———————————————————</h1>
 <p>ggplot(teds, aes(x = age)) + geom_histogram(binwidth = 5, fill = “steelblue”, color = “white”) + labs(title = “Age Distribution of Respondents”, x = “Age”, y = “Count”) + theme_minimal(base_size = 18)</p>
-<p><img src="images/clipboard-991153884.jpeg" class="img-fluid"></p>
 </section>
 <section id="section-14" class="level1">
 <h1>———————————————————</h1>
@@ -450,7 +397,6 @@ edu                 10</code></pre>
 <section id="section-15" class="level1">
 <h1>———————————————————</h1>
 <p>ggplot(teds, aes(x = gender, fill = vote)) + geom_bar(position = “fill”) + scale_fill_manual(values = c(“Other” = “#2980b9”, “Tsai” = “#27ae60”)) + labs(title = “Vote Choice by Gender”, x = “Gender”, y = “Proportion”, fill = “Vote”) + theme_minimal(base_size = 18)</p>
-<p><img src="images/clipboard-275911035.jpeg" class="img-fluid"></p>
 </section>
 <section id="section-16" class="level1">
 <h1>———————————————————</h1>
@@ -461,7 +407,6 @@ edu                 10</code></pre>
 <section id="section-17" class="level1">
 <h1>———————————————————</h1>
 <p>ggplot(teds, aes(x = vote, y = age, fill = vote)) + geom_boxplot() + scale_fill_manual(values = c(“Other” = “#2980b9”, “Tsai” = “#27ae60”)) + labs(title = “Age Distribution by Vote Choice”, x = “Vote Choice”, y = “Age”) + theme_minimal(base_size = 18) + theme(legend.position = “none”)</p>
-<p><img src="images/clipboard-1045109223.jpeg" class="img-fluid"></p>
 </section>
 <section id="section-18" class="level1">
 <h1>———————————————————</h1>
@@ -472,7 +417,6 @@ edu                 10</code></pre>
 <section id="section-19" class="level1">
 <h1>———————————————————</h1>
 <p>teds %&gt;% dplyr::select(age, edu, income, Taiwanese, Econ_worse, DPP) %&gt;% cor(use = “complete.obs”) %&gt;% as.data.frame() %&gt;% rownames_to_column(“var1”) %&gt;% pivot_longer(-var1, names_to = “var2”, values_to = “cor”) %&gt;% ggplot(aes(x = var1, y = var2, fill = cor)) + geom_tile() + geom_text(aes(label = round(cor, 2)), size = 6) + scale_fill_gradient2(low = “#e74c3c”, mid = “white”, high = “#2980b9”, midpoint = 0, limits = c(-1, 1)) + labs(title = “Correlation Matrix of Numeric Variables”, x = NULL, y = NULL) + theme_minimal(base_size = 18) + theme(axis.text.x = element_text(angle = 45, hjust = 1))</p>
-<p><img src="images/clipboard-749692656.jpeg" class="img-fluid"></p>
 </section>
 <section id="section-20" class="level1">
 <h1>———————————————————</h1>
@@ -483,7 +427,6 @@ edu                 10</code></pre>
 <section id="section-21" class="level1">
 <h1>———————————————————</h1>
 <p>teds %&gt;% dplyr::select(age, edu, income, Taiwanese, Econ_worse, vote) %&gt;% ggpairs(aes(color = vote, alpha = 0.5), upper = list(continuous = wrap(“cor”, size = 4)), lower = list(continuous = wrap(“points”, size = 0.5))) + scale_color_manual(values = c(“Other” = “#2980b9”, “Tsai” = “#27ae60”)) + scale_fill_manual(values = c(“Other” = “#2980b9”, “Tsai” = “#27ae60”)) + theme_minimal(base_size = 14)</p>
-<p><img src="images/clipboard-2034418956.jpeg" class="img-fluid"></p>
 </section>
 <section id="section-22" class="level1">
 <h1>================================</h1>
@@ -504,7 +447,6 @@ edu                 10</code></pre>
 <h1>———————————————————</h1>
 <p>teds_numeric &lt;- teds %&gt;% dplyr::select(age, edu, income, Taiwanese, Econ_worse, DPP) %&gt;% scale() %&gt;% as.data.frame()</p>
 <p>head(teds_numeric)</p>
-<pre><code>         age        edu     income Taiwanese Econ_worse        DPP 1 -0.6442434  1.1180557  0.5890616 -1.352636 -1.1612317 -0.8507077 2  0.7997042  1.1180557  0.9453043 -1.352636  0.8604695 -0.8507077 3  0.8598687 -0.8791912  1.3015470  0.738709  0.8604695  1.1745567 4  1.5216780 -1.5449401 -1.5483945 -1.352636  0.8604695 -0.8507077 5  0.2582239  1.1180557  1.6577897  0.738709  0.8604695 -0.8507077 6  0.8598687 -1.5449401 -1.1921518  0.738709  0.8604695 -0.8507077</code></pre>
 </section>
 <section id="section-26" class="level1">
 <h1>———————————————————</h1>
@@ -515,12 +457,10 @@ edu                 10</code></pre>
 <section id="section-27" class="level1">
 <h1>———————————————————</h1>
 <p>fviz_nbclust(teds_numeric, kmeans, method = “wss”, k.max = 10) + labs(title = “Elbow Method: Optimal Number of Clusters”) + theme_minimal(base_size = 18)</p>
-<p><img src="images/clipboard-1944235384.jpeg" class="img-fluid"></p>
 </section>
 <section id="silhouette-method" class="level1">
 <h1>Silhouette method</h1>
 <p>fviz_nbclust(teds_numeric, kmeans, method = “silhouette”, k.max = 10) + labs(title = “Silhouette Method: Optimal Number of Clusters”) + theme_minimal(base_size = 18)</p>
-<p><img src="images/clipboard-1061363806.jpeg" class="img-fluid"></p>
 </section>
 <section id="section-28" class="level1">
 <h1>———————————————————</h1>
@@ -537,15 +477,6 @@ round(km_result\)</span>centers, 2)</p>
 <section id="visualize-clusters" class="level1">
 <h1>Visualize clusters</h1>
 <p>fviz_cluster(km_result, data = teds_numeric, geom = “point”, ellipse.type = “convex”, palette = c(“#e74c3c”, “#2980b9”, “#27ae60”), ggtheme = theme_minimal(base_size = 18)) + labs(title = “K-Means Clustering of TEDS 2016 Voters (k = 3)”)</p>
-<pre><code>&gt; set.seed(6323) 
-&gt; km_result &lt;- kmeans(teds_numeric, centers = 3, nstart = 25) 
-
-&gt; table(km_result$cluster)    1   2   3  400 442 415  &gt; round(km_result$centers, 2)     age   edu income Taiwanese Econ_worse   DPP 
-1  0.11  0.17   0.15     -1.35      -0.26 -0.62 
-2 -0.80  0.75   0.37      0.69      -0.05  0.24 
-3  0.74 -0.96  -0.54      0.57       0.31  0.35</code></pre>
-<pre><code>&gt; # Visualize clusters</code></pre>
-<p><img src="images/clipboard-768739709.jpeg" class="img-fluid"></p>
 </section>
 <section id="section-30" class="level1">
 <h1>———————————————————</h1>
@@ -557,10 +488,6 @@ round(km_result\)</span>centers, 2)</p>
 <h1>———————————————————</h1>
 <p>teds<span class="math inline">\(cluster &lt;- as.factor(km_result\)</span>cluster)</p>
 <p>teds %&gt;% group_by(cluster) %&gt;% summarise( n = n(), mean_age = round(mean(age), 1), mean_edu = round(mean(edu), 1), mean_income = round(mean(income), 1), pct_Taiwanese = round(mean(Taiwanese) * 100, 1), pct_Econ_worse = round(mean(Econ_worse) * 100, 1), mean_DPP = round(mean(DPP), 2), pct_Tsai = round(mean(vote == “Tsai”) * 100, 1) )</p>
-<pre><code>cluster n mean_age mean_edu mean_income pct_Taiwa pct_Econ_worse mean_DPP pct_Tsai
-1      400  51.6    3.6       5.8           0         44.5         0.11     28.2 
-2      442  36.4    4.4       6.4          97.5       54.8         0.54     76   
-3      415  62      1.9       3.8          92         72.8        0.59     81.4</code></pre>
 </section>
 <section id="section-32" class="level1">
 <h1>———————————————————</h1>
@@ -571,7 +498,6 @@ round(km_result\)</span>centers, 2)</p>
 <section id="section-33" class="level1">
 <h1>———————————————————</h1>
 <p>ggplot(teds, aes(x = cluster, fill = vote)) + geom_bar(position = “fill”) + scale_fill_manual(values = c(“Other” = “#2980b9”, “Tsai” = “#27ae60”)) + labs(title = “Vote Choice Distribution by Cluster”, x = “Cluster”, y = “Proportion”, fill = “Vote”) + theme_minimal(base_size = 18)</p>
-<p><img src="images/clipboard-963153146.jpeg" class="img-fluid"></p>
 </section>
 <section id="section-34" class="level1">
 <h1>———————————————————</h1>
@@ -582,18 +508,10 @@ round(km_result\)</span>centers, 2)</p>
 <section id="section-35" class="level1">
 <h1>———————————————————</h1>
 <p>pca_result &lt;- prcomp(teds_numeric, scale. = TRUE) summary(pca_result)</p>
-<pre><code>cluster n mean_age mean_edu mean_income pct_Taiwa pct_Econ_worse mean_DPP pct_Tsai
-1      400  51.6    3.6       5.8           0         44.5         0.11     28.2 
-2      442  36.4    4.4       6.4          97.5       54.8         0.54     76   
-3      415  62      1.9       3.8          92         72.8        0.59     81.4</code></pre>
-<pre><code>Importance of components:                 
-                          PC1      PC2      PC3       PC4     PC5      PC6 
-Standard deviation     1.3621   1.2153    0.9492   0.9141  0.7843   0.5623 Proportion of Variance 0.3092   0.2461    0.1502   0.1393  0.1025   0.0527 Cumulative Proportion  0.3092   0.5554    0.7055   0.8448  0.9473   1.0000</code></pre>
 </section>
 <section id="scree-plot" class="level1">
 <h1>Scree plot</h1>
 <p>fviz_eig(pca_result, addlabels = TRUE) + labs(title = “Scree Plot: Variance Explained by Each PC”) + theme_minimal(base_size = 18)</p>
-<p><img src="images/clipboard-3696577606.jpeg" class="img-fluid"></p>
 </section>
 <section id="section-36" class="level1">
 <h1>———————————————————</h1>
@@ -604,12 +522,10 @@ Standard deviation     1.3621   1.2153    0.9492   0.9141  0.7843   0.5623 Propo
 <section id="section-37" class="level1">
 <h1>———————————————————</h1>
 <p>fviz_pca_var(pca_result, col.var = “contrib”, gradient.cols = c(“#00AFBB”, “#E7B800”, “#FC4E07”), repel = TRUE) + labs(title = “PCA: Variable Contributions”) + theme_minimal(base_size = 18)</p>
-<p><img src="images/clipboard-1046844072.jpeg" class="img-fluid"></p>
 </section>
 <section id="pca-individuals-by-vote" class="level1">
 <h1>PCA individuals by vote</h1>
 <p>fviz_pca_ind(pca_result, geom = “point”, col.ind = teds$vote, palette = c(“#2980b9”, “#27ae60”), addEllipses = TRUE, legend.title = “Vote”) + labs(title = “PCA: Voters Projected onto First Two PCs”) + theme_minimal(base_size = 18)</p>
-<p><img src="images/clipboard-4249042831.jpeg" class="img-fluid"></p>
 </section>
 <section id="section-38" class="level1">
 <h1>================================</h1>
@@ -631,8 +547,6 @@ Standard deviation     1.3621   1.2153    0.9492   0.9141  0.7843   0.5623 Propo
 <p>set.seed(6323)</p>
 <p>train_index &lt;- createDataPartition(teds$vote, p = 0.7, list = FALSE) train_data &lt;- teds[train_index, ] %&gt;% dplyr::select(-cluster) test_data &lt;- teds[-train_index, ] %&gt;% dplyr::select(-cluster)</p>
 <p>cat(“Training set:”, nrow(train_data), “observations”) cat(“Test set:”, nrow(test_data), “observations”) prop.table(table(train_data$vote))</p>
-<pre><code>&gt; cat("Training set:", nrow(train_data), "observations\n") Training set: 880 observations &gt; cat("Test set:", nrow(test_data), "observations\n") Test set: 377 observations &gt; prop.table(table(train_data$vote))</code></pre>
-<pre><code>&gt; prop.table(table(train_data$vote))      Other      Tsai  0.3738636 0.6261364 </code></pre>
 </section>
 <section id="section-42" class="level1">
 <h1>———————————————————</h1>
@@ -644,60 +558,11 @@ Standard deviation     1.3621   1.2153    0.9492   0.9141  0.7843   0.5623 Propo
 <h1>———————————————————</h1>
 <p>logit_model &lt;- glm(vote ~ age + gender + edu + income + Taiwanese + Econ_worse + DPP, data = train_data, family = binomial)</p>
 <p>summary(logit_model)</p>
-<pre><code>Call: 
-glm(formula = vote ~ age + gender + edu + income + Taiwanese +      
-    Econ_worse + DPP, family = binomial, data = train_data)  
-
-Coefficients:               
-                Estimate Std. Error z value Pr(&gt;|z|)     
-                (Intercept)   0.361867   0.642494   0.563  0.57328     
-                age          -0.016301   0.007529  -2.165  0.03038 *   
-                genderFemale -0.349449   0.198576  -1.760  0.07845 .   
-                edu          -0.236898   0.089984  -2.633  0.00847 **  
-                income       -0.017889   0.036531  -0.490  0.62435     
-                Taiwanese     1.483033   0.200581   7.394 1.43e-13 *** 
-                Econ_worse    0.340277   0.193553   1.758  0.07874 .   
-                DPP           3.620753   0.315087  11.491  &lt; 2e-16 *** 
-                --- 
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1  
-
-(Dispersion parameter for binomial family taken to be 1)      
-
-Null deviance: 1163.32  on 879  degrees of freedom 
-
-Residual deviance:  682.87  on 872  degrees of freedom 
-
-AIC: 698.87  
-
-Number of Fisher Scoring iterations: 6</code></pre>
 </section>
 <section id="evaluation" class="level1">
 <h1>Evaluation</h1>
 <p>logit_probs &lt;- predict(logit_model, newdata = test_data, type = “response”) logit_pred &lt;- ifelse(logit_probs &gt; 0.5, “Tsai”, “Other”) logit_pred &lt;- factor(logit_pred, levels = c(“Other”, “Tsai”))</p>
 <p>confusionMatrix(logit_pred, test_data$vote)</p>
-<pre><code>Confusion Matrix and Statistics            
-
-Reference 
-Prediction  Other    Tsai      
-Other        104      40      
-Tsai         37      196                                                           
-
-               Accuracy : 0.7958                            
-                 95% CI : (0.7515, 0.8353)     
-    No Information Rate : 0.626               
-    P-Value [Acc &gt; NIR] : 8.186e-13                                                                   
-                  Kappa : 0.5657                                                     
- Mcnemar's Test P-Value : 0.8197                                                                
-            Sensitivity : 0.7376                       
-            Specificity : 0.8305                  
-         Pos Pred Value : 0.7222                    
-         Neg Pred Value : 0.8412                      
-             Prevalence : 0.3740                    
-         Detection Rate : 0.2759              
-   Detection Prevalence : 0.3820                 
-      Balanced Accuracy : 0.7840 
-            
-       'Positive' Class : Other</code></pre>
 </section>
 <section id="section-44" class="level1">
 <h1>———————————————————</h1>
@@ -709,33 +574,10 @@ Tsai         37      196
 <h1>———————————————————</h1>
 <p>tree_model &lt;- rpart(vote ~ age + gender + edu + income + Taiwanese + Econ_worse + DPP, data = train_data, method = “class”)</p>
 <p>rpart.plot(tree_model, type = 4, extra = 104, main = “Decision Tree: Predicting Vote Choice”, box.palette = “BuGn”, cex = 1.2)</p>
-<p><img src="images/clipboard-1727464899.jpeg" class="img-fluid"></p>
 </section>
 <section id="evaluation-1" class="level1">
 <h1>Evaluation</h1>
 <p>tree_pred &lt;- predict(tree_model, newdata = test_data, type = “class”) confusionMatrix(tree_pred, test_data$vote)</p>
-<pre><code>Confusion Matrix and Statistics            
-Reference 
-Prediction       Other      Tsai      
-Other              118        54      
-Tsai                23       182                                                           
-                Accuracy : 0.7958                            
-                  95% CI : (0.7515, 0.8353)     
-     No Information Rate : 0.626                
-     P-Value [Acc &gt; NIR] : 8.186e-13                                                                    
-                   Kappa : 0.5823     
- 
-  Mcnemar's Test P-Value : 0.0006289  
-
-             Sensitivity : 0.8369                       
-             Specificity : 0.7712                    
-          Pos Pred Value : 0.6860                    
-          Neg Pred Value : 0.8878                        
-              Prevalence : 0.3740                    
-          Detection Rate : 0.3130              
-    Detection Prevalence : 0.4562                 
-       Balanced Accuracy : 0.8040                                                             
-        'Positive' Class : Other </code></pre>
 </section>
 <section id="section-46" class="level1">
 <h1>———————————————————</h1>
@@ -748,46 +590,10 @@ Tsai                23       182
 <p>set.seed(6323)</p>
 <p>rf_model &lt;- randomForest(vote ~ age + gender + edu + income + Taiwanese + Econ_worse + DPP, data = train_data, ntree = 500, importance = TRUE)</p>
 <p>print(rf_model)</p>
-<pre><code>Call:  
-randomForest(formula = vote ~ age + gender + edu + income + Taiwanese + Econ_worse + DPP, data 
-= train_data, ntree = 500, importance = TRUE)                 
-
-               Type of random forest: classification                      
-                     Number of trees: 500 
-No. of variables tried at each split: 2          
-
-OOB estimate of  error rate: 19.77% 
-
-Confusion matrix:       
-       Other   Tsai   class.error 
-Other   245      84     0.2553191 
-Tsai     90     461     0.1633394</code></pre>
 </section>
 <section id="evaluation-2" class="level1">
 <h1>Evaluation</h1>
 <p>rf_pred &lt;- predict(rf_model, newdata = test_data) confusionMatrix(rf_pred, test_data$vote)</p>
-<pre><code>Confusion Matrix and Statistics            
-
-Reference 
-Prediction      Other     Tsai      
-     Other       111       40      
-      Tsai        30      196                                                           
-               Accuracy : 0.8143                           
-                 95% CI : (0.7713, 0.8523)     
-    No Information Rate : 0.626                
-    P-Value [Acc &gt; NIR] : 1.408e-15                                                                     
-                  Kappa : 0.609                                                        
-
- Mcnemar's Test P-Value : 0.2821                                                                  
-            Sensitivity : 0.7872                       
-            Specificity : 0.8305                    
-         Pos Pred Value : 0.7351                    
-         Neg Pred Value : 0.8673                        
-             Prevalence : 0.3740                    
-         Detection Rate : 0.2944              
-   Detection Prevalence : 0.4005                 
-      Balanced Accuracy : 0.8089                                                             
-       'Positive' Class : Other           </code></pre>
 </section>
 <section id="section-48" class="level1">
 <h1>———————————————————</h1>
@@ -810,16 +616,10 @@ Prediction      Other     Tsai
 <h1>———————————————————</h1>
 <p>results &lt;- tibble( Model = c(“Logistic Regression”, “Decision Tree”, “Random Forest”), Accuracy = c( confusionMatrix(logit_pred, test_data<span class="math inline">\(vote)\)</span>overall[“Accuracy”], confusionMatrix(tree_pred, test_data<span class="math inline">\(vote)\)</span>overall[“Accuracy”], confusionMatrix(rf_pred, test_data<span class="math inline">\(vote)\)</span>overall[“Accuracy”] ) )</p>
 <p>results %&gt;% arrange(desc(Accuracy))</p>
-<pre><code>  Model                 Accuracy   
-  &lt;chr&gt;                   &lt;dbl&gt; 
-1 Random Forest          0.814 
-2 Logistic Regression    0.796
-3 Decision Tree          0.796</code></pre>
 </section>
 <section id="comparison-plot" class="level1">
 <h1>Comparison plot</h1>
 <p>ggplot(results, aes(x = reorder(Model, Accuracy), y = Accuracy, fill = Model)) + geom_col(width = 0.6) + geom_text(aes(label = paste0(round(Accuracy * 100, 1), “%”)), hjust = -0.1, size = 7) + coord_flip() + scale_fill_manual(values = c(“#e74c3c”, “#2980b9”, “#27ae60”)) + scale_y_continuous(limits = c(0, 1), labels = scales::percent) + labs(title = “Model Comparison: Prediction Accuracy”, x = NULL, y = “Accuracy”) + theme_minimal(base_size = 18) + theme(legend.position = “none”)</p>
-<p><img src="images/clipboard-2540032337.jpeg" class="img-fluid"></p>
 
 
 </section>
