@@ -3,7 +3,14 @@
 # EPPS 6323 Knowledge Mining
 # Karl Ho, University of Texas at Dallas
 # ============================================================================
+# Install Packages
 
+install.packages("GGally")
+install.packages("factoextra")
+install.packages("rpart.plot")
+install.packages ("randomForest")
+install.packages ("caret")
+install.packages ("pander")
 # ----------------------------------------------------------------------------
 # 0. Setup: Packages and Data
 # ----------------------------------------------------------------------------
@@ -22,7 +29,7 @@ library(e1071)        # SVM and Naive Bayes
 # Load data
 TEDS_2016 <- read_stata("https://github.com/datageneration/home/blob/master/DataProgramming/data/TEDS_2016.dta?raw=true")
 
-
+View(TEDS_2016)
 # ============================================================================
 # PART I: EXPLORATORY DATA ANALYSIS
 # ============================================================================
@@ -32,8 +39,16 @@ TEDS_2016 <- read_stata("https://github.com/datageneration/home/blob/master/Data
 # ----------------------------------------------------------------------------
 
 dim(TEDS_2016)
+The TEDS2016 dataset contains `r nrow(TEDS_2016)` observations and `r ncol(TEDS_2016)` variables.
+
 names(TEDS_2016)
+# Table of variable names
+knitr::kable(matrix(names(TEDS_2016), ncol = 4), caption = "Variable Names in TEDS2016")
+
+
 summary(TEDS_2016)
+library(pander)
+pander(summary(TEDS_2016[, 1:5])) # Summarizing first 5 variables
 
 # ----------------------------------------------------------------------------
 # Q2. Missing data assessment
@@ -81,6 +96,13 @@ teds <- TEDS_2016 %>%
   drop_na()
 
 glimpse(teds)
+
+teds %>%
+  map_df(~ data.frame(
+    Class = class(.x)[1], 
+    Sample_Values = paste(head(as.character(.x), 3), collapse = ", ")
+  ), .id = "Variable") %>%
+  knitr::kable(caption = "Table 1: Data Dictionary and Variable Structure (teds)")
 
 # ----------------------------------------------------------------------------
 # Q4. Vote choice distribution
@@ -156,7 +178,7 @@ teds %>%
 teds %>%
   dplyr::select(age, edu, income, Taiwanese, Econ_worse, vote) %>%
   ggpairs(aes(color = vote, alpha = 0.5),
-          upper = list(continuous = wrap("cor", size = 4)),
+          upper = list(continuous = wrap("cor", size = 3)),
           lower = list(continuous = wrap("points", size = 0.5))) +
   scale_color_manual(values = c("Other" = "#2980b9", "Tsai" = "#27ae60")) +
   scale_fill_manual(values = c("Other" = "#2980b9", "Tsai" = "#27ae60")) +
@@ -392,3 +414,4 @@ ggplot(results, aes(x = reorder(Model, Accuracy), y = Accuracy, fill = Model)) +
        x = NULL, y = "Accuracy") +
   theme_minimal(base_size = 18) +
   theme(legend.position = "none")
+
