@@ -116,7 +116,10 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="./assignments.html">
  <span class="dropdown-text">Coursework</span></a>
   </li>  
-        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="./assignments.html">
+ <span class="dropdown-text">— Assignments —</span></a>
+  </li>  
         <li>
     <a class="dropdown-item" href="./assignment01.html">
  <span class="dropdown-text">Assignment 01</span></a>
@@ -129,7 +132,14 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="./assignment03.html">
  <span class="dropdown-text">Assignment 03</span></a>
   </li>  
-        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="./assignment04.html">
+ <span class="dropdown-text">Assignment 04</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./assignments.html">
+ <span class="dropdown-text">— Labs —</span></a>
+  </li>  
         <li>
     <a class="dropdown-item" href="./Lab01.html">
  <span class="dropdown-text">Lab 01: R Programming Basics I</span></a>
@@ -205,34 +215,34 @@ ul.task-list li input[type="checkbox"] {
 <section id="setup-packages-and-data" class="level2">
 <h2 class="anchored" data-anchor-id="setup-packages-and-data">Setup: Packages and Data</h2>
 <pre class="{r} library(haven) library(tidyverse)}"><code></code></pre>
-<p><code>wht TEDS_2016 &lt;- read_stata("https://github.com/datageneration/home/blob/master/DataProgramming/data/TEDS_2016.dta?raw=true")}</code></p>
+<p><code>eay TEDS_2016 &lt;- read_stata("https://github.com/datageneration/home/blob/master/DataProgramming/data/TEDS_2016.dta?raw=true")}</code></p>
 <hr>
 </section>
 <section id="multiple-regression-model" class="level2">
 <h2 class="anchored" data-anchor-id="multiple-regression-model">1. Multiple Regression Model</h2>
 <p>I am using <code>votetsai</code> as the dependent variable and <code>Age</code>, <code>Education</code>, and <code>Income</code> as predictors.</p>
-<p><code>wht model &lt;- lm(votetsai ~ Age + Edu + income, data = TEDS_2016) summary(model)}</code></p>
+<p><code>eay model &lt;- lm(votetsai ~ Age + Edu + income, data = TEDS_2016) summary(model)}</code></p>
 <hr>
 </section>
 <section id="the-regplot-function" class="level2">
 <h2 class="anchored" data-anchor-id="the-regplot-function">2. The <code>regplot</code> Function</h2>
 <p>Now I am creating a function that combines <code>lm()</code>, <code>plot()</code>, and <code>abline()</code> to plot a regression fit line.</p>
-<p><code>wht regplot &lt;- function(x, y) {   fit &lt;- lm(y ~ x)   plot(x, y)   abline(fit, col = "red") }</code></p>
+<p><code>eay regplot &lt;- function(x, y) {   fit &lt;- lm(y ~ x)   plot(x, y)   abline(fit, col = "red") }</code></p>
 <hr>
 </section>
 <section id="running-regplot-on-the-dependent-variable" class="level2">
 <h2 class="anchored" data-anchor-id="running-regplot-on-the-dependent-variable">3. Running <code>regplot</code> on the Dependent Variable</h2>
 <section id="a.-vote-choice-by-age" class="level3">
 <h3 class="anchored" data-anchor-id="a.-vote-choice-by-age">a. Vote Choice by Age</h3>
-<p><code>wht regplot(TEDS_2016$Age, TEDS_2016$votetsai) title(main = "Vote Choice (Tsai) by Age", xlab = "Age", ylab = "Vote (0 = Other, 1 = Tsai)")}</code></p>
+<p><code>eay regplot(TEDS_2016$Age, TEDS_2016$votetsai) title(main = "Vote Choice (Tsai) by Age", xlab = "Age", ylab = "Vote (0 = Other, 1 = Tsai)")}</code></p>
 </section>
 <section id="b.-vote-choice-by-education" class="level3">
 <h3 class="anchored" data-anchor-id="b.-vote-choice-by-education">b. Vote Choice by Education</h3>
-<p><code>wht regplot(TEDS_2016$Edu, TEDS_2016$votetsai) title(main = "Vote Choice (Tsai) by Education", xlab = "Education", ylab = "Vote (0 = Other, 1 = Tsai)")}</code></p>
+<p><code>eay regplot(TEDS_2016$Edu, TEDS_2016$votetsai) title(main = "Vote Choice (Tsai) by Education", xlab = "Education", ylab = "Vote (0 = Other, 1 = Tsai)")}</code></p>
 </section>
 <section id="c.-vote-choice-by-income" class="level3">
 <h3 class="anchored" data-anchor-id="c.-vote-choice-by-income">c.&nbsp;Vote Choice by Income</h3>
-<p><code>wht regplot(TEDS_2016$income, TEDS_2016$votetsai) title(main = "Vote Choice (Tsai) by Income", xlab = "Income", ylab = "Vote (0 = Other, 1 = Tsai)")}</code></p>
+<p><code>eay regplot(TEDS_2016$income, TEDS_2016$votetsai) title(main = "Vote Choice (Tsai) by Income", xlab = "Income", ylab = "Vote (0 = Other, 1 = Tsai)")}</code></p>
 <hr>
 </section>
 </section>
@@ -250,11 +260,11 @@ ul.task-list li input[type="checkbox"] {
 <section id="what-can-be-done-to-improve-prediction" class="level2">
 <h2 class="anchored" data-anchor-id="what-can-be-done-to-improve-prediction">5. What Can Be Done to Improve Prediction?</h2>
 <p>Since the dependent variable is binary, logistic regression is the appropriate model. It models the log-odds of the outcome and constrains predictions between 0 and 1.</p>
-<p><code>wht logit_model &lt;- glm(votetsai ~ Age + Edu + income,                    data = TEDS_2016,                    family = binomial) summary(logit_model)}</code></p>
+<p><code>eay logit_model &lt;- glm(votetsai ~ Age + Edu + income,                    data = TEDS_2016,                    family = binomial) summary(logit_model)}</code></p>
 <p>We can visualize the logistic fit for Age:</p>
-<p><code>wht TEDS_2016_clean &lt;- TEDS_2016 %&gt;%   dplyr::select(votetsai, Age, Edu, income) %&gt;%   drop_na()  ggplot(TEDS_2016_clean, aes(x = Age, y = votetsai)) +   geom_jitter(height = 0.05, alpha = 0.3, color = "steelblue") +   geom_smooth(method = "glm",               method.args = list(family = binomial),               se = TRUE,               color = "red") +   labs(title = "Logistic Regression: Vote Choice (Tsai) by Age",        x = "Age", y = "Probability of Voting for Tsai") +   theme_minimal(base_size = 16)}</code></p>
-<p><code>wht ggplot(TEDS_2016_clean, aes(x = Edu, y = votetsai)) +   geom_jitter(height = 0.05, alpha = 0.3, color = "steelblue") +   geom_smooth(method = "glm",               method.args = list(family = binomial),               se = TRUE,               color = "red") +   labs(title = "Logistic Regression: Vote Choice (Tsai) by Education",        x = "Education", y = "Probability of Voting for Tsai") +   theme_minimal(base_size = 16)}</code></p>
-<p><code>wht ggplot(TEDS_2016_clean, aes(x = income, y = votetsai)) +   geom_jitter(height = 0.05, alpha = 0.3, color = "steelblue") +   geom_smooth(method = "glm",               method.args = list(family = binomial),               se = TRUE,               color = "red") +   labs(title = "Logistic Regression: Vote Choice (Tsai) by Income",        x = "Income", y = "Probability of Voting for Tsai") +   theme_minimal(base_size = 16)}</code></p>
+<p><code>eay TEDS_2016_clean &lt;- TEDS_2016 %&gt;%   dplyr::select(votetsai, Age, Edu, income) %&gt;%   drop_na()  ggplot(TEDS_2016_clean, aes(x = Age, y = votetsai)) +   geom_jitter(height = 0.05, alpha = 0.3, color = "steelblue") +   geom_smooth(method = "glm",               method.args = list(family = binomial),               se = TRUE,               color = "red") +   labs(title = "Logistic Regression: Vote Choice (Tsai) by Age",        x = "Age", y = "Probability of Voting for Tsai") +   theme_minimal(base_size = 16)}</code></p>
+<p><code>eay ggplot(TEDS_2016_clean, aes(x = Edu, y = votetsai)) +   geom_jitter(height = 0.05, alpha = 0.3, color = "steelblue") +   geom_smooth(method = "glm",               method.args = list(family = binomial),               se = TRUE,               color = "red") +   labs(title = "Logistic Regression: Vote Choice (Tsai) by Education",        x = "Education", y = "Probability of Voting for Tsai") +   theme_minimal(base_size = 16)}</code></p>
+<p><code>eay ggplot(TEDS_2016_clean, aes(x = income, y = votetsai)) +   geom_jitter(height = 0.05, alpha = 0.3, color = "steelblue") +   geom_smooth(method = "glm",               method.args = list(family = binomial),               se = TRUE,               color = "red") +   labs(title = "Logistic Regression: Vote Choice (Tsai) by Income",        x = "Income", y = "Probability of Voting for Tsai") +   theme_minimal(base_size = 16)}</code></p>
 
 
 </section>

@@ -23,20 +23,31 @@ website:
         menu:
           - text: "Coursework"
             href: assignments.html
-          - text: "---" # Visual separator
+            
+          - text: "— Assignments —"
+            href: assignments.html
+            
           - text: "Assignment 01"
             href: assignment01.html
+            
           - text: "Assignment 02"
             href: assignment02.html
+            
           - text: "Assignment 03"
             href: assignment03.html
+            
           - text: "Assignment 04"
             href: assignment04.html
-          - text: "---" # Visual separator for Labs
+            
+          - text: "— Labs —"
+            href: assignments.html
+            
           - text: "Lab 01: R Programming Basics I"
             href: Lab01.html
+            
           - text: "Lab 02: R Programming Basics II"
             href: Lab02.html
+            
           - text: "Lab ML01: Simple and Multiple Linear Regression"
             href: Lab_ML01.html
         
