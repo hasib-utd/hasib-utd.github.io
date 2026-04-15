@@ -179,35 +179,35 @@
     "href": "assignment03.html",
     "title": "Assignment 03: ML Exercise",
     "section": "",
-    "text": "vyy TEDS_2016 &lt;- read_stata(\"https://github.com/datageneration/home/blob/master/DataProgramming/data/TEDS_2016.dta?raw=true\")}"
+    "text": "rrr TEDS_2016 &lt;- read_stata(\"https://github.com/datageneration/home/blob/master/DataProgramming/data/TEDS_2016.dta?raw=true\")}"
   },
   {
     "objectID": "assignment03.html#setup-packages-and-data",
     "href": "assignment03.html#setup-packages-and-data",
     "title": "Assignment 03: ML Exercise",
     "section": "",
-    "text": "vyy TEDS_2016 &lt;- read_stata(\"https://github.com/datageneration/home/blob/master/DataProgramming/data/TEDS_2016.dta?raw=true\")}"
+    "text": "rrr TEDS_2016 &lt;- read_stata(\"https://github.com/datageneration/home/blob/master/DataProgramming/data/TEDS_2016.dta?raw=true\")}"
   },
   {
     "objectID": "assignment03.html#multiple-regression-model",
     "href": "assignment03.html#multiple-regression-model",
     "title": "Assignment 03: ML Exercise",
     "section": "1. Multiple Regression Model",
-    "text": "1. Multiple Regression Model\nI am using votetsai as the dependent variable and Age, Education, and Income as predictors.\nvyy model &lt;- lm(votetsai ~ Age + Edu + income, data = TEDS_2016) summary(model)}"
+    "text": "1. Multiple Regression Model\nI am using votetsai as the dependent variable and Age, Education, and Income as predictors.\nrrr model &lt;- lm(votetsai ~ Age + Edu + income, data = TEDS_2016) summary(model)}"
   },
   {
     "objectID": "assignment03.html#the-regplot-function",
     "href": "assignment03.html#the-regplot-function",
     "title": "Assignment 03: ML Exercise",
     "section": "2. The regplot Function",
-    "text": "2. The regplot Function\nNow I am creating a function that combines lm(), plot(), and abline() to plot a regression fit line.\nvyy regplot &lt;- function(x, y) {   fit &lt;- lm(y ~ x)   plot(x, y)   abline(fit, col = \"red\") }"
+    "text": "2. The regplot Function\nNow I am creating a function that combines lm(), plot(), and abline() to plot a regression fit line.\nrrr regplot &lt;- function(x, y) {   fit &lt;- lm(y ~ x)   plot(x, y)   abline(fit, col = \"red\") }"
   },
   {
     "objectID": "assignment03.html#running-regplot-on-the-dependent-variable",
     "href": "assignment03.html#running-regplot-on-the-dependent-variable",
     "title": "Assignment 03: ML Exercise",
     "section": "3. Running regplot on the Dependent Variable",
-    "text": "3. Running regplot on the Dependent Variable\n\na. Vote Choice by Age\nvyy regplot(TEDS_2016$Age, TEDS_2016$votetsai) title(main = \"Vote Choice (Tsai) by Age\", xlab = \"Age\", ylab = \"Vote (0 = Other, 1 = Tsai)\")}\n\n\nb. Vote Choice by Education\nvyy regplot(TEDS_2016$Edu, TEDS_2016$votetsai) title(main = \"Vote Choice (Tsai) by Education\", xlab = \"Education\", ylab = \"Vote (0 = Other, 1 = Tsai)\")}\n\n\nc. Vote Choice by Income\nvyy regplot(TEDS_2016$income, TEDS_2016$votetsai) title(main = \"Vote Choice (Tsai) by Income\", xlab = \"Income\", ylab = \"Vote (0 = Other, 1 = Tsai)\")}"
+    "text": "3. Running regplot on the Dependent Variable\n\na. Vote Choice by Age\nrrr regplot(TEDS_2016$Age, TEDS_2016$votetsai) title(main = \"Vote Choice (Tsai) by Age\", xlab = \"Age\", ylab = \"Vote (0 = Other, 1 = Tsai)\")}\n\n\nb. Vote Choice by Education\nrrr regplot(TEDS_2016$Edu, TEDS_2016$votetsai) title(main = \"Vote Choice (Tsai) by Education\", xlab = \"Education\", ylab = \"Vote (0 = Other, 1 = Tsai)\")}\n\n\nc. Vote Choice by Income\nrrr regplot(TEDS_2016$income, TEDS_2016$votetsai) title(main = \"Vote Choice (Tsai) by Income\", xlab = \"Income\", ylab = \"Vote (0 = Other, 1 = Tsai)\")}"
   },
   {
     "objectID": "assignment03.html#what-is-the-problem-why",
@@ -221,7 +221,7 @@
     "href": "assignment03.html#what-can-be-done-to-improve-prediction",
     "title": "Assignment 03: ML Exercise",
     "section": "5. What Can Be Done to Improve Prediction?",
-    "text": "5. What Can Be Done to Improve Prediction?\nSince the dependent variable is binary, logistic regression is the appropriate model. It models the log-odds of the outcome and constrains predictions between 0 and 1.\nvyy logit_model &lt;- glm(votetsai ~ Age + Edu + income,                    data = TEDS_2016,                    family = binomial) summary(logit_model)}\nWe can visualize the logistic fit for Age:\nvyy TEDS_2016_clean &lt;- TEDS_2016 %&gt;%   dplyr::select(votetsai, Age, Edu, income) %&gt;%   drop_na()  ggplot(TEDS_2016_clean, aes(x = Age, y = votetsai)) +   geom_jitter(height = 0.05, alpha = 0.3, color = \"steelblue\") +   geom_smooth(method = \"glm\",               method.args = list(family = binomial),               se = TRUE,               color = \"red\") +   labs(title = \"Logistic Regression: Vote Choice (Tsai) by Age\",        x = \"Age\", y = \"Probability of Voting for Tsai\") +   theme_minimal(base_size = 16)}\nvyy ggplot(TEDS_2016_clean, aes(x = Edu, y = votetsai)) +   geom_jitter(height = 0.05, alpha = 0.3, color = \"steelblue\") +   geom_smooth(method = \"glm\",               method.args = list(family = binomial),               se = TRUE,               color = \"red\") +   labs(title = \"Logistic Regression: Vote Choice (Tsai) by Education\",        x = \"Education\", y = \"Probability of Voting for Tsai\") +   theme_minimal(base_size = 16)}\nvyy ggplot(TEDS_2016_clean, aes(x = income, y = votetsai)) +   geom_jitter(height = 0.05, alpha = 0.3, color = \"steelblue\") +   geom_smooth(method = \"glm\",               method.args = list(family = binomial),               se = TRUE,               color = \"red\") +   labs(title = \"Logistic Regression: Vote Choice (Tsai) by Income\",        x = \"Income\", y = \"Probability of Voting for Tsai\") +   theme_minimal(base_size = 16)}"
+    "text": "5. What Can Be Done to Improve Prediction?\nSince the dependent variable is binary, logistic regression is the appropriate model. It models the log-odds of the outcome and constrains predictions between 0 and 1.\nrrr logit_model &lt;- glm(votetsai ~ Age + Edu + income,                    data = TEDS_2016,                    family = binomial) summary(logit_model)}\nWe can visualize the logistic fit for Age:\nrrr TEDS_2016_clean &lt;- TEDS_2016 %&gt;%   dplyr::select(votetsai, Age, Edu, income) %&gt;%   drop_na()  ggplot(TEDS_2016_clean, aes(x = Age, y = votetsai)) +   geom_jitter(height = 0.05, alpha = 0.3, color = \"steelblue\") +   geom_smooth(method = \"glm\",               method.args = list(family = binomial),               se = TRUE,               color = \"red\") +   labs(title = \"Logistic Regression: Vote Choice (Tsai) by Age\",        x = \"Age\", y = \"Probability of Voting for Tsai\") +   theme_minimal(base_size = 16)}\nrrr ggplot(TEDS_2016_clean, aes(x = Edu, y = votetsai)) +   geom_jitter(height = 0.05, alpha = 0.3, color = \"steelblue\") +   geom_smooth(method = \"glm\",               method.args = list(family = binomial),               se = TRUE,               color = \"red\") +   labs(title = \"Logistic Regression: Vote Choice (Tsai) by Education\",        x = \"Education\", y = \"Probability of Voting for Tsai\") +   theme_minimal(base_size = 16)}\nrrr ggplot(TEDS_2016_clean, aes(x = income, y = votetsai)) +   geom_jitter(height = 0.05, alpha = 0.3, color = \"steelblue\") +   geom_smooth(method = \"glm\",               method.args = list(family = binomial),               se = TRUE,               color = \"red\") +   labs(title = \"Logistic Regression: Vote Choice (Tsai) by Income\",        x = \"Income\", y = \"Probability of Voting for Tsai\") +   theme_minimal(base_size = 16)}"
   },
   {
     "objectID": "assignment01.html",
