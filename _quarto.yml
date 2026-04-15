@@ -45,6 +45,9 @@ website:
           - text: "Reflection 01"
             href: reflection01.html
             
+          - text: "Reflection 02"
+            href: reflection02.html
+            
           - text: "— Labs —"
             href: assignments.html
             

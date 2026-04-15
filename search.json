@@ -326,7 +326,7 @@
     "href": "assignments.html#reflctions",
     "title": "EPPS 6323 Assignments",
     "section": "Reflctions",
-    "text": "Reflctions\n\nReflction 01: : AI, Originality, AGI, and Scientific Research"
+    "text": "Reflctions\n\nReflction 01: : AI, Originality, AGI, and Scientific Research\nReflction 02: : Using AI in Research Projects"
   },
   {
     "objectID": "assignments.html#labs",
@@ -464,7 +464,7 @@
   {
     "objectID": "reflection02.html",
     "href": "reflection02.html",
-    "title": "Reflection 02",
+    "title": "Using AI in Research Projects",
     "section": "",
     "text": "Using AI for My Project\nMy research focuses on the adoption of artificial intelligence in public services. At this stage, my primary challenge is refining research questions and navigating a large interdisciplinary literature. I plan to start using AI as a cognitive support tool to organize ideas and explore alternative analytical strategies rather than as a replacement for original thinking.\nAI Model 1: ChatGPT\nI plan to use ChatGPT to translate theoretical concepts into analytical steps, assist with R code development, and clarify methodological tradeoffs. This model is particularly useful for iterative questioning and debugging. However, I will independently verify outputs to avoid over‑reliance.\nAI Model 2: Claude\nI will use this model primarily for literature discovery and summarization, especially in unfamiliar domains. Its ability to point to sources helps me maintain transparency and research integrity."
   },
