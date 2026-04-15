@@ -1,0 +1,60 @@
+---
+title: "Assignment 03: Regression Analysis (TEDS2016)"
+format: html
+---
+
+## EPPS 6323 – Knowledge Mining
+
+This exercise explores the application of multiple regression models using the Taiwan Election and Democratization Study (TEDS2016). Following the instructions in ISLR Chapter 3, we evaluate the correlation between socioeconomic variables (Age, Education, Income) and a categorical dependent variable to identify the limitations of Ordinary Least Squares (OLS) when applied to non-continuous data.
+
+## 1. Review of Methodology
+
+The following resources and methods were reviewed to conduct this analysis:
+
+-   *An Introduction to Statistical Learning (ISLR)*, Chapter 3
+
+-   Lab ML01.R (Multiple Linear Regression)
+
+-   Principles of Reproducible Research (Gentleman, 2005)
+
+## 2. Load the TEDS2016 Dataset
+
+The dataset was loaded directly from GitHub using the **haven** package for Stata compatibility.
+
+```         
+#| message: false #| warning: false library(haven) library(tidyverse)  TEDS_2016 <- read_stata(   "[https://github.com/datageneration/home/blob/master/DataProgramming/data/TEDS_2016.dta?raw=true](https://github.com/datageneration/home/blob/master/DataProgramming/data/TEDS_2016.dta?raw=true)" )  head(TEDS_2016) 
+```
+
+Several data characteristics were noted during ingestion:
+
+-   The dependent variable `votetsai` is categorical.
+
+-   Socioeconomic predictors (Age, Education, Income) require numeric handling.
+
+-   The dataset includes 1,690 observations and 169 variables.
+
+## 3. Regression Analysis (regplot)
+
+We define a custom function `regplot` to combine linear modeling, scatter plotting, and the addition of a regression line into a single command.
+
+```         
+# Define the function regplot <- function(x, y, title = "Regression Fit") {   fit <- lm(y ~ x)   plot(x, y, main = title, xlab = "Independent Variable", ylab = "Vote Choice (DV)")   abline(fit, col = "red", lwd = 2) }  # Run regplot for specific variables par(mfrow = c(3, 1))  # a. Age regplot(TEDS_2016$age, TEDS_2016$votetsai, "Age vs. Voter Choice")  # b. Education regplot(TEDS_2016$edu, TEDS_2016$votetsai, "Education vs. Voter Choice")  # c. Income regplot(TEDS_2016$income, TEDS_2016$votetsai, "Income vs. Voter Choice")
+```
+
+## 4. Analytical Questions
+
+**Q6. What is the problem? Why?**
+
+The primary problem is that the Dependent Variable (DV), `votetsai`, is **categorical** (binary). As hinted in the assignment, there are only a few categories (0 or 1). Linear regression assumes a continuous DV; when applied to categorical data, the "best fit" line fails to capture the probability of categories and results in residuals that violate the assumption of normality and homoscedasticity.
+
+**Q7. What can be done to improve prediction of the dependent variable?**
+
+To improve prediction for a categorical outcome, we should utilize **Logistic Regression** (GLM with a binomial family) or advanced machine learning techniques such as **Gradient Boosting Models (GBM)**. These models are designed to handle non-linear relationships and binary classification tasks more effectively than Ordinary Least Squares (OLS).
+
+## 5. Peer-Reviewed References
+
+-   **Abbott, D. (2008).** *What is Digital Curation?* Digital Curation Centre.
+
+-   **Gentleman, R. (2005).** Reproducible Research: A Case Study. *Statistical Applications in Genetics and Molecular Biology*.
+
+-   **Wickham, H., & Grolemund, G. (2016).** *R for Data Science*. O'Reilly Media.
