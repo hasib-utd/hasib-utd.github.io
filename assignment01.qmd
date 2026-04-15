@@ -1,74 +1,288 @@
 ---
-title: "Assignment 01: Brush up R and Quarto"
+title: "Assignment 01: Brush Up R and Quarto"
+author: "Muhammad Al Hasib"
 format: html
+editor: visual
+execute:
+  echo: true
+  warning: false
+  message: false
 ---
 
-## EPPS 6323 – Knowledge Mining  
-**Assignment 01**
-
-This assignment reviews basic R programming and performs exploratory data analysis (EDA) using the **TEDS2016 dataset**.
-
----
-
-## 1. Review of R Programming
-
-The following resources were reviewed:
-
-- Introduction to R (University of Southern California)
-- EPPS Math and Coding Camp materials
-- Chapters 3–7 of *R for Data Science (R4DS)*
-
----
-
-## 2. Lab Exercises
-
-The following lab exercises were completed and published on this website.
-
-- [Lab 01: R Programming Basics I](Lab01.html)
-- [Lab 02: R Programming Basics II](Lab02.html)
-
----
-
-## 3. Load the TEDS2016 Dataset
-
-The dataset was loaded directly from GitHub using the **haven** package.
+## Setup: Packages and Data
 
 ```{r}
 library(haven)
+library(tidyverse)
+```
 
-TEDS_2016 <- haven::read_dta(
-"https://github.com/datageneration/home/blob/master/DataProgramming/data/TEDS_2016.dta?raw=true"
-)
+```{r}
+TEDS_2016 <- haven::read_dta("https://github.com/datageneration/home/blob/master/DataProgramming/data/TEDS_2016.dta?raw=true")
+```
 
-head(TEDS_2016)
+------------------------------------------------------------------------
 
-Several issues were encountered when working with the dataset:
+## Exploratory Data Analysis
 
-Missing values in multiple variables.
+### Data Overview
 
-Some variables are stored as labelled values.
+```{r}
+dim(TEDS_2016)
+names(TEDS_2016)
+glimpse(TEDS_2016)
+```
 
-Need to convert variables to numeric or factor types before analysis.
+```{r}
+summary(TEDS_2016)
+```
 
-Understanding variable meanings required consulting documentation.
+------------------------------------------------------------------------
 
-These issues required cleaning and transforming the dataset before analysis.
+## Q4. What Problems Do You Encounter When Working with the Dataset?
 
----
-  
-## 3. Handling Missing Values
+Several issues arise when working with the TEDS 2016 dataset:
 
-TEDS_clean <- na.omit(TEDS_2016)
+-   **Missing values:** Several variables contain a large number of `NA` values, particularly vote-related variables such as `votetsai`, `votekmt`, and income-related variables.
+-   **Labelled variables:** The dataset is imported from Stata (`.dta`), so many variables come in as `labelled` class rather than standard R factor or numeric types, requiring conversion before analysis.
+-   **Categorical variables stored as numeric:** Variables like `Tondu`, `Party`, `Sex`, and `Edu` are coded as integers but represent categorical categories, which can lead to incorrect analysis if treated as continuous.
+-   **Skewed distributions:** Some variables such as `income` and `age` may have skewed distributions that need to be examined before modeling.
 
-TEDS_2016$Tondu <- as.numeric(TEDS_2016$Tondu)
+```{r}
+# Check missing values across all variables
+TEDS_2016 %>%
+  summarise(across(everything(), ~sum(is.na(.)))) %>%
+  pivot_longer(everything(),
+               names_to = "variable",
+               values_to = "n_missing") %>%
+  filter(n_missing > 0) %>%
+  arrange(desc(n_missing))
+```
 
-table(TEDS_2016$Tondu)
+```{r}
+# Visualize missing values
+TEDS_2016 %>%
+  summarise(across(everything(), ~sum(is.na(.)))) %>%
+  pivot_longer(everything(),
+               names_to = "variable",
+               values_to = "n_missing") %>%
+  filter(n_missing > 0) %>%
+  ggplot(aes(x = reorder(variable, n_missing), y = n_missing)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  labs(title = "Missing Values by Variable",
+       x = NULL, y = "Count of Missing Values") +
+  theme_minimal(base_size = 16)
+```
 
-table(TEDS_2016$Tondu)
+------------------------------------------------------------------------
 
-barplot(
-table(TEDS_2016$Tondu),
-main = "Distribution of Tondu",
-xlab = "Tondu Categories",
-ylab = "Frequency"
-)
+## Q5. How to Deal with Missing Values?
+
+There are several strategies for handling missing values depending on context:
+
+-   **Listwise deletion (`drop_na()`):** Remove all rows with any missing values. Simple but can reduce sample size significantly.
+-   **Variable-wise filtering:** Remove only rows where the specific variable of interest is missing, preserving more data for other analyses.
+-   **Imputation:** Replace missing values with the mean, median, or mode for numeric variables, or use multiple imputation for more rigorous analysis.
+-   **Flagging:** Create a binary indicator variable to flag whether a value was missing, which can itself be informative in modeling.
+
+For this analysis, listwise deletion is used for modeling tasks, while missing values are retained for descriptive summaries.
+
+```{r}
+# Example: drop rows missing votetsai and key predictors
+teds_clean <- TEDS_2016 %>%
+  dplyr::select(votetsai, Tondu, female, DPP, age, income, edu, Taiwanese, Econ_worse) %>%
+  drop_na()
+
+cat("Rows after dropping missing values:", nrow(teds_clean), "\n")
+cat("Rows removed:", nrow(TEDS_2016) - nrow(teds_clean), "\n")
+```
+
+------------------------------------------------------------------------
+
+## Q6. Exploring the Relationship Between Tondu and Other Variables
+
+To explore the relationship between `Tondu` (unification-independence preference) and other variables, the following methods are appropriate:
+
+-   **Cross-tabulation / frequency tables** for categorical variables (e.g., Tondu vs. female, DPP)
+-   **Boxplots or violin plots** for continuous variables (e.g., Tondu vs. age, income, edu)
+-   **Correlation analysis** for numeric relationships
+-   **ANOVA or chi-square tests** for inferential comparisons
+
+```{r}
+# Convert Tondu to factor with labels
+TEDS_2016$Tondu <- factor(TEDS_2016$Tondu,
+  levels = 1:7,
+  labels = c("Unification now", "Status quo, unif. in future",
+             "Status quo, decide later", "Status quo forever",
+             "Status quo, indep. in future", "Independence now",
+             "No response"))
+```
+
+### Tondu vs. Gender (female)
+
+```{r}
+TEDS_2016 %>%
+  filter(!is.na(Tondu), !is.na(female)) %>%
+  mutate(female = factor(female, levels = c(0, 1), labels = c("Male", "Female"))) %>%
+  ggplot(aes(x = Tondu, fill = female)) +
+  geom_bar(position = "fill") +
+  coord_flip() +
+  scale_fill_manual(values = c("Male" = "#2980b9", "Female" = "#e74c3c")) +
+  labs(title = "Tondu by Gender",
+       x = "Tondu", y = "Proportion", fill = "Gender") +
+  theme_minimal(base_size = 14)
+```
+
+### Tondu vs. DPP Support
+
+```{r}
+TEDS_2016 %>%
+  filter(!is.na(Tondu), !is.na(DPP)) %>%
+  mutate(DPP = factor(DPP, levels = c(0, 1), labels = c("Non-DPP", "DPP"))) %>%
+  ggplot(aes(x = Tondu, fill = DPP)) +
+  geom_bar(position = "fill") +
+  coord_flip() +
+  scale_fill_manual(values = c("Non-DPP" = "#2980b9", "DPP" = "#27ae60")) +
+  labs(title = "Tondu by DPP Support",
+       x = "Tondu", y = "Proportion", fill = "DPP") +
+  theme_minimal(base_size = 14)
+```
+
+### Tondu vs. Age
+
+```{r}
+TEDS_2016 %>%
+  filter(!is.na(Tondu), !is.na(age)) %>%
+  ggplot(aes(x = Tondu, y = age, fill = Tondu)) +
+  geom_boxplot() +
+  coord_flip() +
+  labs(title = "Age Distribution by Tondu",
+       x = "Tondu", y = "Age") +
+  theme_minimal(base_size = 14) +
+  theme(legend.position = "none")
+```
+
+### Tondu vs. Education
+
+```{r}
+TEDS_2016 %>%
+  filter(!is.na(Tondu), !is.na(edu)) %>%
+  ggplot(aes(x = Tondu, y = as.numeric(edu), fill = Tondu)) +
+  geom_boxplot() +
+  coord_flip() +
+  labs(title = "Education Level by Tondu",
+       x = "Tondu", y = "Education") +
+  theme_minimal(base_size = 14) +
+  theme(legend.position = "none")
+```
+
+### Tondu vs. Income
+
+```{r}
+TEDS_2016 %>%
+  filter(!is.na(Tondu), !is.na(income)) %>%
+  ggplot(aes(x = Tondu, y = as.numeric(income), fill = Tondu)) +
+  geom_boxplot() +
+  coord_flip() +
+  labs(title = "Income Level by Tondu",
+       x = "Tondu", y = "Income") +
+  theme_minimal(base_size = 14) +
+  theme(legend.position = "none")
+```
+
+### Tondu vs. Taiwanese Identity
+
+```{r}
+TEDS_2016 %>%
+  filter(!is.na(Tondu), !is.na(Taiwanese)) %>%
+  mutate(Taiwanese = factor(Taiwanese, levels = c(0, 1),
+                            labels = c("Non-Taiwanese", "Taiwanese"))) %>%
+  ggplot(aes(x = Tondu, fill = Taiwanese)) +
+  geom_bar(position = "fill") +
+  coord_flip() +
+  scale_fill_manual(values = c("Non-Taiwanese" = "#e74c3c", "Taiwanese" = "#27ae60")) +
+  labs(title = "Tondu by Taiwanese Identity",
+       x = "Tondu", y = "Proportion", fill = "Identity") +
+  theme_minimal(base_size = 14)
+```
+
+### Tondu vs. Economic Pessimism (Econ_worse)
+
+```{r}
+TEDS_2016 %>%
+  filter(!is.na(Tondu), !is.na(Econ_worse)) %>%
+  mutate(Econ_worse = factor(Econ_worse, levels = c(0, 1),
+                             labels = c("Not worse", "Economy worse"))) %>%
+  ggplot(aes(x = Tondu, fill = Econ_worse)) +
+  geom_bar(position = "fill") +
+  coord_flip() +
+  scale_fill_manual(values = c("Not worse" = "#2980b9", "Economy worse" = "#e74c3c")) +
+  labs(title = "Tondu by Economic Pessimism",
+       x = "Tondu", y = "Proportion", fill = "Economy") +
+  theme_minimal(base_size = 14)
+```
+
+------------------------------------------------------------------------
+
+## Q7. The votetsai Variable
+
+The `votetsai` variable captures whether a respondent voted for DPP candidate Tsai Ing-wen (1 = Yes, 0 = No). It is a binary outcome variable, making it suitable for logistic regression rather than linear regression.
+
+```{r}
+# Distribution of votetsai
+TEDS_2016 %>%
+  filter(!is.na(votetsai)) %>%
+  mutate(votetsai = factor(votetsai, levels = c(0, 1),
+                           labels = c("Other", "Tsai"))) %>%
+  ggplot(aes(x = votetsai, fill = votetsai)) +
+  geom_bar() +
+  scale_fill_manual(values = c("Other" = "#2980b9", "Tsai" = "#27ae60")) +
+  labs(title = "Vote Choice Distribution: Tsai Ing-wen vs. Other",
+       x = "Vote Choice", y = "Count") +
+  theme_minimal(base_size = 16) +
+  theme(legend.position = "none")
+```
+
+```{r}
+# votetsai by Tondu
+TEDS_2016 %>%
+  filter(!is.na(votetsai), !is.na(Tondu)) %>%
+  mutate(votetsai = factor(votetsai, levels = c(0, 1),
+                           labels = c("Other", "Tsai"))) %>%
+  ggplot(aes(x = Tondu, fill = votetsai)) +
+  geom_bar(position = "fill") +
+  coord_flip() +
+  scale_fill_manual(values = c("Other" = "#2980b9", "Tsai" = "#27ae60")) +
+  labs(title = "Vote for Tsai by Tondu Preference",
+       x = "Tondu", y = "Proportion", fill = "Vote") +
+  theme_minimal(base_size = 14)
+```
+
+------------------------------------------------------------------------
+
+## Q8. Frequency Table and Barchart of Tondu
+
+```{r}
+# Frequency table
+tondu_freq <- TEDS_2016 %>%
+  filter(!is.na(Tondu)) %>%
+  count(Tondu) %>%
+  mutate(Proportion = round(n / sum(n) * 100, 1))
+
+knitr::kable(tondu_freq,
+             caption = "Frequency Table: Tondu Variable",
+             col.names = c("Category", "Count", "Percentage (%)"))
+```
+
+```{r}
+# Barchart of Tondu
+TEDS_2016 %>%
+  filter(!is.na(Tondu)) %>%
+  ggplot(aes(x = fct_infreq(Tondu), fill = Tondu)) +
+  geom_bar() +
+  coord_flip() +
+  labs(title = "Barchart: Tondu (Unification-Independence Preference)",
+       x = "Tondu Category", y = "Count") +
+  theme_minimal(base_size = 14) +
+  theme(legend.position = "none")
+```

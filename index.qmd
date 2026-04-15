@@ -2,7 +2,7 @@
 title: "Muhammad Al Hasib"
 about:
   template: trestles
-  image: images/IMG_6763.PNG
+  image: images/IMAGE01.PNG
   links:
     - icon: linkedin
       text: LinkedIn
@@ -15,22 +15,23 @@ about:
       href: https://www.alhasib.net/
 ---
 ## Intro
-Hello! I am **Hasib**, a PhD student in Public Affairs at The University of Texas at Dallas. My work sits at the intersection of technology and governance, specifically focusing on how AI impacts public service delivery.
+Hello! Welcome to my research portfolio! 
+I am a PhD student in Public Affairs at The University of Texas at Dallas. As a behavioral public administration Scholar, my work sits at the intersection of human behavior, societal change, organizational resilience, and governance challenges.
 
 This website showcases my coursework, research, and data analysis projects.
 
 ## Education
-* **PhD in Public and Nonprofit Management** |
-The University of Texas at Dallas (In Progress)
-* **MS in Social Data Analytics and Research** |
-The University of Texas at Dallas (2025)
-* **MSS in Public Administration** |
-University of Barishal (2019)
-* **BSS in Public Administration** |
-University of Barishal (2018)
+* PhD in Public Affairs |
+School of Economic, Political, and Policy Sciences | The University of Texas at Dallas (In Progress)
+* MSc in Social Data Analytics and Research |
+School of Economic, Political, and Policy Sciences | The University of Texas at Dallas (In Progress)
+* MSS in Public Administration |
+Faculty of Social Sciences | University of Barishal, Bangladesh (2019)
+* BSS in Public Administration |
+Faculty of Social Sciences | University of Barishal, Bangladesh (2018)
 
 ## Research Interests
 * Behavioral Public Administration
-* AI in Public Service
-* Public Trust in Institutions
-* Healthcare and Police Administration
+* Technology and Public Management
+* Public Trust in Government Institutions
+* Education, Healthcare and Police Administration
