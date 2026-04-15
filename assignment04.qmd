@@ -2,6 +2,7 @@
 title: "Assignment 04: Text Analytics using quanteda"
 author: "Muhammad Al Hasib"
 format: html
+editor: visual
 execute:
   echo: true
   warning: false
@@ -10,7 +11,14 @@ execute:
 
 ## Setup: Packages
 
-```{r} library(quanteda) library(quanteda.textstats) library(quanteda.textplots) library(quanteda.textmodels) library(tidyverse) library(pdftools) library(ggplot2)}
+```{r}
+library(quanteda)
+library(quanteda.textstats)
+library(quanteda.textplots)
+library(quanteda.textmodels)
+library(tidyverse)
+library(pdftools)
+library(ggplot2)
 ```
 
 ------------------------------------------------------------------------
@@ -19,37 +27,92 @@ execute:
 
 ### Build Corpus
 
-```{r} corp_inaug <- corpus(data_corpus_inaugural) summary(corp_inaug, 10)}
+```{r}
+corp_inaug <- corpus(data_corpus_inaugural)
+summary(corp_inaug, 10)
 ```
 
 ### Similarities and Differences Over Time
 
-```{r} # Tokenize and create DFM toks_inaug <- tokens(corp_inaug,                      remove_punct = TRUE,                      remove_numbers = TRUE,                      remove_symbols = TRUE) %>%   tokens_remove(stopwords("en")) %>%   tokens_wordstem()  dfm_inaug <- dfm(toks_inaug) dfm_inaug}
+```{r}
+# Tokenize and create DFM
+toks_inaug <- tokens(corp_inaug,
+                     remove_punct = TRUE,
+                     remove_numbers = TRUE,
+                     remove_symbols = TRUE) %>%
+  tokens_remove(stopwords("en")) %>%
+  tokens_wordstem()
+
+dfm_inaug <- dfm(toks_inaug)
+dfm_inaug
 ```
 
 ### Top Features
 
-```{r} # Top 20 most frequent words overall topfeatures(dfm_inaug, 20)}
+```{r}
+# Top 20 most frequent words overall
+topfeatures(dfm_inaug, 20)
 ```
 
 ### Wordcloud of Inaugural Speeches
 
-```{r} set.seed(6323) textplot_wordcloud(dfm_inaug,                    max_words = 100,                    color = c("#2980b9", "#27ae60", "#e74c3c"))}
+```{r}
+set.seed(6323)
+textplot_wordcloud(dfm_inaug,
+                   max_words = 100,
+                   color = c("#2980b9", "#27ae60", "#e74c3c"))
 ```
 
 ### Word Frequency Over Time
 
-```{r} # Track key words over time words_time <- dfm_inaug %>%   dfm_select(pattern = c("freedom", "nation", "war", "peace", "econom*", "terror*")) %>%   convert(to = "data.frame") %>%   bind_cols(docvars(dfm_inaug)) %>%   pivot_longer(cols = c("freedom", "nation", "war", "peace", "econom", "terror"),                names_to = "word", values_to = "count") %>%   group_by(Year, word) %>%   summarise(count = sum(count), .groups = "drop")  ggplot(words_time, aes(x = Year, y = count, color = word)) +   geom_line(size = 1) +   geom_point(size = 2) +   labs(title = "Key Word Frequencies in Inaugural Speeches Over Time",        x = "Year", y = "Word Count", color = "Word") +   theme_minimal(base_size = 14)}
+```{r}
+# Track key words over time
+words_time <- dfm_inaug %>%
+  dfm_select(pattern = c("freedom", "nation", "war", "peace", "econom*", "terror*")) %>%
+  convert(to = "data.frame") %>%
+  bind_cols(docvars(dfm_inaug)) %>%
+  pivot_longer(cols = c("freedom", "nation", "war", "peace", "econom", "terror"),
+               names_to = "word", values_to = "count") %>%
+  group_by(Year, word) %>%
+  summarise(count = sum(count), .groups = "drop")
+
+ggplot(words_time, aes(x = Year, y = count, color = word)) +
+  geom_line(size = 1) +
+  geom_point(size = 2) +
+  labs(title = "Key Word Frequencies in Inaugural Speeches Over Time",
+       x = "Year", y = "Word Count", color = "Word") +
+  theme_minimal(base_size = 14)
 ```
 
 ### Keyness: Recent vs. Early Presidents
 
-```{r} # Compare post-2000 vs pre-2000 speeches dfm_inaug_grouped <- dfm_inaug %>%   dfm_group(groups = ifelse(docvars(dfm_inaug, "Year") >= 2000,                             "Post-2000", "Pre-2000"))  keyness <- textstat_keyness(dfm_inaug_grouped, target = "Post-2000") textplot_keyness(keyness, n = 20) +   labs(title = "Keyness: Post-2000 vs Pre-2000 Inaugural Speeches")}
+```{r}
+# Compare post-2000 vs pre-2000 speeches
+dfm_inaug_grouped <- dfm_inaug %>%
+  dfm_group(groups = ifelse(docvars(dfm_inaug, "Year") >= 2000,
+                            "Post-2000", "Pre-2000"))
+
+keyness <- textstat_keyness(dfm_inaug_grouped, target = "Post-2000")
+textplot_keyness(keyness, n = 20) +
+  labs(title = "Keyness: Post-2000 vs Pre-2000 Inaugural Speeches")
 ```
 
 ### Document Similarity Among Presidents
 
-```{r} # Cosine similarity between speeches dfm_inaug_tfidf <- dfm_tfidf(dfm_inaug) sim_matrix <- textstat_simil(dfm_inaug_tfidf, method = "cosine")  # Show most similar speech pairs sim_df <- as.data.frame(as.matrix(sim_matrix)) %>%   rownames_to_column("doc1") %>%   pivot_longer(-doc1, names_to = "doc2", values_to = "similarity") %>%   filter(doc1 < doc2) %>%   arrange(desc(similarity)) %>%   head(10)  knitr::kable(sim_df, caption = "Top 10 Most Similar Inaugural Speech Pairs (Cosine Similarity)")}
+```{r}
+# Cosine similarity between speeches
+dfm_inaug_tfidf <- dfm_tfidf(dfm_inaug)
+sim_matrix <- textstat_simil(dfm_inaug_tfidf, method = "cosine")
+
+# Show most similar speech pairs
+sim_df <- as.data.frame(as.matrix(sim_matrix)) %>%
+  rownames_to_column("doc1") %>%
+  pivot_longer(-doc1, names_to = "doc2", values_to = "similarity") %>%
+  filter(doc1 < doc2) %>%
+  arrange(desc(similarity)) %>%
+  head(10)
+
+knitr::kable(sim_df, caption = "Top 10 Most Similar Inaugural Speech Pairs (Cosine Similarity)")
 ```
 
 ------------------------------------------------------------------------
@@ -58,27 +121,89 @@ execute:
 
 ### Load and Build Corpus from PDFs
 
-```{r} # Set path to USDOD folder dod_path <- "USDOD/"  # List all PDF files pdf_files <- list.files(dod_path, pattern = "\\.pdf$|\\.PDF$",                         full.names = TRUE, ignore.case = TRUE)  # Extract year from filenames years <- str_extract(basename(pdf_files), "^[0-9]{4}")  # Read PDF text dod_texts <- map_chr(pdf_files, function(f) {   tryCatch(     paste(pdf_text(f), collapse = " "),     error = function(e) ""   ) })  # Build corpus corp_dod <- corpus(dod_texts,                    docnames = paste0("DOD_", years),                    docvars = data.frame(year = as.integer(years)))  summary(corp_dod)}
+```{r}
+# Set path to USDOD folder
+dod_path <- "USDOD/USDOD/"
+
+# List all PDF files
+pdf_files <- list.files(dod_path, pattern = "\\.pdf$|\\.PDF$",
+                        full.names = TRUE, ignore.case = TRUE)
+
+# Extract year from filenames
+years <- str_extract(basename(pdf_files), "^[0-9]{4}")
+
+# Remove files where year could not be extracted
+valid <- !is.na(years)
+pdf_files <- pdf_files[valid]
+years <- years[valid]
+
+# Read PDF text
+dod_texts <- map_chr(pdf_files, function(f) {
+  tryCatch(
+    paste(pdf_text(f), collapse = " "),
+    error = function(e) ""
+  )
+})
+
+# Build corpus
+corp_dod <- corpus(dod_texts,
+                   docnames = paste0("DOD_", years),
+                   docvars = data.frame(year = as.integer(years)))
+
+summary(corp_dod)
 ```
 
 ### Tokenize and Build DFM
 
-```{r} toks_dod <- tokens(corp_dod,                    remove_punct = TRUE,                    remove_numbers = TRUE,                    remove_symbols = TRUE) %>%   tokens_remove(stopwords("en")) %>%   tokens_remove(c("also", "will", "may", "china", "chinese",                   "prc", "dod", "report", "military")) %>%   tokens_wordstem()  dfm_dod <- dfm(toks_dod) dfm_dod}
+```{r}
+toks_dod <- tokens(corp_dod,
+                   remove_punct = TRUE,
+                   remove_numbers = TRUE,
+                   remove_symbols = TRUE) %>%
+  tokens_remove(stopwords("en")) %>%
+  tokens_remove(c("also", "will", "may", "china", "chinese",
+                  "prc", "dod", "report", "military")) %>%
+  tokens_wordstem()
+
+dfm_dod <- dfm(toks_dod)
+dfm_dod
 ```
 
 ### Top Features in DOD Reports
 
-```{r} topfeatures(dfm_dod, 20)}
+```{r}
+topfeatures(dfm_dod, 20)
 ```
 
 ### Wordcloud of DOD Reports
 
-```{r} set.seed(6323) textplot_wordcloud(dfm_dod,                    max_words = 100,                    color = c("#2980b9", "#e74c3c", "#e67e22"))}
+```{r}
+set.seed(6323)
+textplot_wordcloud(dfm_dod,
+                   max_words = 100,
+                   color = c("#2980b9", "#e74c3c", "#e67e22"))
 ```
 
 ### Key Terms Over Time
 
-```{r} key_terms <- c("taiwan", "nuclear", "cyber", "space", "missil", "naval", "technolog")  term_trends <- dfm_dod %>%   dfm_select(pattern = key_terms) %>%   convert(to = "data.frame") %>%   bind_cols(docvars(dfm_dod)) %>%   pivot_longer(cols = all_of(key_terms),                names_to = "term", values_to = "count") %>%   group_by(year, term) %>%   summarise(count = sum(count), .groups = "drop")  ggplot(term_trends, aes(x = year, y = count, color = term)) +   geom_line(size = 1) +   geom_point(size = 2) +   labs(title = "Key Term Frequencies in DOD China Reports (1999–2025)",        x = "Year", y = "Word Count", color = "Term") +   theme_minimal(base_size = 14)}
+```{r}
+key_terms <- c("taiwan", "nuclear", "cyber", "space", "missil", "naval", "technolog")
+
+term_trends <- dfm_dod %>%
+  dfm_select(pattern = key_terms) %>%
+  convert(to = "data.frame") %>%
+  bind_cols(docvars(dfm_dod)) %>%
+  pivot_longer(cols = all_of(key_terms),
+               names_to = "term", values_to = "count") %>%
+  group_by(year, term) %>%
+  summarise(count = sum(count), .groups = "drop")
+
+ggplot(term_trends, aes(x = year, y = count, color = term)) +
+  geom_line(size = 1) +
+  geom_point(size = 2) +
+  labs(title = "Key Term Frequencies in DOD China Reports (1999–2025)",
+       x = "Year", y = "Word Count", color = "Term") +
+  theme_minimal(base_size = 14)
 ```
 
 ------------------------------------------------------------------------
@@ -98,17 +223,51 @@ In the context of DOD reports, Wordfish can reveal how the rhetorical framing of
 
 ### Run Wordfish on DOD Reports
 
-```{r} # Trim low-frequency terms for stability dfm_dod_trim <- dfm_trim(dfm_dod, min_termfreq = 5, min_docfreq = 2)  # Run Wordfish set.seed(6323) wf_model <- textmodel_wordfish(dfm_dod_trim) summary(wf_model)}
+```{r}
+# Trim low-frequency terms for stability
+dfm_dod_trim <- dfm_trim(dfm_dod, min_termfreq = 5, min_docfreq = 2)
+
+# Run Wordfish
+set.seed(6323)
+wf_model <- textmodel_wordfish(dfm_dod_trim)
+summary(wf_model)
 ```
 
 ### Visualize Document Positions (θ)
 
-```{r} # Extract document positions wf_positions <- data.frame(   document = docnames(dfm_dod_trim),   year = docvars(dfm_dod_trim, "year"),   theta = wf_model$theta,   se = wf_model$se.theta )  ggplot(wf_positions, aes(x = year, y = theta)) +   geom_point(size = 3, color = "#2980b9") +   geom_errorbar(aes(ymin = theta - 1.96 * se,                     ymax = theta + 1.96 * se),                 width = 0.5, color = "#2980b9", alpha = 0.6) +   geom_line(color = "#2980b9", alpha = 0.5) +   geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +   labs(title = "Wordfish Document Positions: DOD China Reports (1999–2025)",        subtitle = "Estimated latent position (θ) with 95% confidence intervals",        x = "Year", y = "Estimated Position (θ)") +   theme_minimal(base_size = 14)}
+```{r}
+# Extract document positions
+wf_positions <- data.frame(
+  document = docnames(dfm_dod_trim),
+  year = docvars(dfm_dod_trim, "year"),
+  theta = wf_model$theta,
+  se = wf_model$se.theta
+)
+
+ggplot(wf_positions, aes(x = year, y = theta)) +
+  geom_point(size = 3, color = "#2980b9") +
+  geom_errorbar(aes(ymin = theta - 1.96 * se,
+                    ymax = theta + 1.96 * se),
+                width = 0.5, color = "#2980b9", alpha = 0.6) +
+  geom_line(color = "#2980b9", alpha = 0.5) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
+  labs(title = "Wordfish Document Positions: DOD China Reports (1999–2025)",
+       subtitle = "Estimated latent position (θ) with 95% confidence intervals",
+       x = "Year", y = "Estimated Position (θ)") +
+  theme_minimal(base_size = 14)
 ```
 
 ### Word-Level Discrimination (β)
 
-```{r} # Plot word features by position textplot_scale1d(wf_model,                  margin = "features",                  highlighted = c("taiwan", "nuclear", "cyber",                                  "space", "missil", "technolog",                                  "naval", "aggress", "cooper")) +   labs(title = "Wordfish: Word Discrimination Parameters (β)",        subtitle = "Words driving positional differences across DOD reports")}
+```{r}
+# Plot word features by position
+textplot_scale1d(wf_model,
+                 margin = "features",
+                 highlighted = c("taiwan", "nuclear", "cyber",
+                                 "space", "missil", "technolog",
+                                 "naval", "aggress", "cooper")) +
+  labs(title = "Wordfish: Word Discrimination Parameters (β)",
+       subtitle = "Words driving positional differences across DOD reports")
 ```
 
 ------------------------------------------------------------------------
@@ -125,12 +284,56 @@ Already run above. Wordfish places each DOD report on a single latent dimension 
 
 Wordscores requires reference texts with known positions. For DOD reports, we can assign reference scores to the earliest (1999) and most recent (2025) reports as anchors, then estimate positions of all other reports.
 
-```{r} # Assign reference scores: 1999 = -1 (baseline), 2025 = +1 (most recent) ref_scores <- rep(NA, ndoc(dfm_dod_trim)) ref_scores[docvars(dfm_dod_trim, "year") == min(docvars(dfm_dod_trim, "year"))] <- -1 ref_scores[docvars(dfm_dod_trim, "year") == max(docvars(dfm_dod_trim, "year"))] <- 1  ws_model <- textmodel_wordscores(dfm_dod_trim, y = ref_scores)  # Predict scores for all documents ws_pred <- predict(ws_model, se.fit = TRUE, newdata = dfm_dod_trim)  ws_positions <- data.frame(   year = docvars(dfm_dod_trim, "year"),   score = ws_pred$fit,   se = ws_pred$se.fit )  ggplot(ws_positions, aes(x = year, y = score)) +   geom_point(size = 3, color = "#e74c3c") +   geom_errorbar(aes(ymin = score - 1.96 * se,                     ymax = score + 1.96 * se),                 width = 0.5, color = "#e74c3c", alpha = 0.6) +   geom_line(color = "#e74c3c", alpha = 0.5) +   geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +   labs(title = "Wordscores Document Positions: DOD China Reports",        subtitle = "Supervised scaling anchored at 1999 (−1) and 2025 (+1)",        x = "Year", y = "Estimated Score") +   theme_minimal(base_size = 14)}
+```{r}
+# Assign reference scores: 1999 = -1 (baseline), 2025 = +1 (most recent)
+ref_scores <- rep(NA, ndoc(dfm_dod_trim))
+ref_scores[docvars(dfm_dod_trim, "year") == min(docvars(dfm_dod_trim, "year"))] <- -1
+ref_scores[docvars(dfm_dod_trim, "year") == max(docvars(dfm_dod_trim, "year"))] <- 1
+
+ws_model <- textmodel_wordscores(dfm_dod_trim, y = ref_scores)
+
+# Predict scores for all documents
+ws_pred <- predict(ws_model, se.fit = TRUE, newdata = dfm_dod_trim)
+
+ws_positions <- data.frame(
+  year = docvars(dfm_dod_trim, "year"),
+  score = ws_pred$fit,
+  se = ws_pred$se.fit
+)
+
+ggplot(ws_positions, aes(x = year, y = score)) +
+  geom_point(size = 3, color = "#e74c3c") +
+  geom_errorbar(aes(ymin = score - 1.96 * se,
+                    ymax = score + 1.96 * se),
+                width = 0.5, color = "#e74c3c", alpha = 0.6) +
+  geom_line(color = "#e74c3c", alpha = 0.5) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
+  labs(title = "Wordscores Document Positions: DOD China Reports",
+       subtitle = "Supervised scaling anchored at 1999 (−1) and 2025 (+1)",
+       x = "Year", y = "Estimated Score") +
+  theme_minimal(base_size = 14)
 ```
 
 ### Method 3: Comparing Wordfish vs. Wordscores
 
-```{r} # Combine both estimates for comparison comparison_df <- data.frame(   year = wf_positions$year,   Wordfish = scale(wf_positions$theta)[, 1],   Wordscores = scale(ws_positions$score)[, 1] ) %>%   pivot_longer(cols = c("Wordfish", "Wordscores"),                names_to = "method", values_to = "position")  ggplot(comparison_df, aes(x = year, y = position, color = method)) +   geom_line(size = 1) +   geom_point(size = 2) +   scale_color_manual(values = c("Wordfish" = "#2980b9", "Wordscores" = "#e74c3c")) +   labs(title = "Comparing Wordfish vs. Wordscores Positions",        subtitle = "DOD China Reports (1999–2025), both scaled to z-scores",        x = "Year", y = "Scaled Position", color = "Method") +   theme_minimal(base_size = 14)}
+```{r}
+# Combine both estimates for comparison
+comparison_df <- data.frame(
+  year = wf_positions$year,
+  Wordfish = scale(wf_positions$theta)[, 1],
+  Wordscores = scale(ws_positions$score)[, 1]
+) %>%
+  pivot_longer(cols = c("Wordfish", "Wordscores"),
+               names_to = "method", values_to = "position")
+
+ggplot(comparison_df, aes(x = year, y = position, color = method)) +
+  geom_line(size = 1) +
+  geom_point(size = 2) +
+  scale_color_manual(values = c("Wordfish" = "#2980b9", "Wordscores" = "#e74c3c")) +
+  labs(title = "Comparing Wordfish vs. Wordscores Positions",
+       subtitle = "DOD China Reports (1999–2025), both scaled to z-scores",
+       x = "Year", y = "Scaled Position", color = "Method") +
+  theme_minimal(base_size = 14)
 ```
 
 ### Interpretation

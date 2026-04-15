@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -138,11 +173,15 @@ ul.task-list li input[type="checkbox"] {
   </li>  
         <li>
     <a class="dropdown-item" href="./assignments.html">
- <span class="dropdown-text">— Reflctions —</span></a>
+ <span class="dropdown-text">— Reflections —</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./assignments.html">
- <span class="dropdown-text">Reflction 01: AI, Originality, AGI, and Scientific Research</span></a>
+    <a class="dropdown-item" href="./reflection01.html">
+ <span class="dropdown-text">Reflection 01</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./reflection02.html">
+ <span class="dropdown-text">Reflection 02</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./assignments.html">
@@ -243,38 +282,271 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="setup-packages" class="level2">
 <h2 class="anchored" data-anchor-id="setup-packages">Setup: Packages</h2>
-<p><code>apn library(quanteda) library(quanteda.textstats) library(quanteda.textplots) library(quanteda.textmodels) library(tidyverse) library(pdftools) library(ggplot2)}</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textplots)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textmodels)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pdftools)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
 <hr>
 </section>
 <section id="part-1-us-presidential-inaugural-speeches" class="level2">
 <h2 class="anchored" data-anchor-id="part-1-us-presidential-inaugural-speeches">Part 1: US Presidential Inaugural Speeches</h2>
 <section id="build-corpus" class="level3">
 <h3 class="anchored" data-anchor-id="build-corpus">Build Corpus</h3>
-<pre class="{r} corp_inaug <- corpus(data_corpus_inaugural) summary(corp_inaug, 10)}"><code></code></pre>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>corp_inaug <span class="ot">&lt;-</span> <span class="fu">corpus</span>(data_corpus_inaugural)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(corp_inaug, <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Corpus consisting of 60 documents, showing 10 documents:
+
+            Text Types Tokens Sentences Year  President   FirstName
+ 1789-Washington   625   1537        24 1789 Washington      George
+ 1793-Washington    96    147         5 1793 Washington      George
+      1797-Adams   826   2577        37 1797      Adams        John
+  1801-Jefferson   717   1923        43 1801  Jefferson      Thomas
+  1805-Jefferson   804   2380        45 1805  Jefferson      Thomas
+    1809-Madison   535   1261        21 1809    Madison       James
+    1813-Madison   541   1302        33 1813    Madison       James
+     1817-Monroe  1040   3677       121 1817     Monroe       James
+     1821-Monroe  1259   4886       131 1821     Monroe       James
+      1825-Adams  1003   3147        75 1825      Adams John Quincy
+                 Party
+                  none
+                  none
+            Federalist
+ Democratic-Republican
+ Democratic-Republican
+ Democratic-Republican
+ Democratic-Republican
+ Democratic-Republican
+ Democratic-Republican
+ Democratic-Republican</code></pre>
+</div>
+</div>
 </section>
 <section id="similarities-and-differences-over-time" class="level3">
 <h3 class="anchored" data-anchor-id="similarities-and-differences-over-time">Similarities and Differences Over Time</h3>
-<p><code>apn # Tokenize and create DFM toks_inaug &lt;- tokens(corp_inaug,                      remove_punct = TRUE,                      remove_numbers = TRUE,                      remove_symbols = TRUE) %&gt;%   tokens_remove(stopwords("en")) %&gt;%   tokens_wordstem()  dfm_inaug &lt;- dfm(toks_inaug) dfm_inaug}</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tokenize and create DFM</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>toks_inaug <span class="ot">&lt;-</span> <span class="fu">tokens</span>(corp_inaug,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">remove_punct =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">stopwords</span>(<span class="st">"en"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_wordstem</span>()</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>dfm_inaug <span class="ot">&lt;-</span> <span class="fu">dfm</span>(toks_inaug)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>dfm_inaug</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Document-feature matrix of: 60 documents, 5,540 features (89.45% sparse) and 4 docvars.
+                 features
+docs              fellow-citizen senat hous repres among vicissitud incid life
+  1789-Washington              1     1    2      2     1          1     1    1
+  1793-Washington              0     0    0      0     0          0     0    0
+  1797-Adams                   3     1    3      3     4          0     0    2
+  1801-Jefferson               2     0    0      1     1          0     0    1
+  1805-Jefferson               0     0    0      0     7          0     0    2
+  1809-Madison                 1     0    0      1     0          1     0    1
+                 features
+docs              event fill
+  1789-Washington     2    1
+  1793-Washington     0    0
+  1797-Adams          0    0
+  1801-Jefferson      0    0
+  1805-Jefferson      1    0
+  1809-Madison        0    1
+[ reached max_ndoc ... 54 more documents, reached max_nfeat ... 5,530 more features ]</code></pre>
+</div>
+</div>
 </section>
 <section id="top-features" class="level3">
 <h3 class="anchored" data-anchor-id="top-features">Top Features</h3>
-<pre class="{r} # Top 20 most frequent words overall topfeatures(dfm_inaug, 20)}"><code></code></pre>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Top 20 most frequent words overall</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">topfeatures</span>(dfm_inaug, <span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>   nation    govern     peopl        us       can     state     great     power 
+      713       666       640       507       489       463       389       384 
+     must   countri      upon     world       may     shall     everi constitut 
+      377       376       371       357       343       316       309       291 
+     peac       one     right  american 
+      288       286       286       277 </code></pre>
+</div>
+</div>
 </section>
 <section id="wordcloud-of-inaugural-speeches" class="level3">
 <h3 class="anchored" data-anchor-id="wordcloud-of-inaugural-speeches">Wordcloud of Inaugural Speeches</h3>
-<p><code>apn set.seed(6323) textplot_wordcloud(dfm_inaug,                    max_words = 100,                    color = c("#2980b9", "#27ae60", "#e74c3c"))}</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">6323</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_wordcloud</span>(dfm_inaug,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">max_words =</span> <span class="dv">100</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">color =</span> <span class="fu">c</span>(<span class="st">"#2980b9"</span>, <span class="st">"#27ae60"</span>, <span class="st">"#e74c3c"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assignment04_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="word-frequency-over-time" class="level3">
 <h3 class="anchored" data-anchor-id="word-frequency-over-time">Word Frequency Over Time</h3>
-<p><code>apn # Track key words over time words_time &lt;- dfm_inaug %&gt;%   dfm_select(pattern = c("freedom", "nation", "war", "peace", "econom*", "terror*")) %&gt;%   convert(to = "data.frame") %&gt;%   bind_cols(docvars(dfm_inaug)) %&gt;%   pivot_longer(cols = c("freedom", "nation", "war", "peace", "econom", "terror"),                names_to = "word", values_to = "count") %&gt;%   group_by(Year, word) %&gt;%   summarise(count = sum(count), .groups = "drop")  ggplot(words_time, aes(x = Year, y = count, color = word)) +   geom_line(size = 1) +   geom_point(size = 2) +   labs(title = "Key Word Frequencies in Inaugural Speeches Over Time",        x = "Year", y = "Word Count", color = "Word") +   theme_minimal(base_size = 14)}</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Track key words over time</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>words_time <span class="ot">&lt;-</span> dfm_inaug <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_select</span>(<span class="at">pattern =</span> <span class="fu">c</span>(<span class="st">"freedom"</span>, <span class="st">"nation"</span>, <span class="st">"war"</span>, <span class="st">"peace"</span>, <span class="st">"econom*"</span>, <span class="st">"terror*"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">convert</span>(<span class="at">to =</span> <span class="st">"data.frame"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(<span class="fu">docvars</span>(dfm_inaug)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"freedom"</span>, <span class="st">"nation"</span>, <span class="st">"war"</span>, <span class="st">"peace"</span>, <span class="st">"econom"</span>, <span class="st">"terror"</span>),</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"word"</span>, <span class="at">values_to =</span> <span class="st">"count"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year, word) <span class="sc">%&gt;%</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">sum</span>(count), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(words_time, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> count, <span class="at">color =</span> word)) <span class="sc">+</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Key Word Frequencies in Inaugural Speeches Over Time"</span>,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Word Count"</span>, <span class="at">color =</span> <span class="st">"Word"</span>) <span class="sc">+</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assignment04_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="keyness-recent-vs.-early-presidents" class="level3">
 <h3 class="anchored" data-anchor-id="keyness-recent-vs.-early-presidents">Keyness: Recent vs.&nbsp;Early Presidents</h3>
-<p><code>apn # Compare post-2000 vs pre-2000 speeches dfm_inaug_grouped &lt;- dfm_inaug %&gt;%   dfm_group(groups = ifelse(docvars(dfm_inaug, "Year") &gt;= 2000,                             "Post-2000", "Pre-2000"))  keyness &lt;- textstat_keyness(dfm_inaug_grouped, target = "Post-2000") textplot_keyness(keyness, n = 20) +   labs(title = "Keyness: Post-2000 vs Pre-2000 Inaugural Speeches")}</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare post-2000 vs pre-2000 speeches</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>dfm_inaug_grouped <span class="ot">&lt;-</span> dfm_inaug <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_group</span>(<span class="at">groups =</span> <span class="fu">ifelse</span>(<span class="fu">docvars</span>(dfm_inaug, <span class="st">"Year"</span>) <span class="sc">&gt;=</span> <span class="dv">2000</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"Post-2000"</span>, <span class="st">"Pre-2000"</span>))</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>keyness <span class="ot">&lt;-</span> <span class="fu">textstat_keyness</span>(dfm_inaug_grouped, <span class="at">target =</span> <span class="st">"Post-2000"</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_keyness</span>(keyness, <span class="at">n =</span> <span class="dv">20</span>) <span class="sc">+</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Keyness: Post-2000 vs Pre-2000 Inaugural Speeches"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assignment04_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="document-similarity-among-presidents" class="level3">
 <h3 class="anchored" data-anchor-id="document-similarity-among-presidents">Document Similarity Among Presidents</h3>
-<p><code>apn # Cosine similarity between speeches dfm_inaug_tfidf &lt;- dfm_tfidf(dfm_inaug) sim_matrix &lt;- textstat_simil(dfm_inaug_tfidf, method = "cosine")  # Show most similar speech pairs sim_df &lt;- as.data.frame(as.matrix(sim_matrix)) %&gt;%   rownames_to_column("doc1") %&gt;%   pivot_longer(-doc1, names_to = "doc2", values_to = "similarity") %&gt;%   filter(doc1 &lt; doc2) %&gt;%   arrange(desc(similarity)) %&gt;%   head(10)  knitr::kable(sim_df, caption = "Top 10 Most Similar Inaugural Speech Pairs (Cosine Similarity)")}</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cosine similarity between speeches</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>dfm_inaug_tfidf <span class="ot">&lt;-</span> <span class="fu">dfm_tfidf</span>(dfm_inaug)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>sim_matrix <span class="ot">&lt;-</span> <span class="fu">textstat_simil</span>(dfm_inaug_tfidf, <span class="at">method =</span> <span class="st">"cosine"</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Show most similar speech pairs</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>sim_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">as.matrix</span>(sim_matrix)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">"doc1"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>doc1, <span class="at">names_to =</span> <span class="st">"doc2"</span>, <span class="at">values_to =</span> <span class="st">"similarity"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(doc1 <span class="sc">&lt;</span> doc2) <span class="sc">%&gt;%</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(similarity)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(sim_df, <span class="at">caption =</span> <span class="st">"Top 10 Most Similar Inaugural Speech Pairs (Cosine Similarity)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Top 10 Most Similar Inaugural Speech Pairs (Cosine Similarity)</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">doc1</th>
+<th style="text-align: left;">doc2</th>
+<th style="text-align: right;">similarity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1817-Monroe</td>
+<td style="text-align: left;">1821-Monroe</td>
+<td style="text-align: right;">0.3674328</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1837-VanBuren</td>
+<td style="text-align: left;">1841-Harrison</td>
+<td style="text-align: right;">0.3160154</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1841-Harrison</td>
+<td style="text-align: left;">1845-Polk</td>
+<td style="text-align: right;">0.3031177</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2001-Bush</td>
+<td style="text-align: left;">2021-Biden</td>
+<td style="text-align: right;">0.2960761</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1897-McKinley</td>
+<td style="text-align: left;">1909-Taft</td>
+<td style="text-align: right;">0.2931335</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1825-Adams</td>
+<td style="text-align: left;">1845-Polk</td>
+<td style="text-align: right;">0.2901419</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1837-VanBuren</td>
+<td style="text-align: left;">1853-Pierce</td>
+<td style="text-align: right;">0.2897037</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1841-Harrison</td>
+<td style="text-align: left;">1857-Buchanan</td>
+<td style="text-align: right;">0.2893932</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1845-Polk</td>
+<td style="text-align: left;">1857-Buchanan</td>
+<td style="text-align: right;">0.2873895</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1889-Harrison</td>
+<td style="text-align: left;">1897-McKinley</td>
+<td style="text-align: right;">0.2860167</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <hr>
 </section>
 </section>
@@ -282,23 +554,179 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="part-2-us-department-of-defense-reports-on-china-19992025">Part 2: US Department of Defense Reports on China (1999–2025)</h2>
 <section id="load-and-build-corpus-from-pdfs" class="level3">
 <h3 class="anchored" data-anchor-id="load-and-build-corpus-from-pdfs">Load and Build Corpus from PDFs</h3>
-<p><code>apn # Set path to USDOD folder dod_path &lt;- "USDOD/"  # List all PDF files pdf_files &lt;- list.files(dod_path, pattern = "\\.pdf$|\\.PDF$",                         full.names = TRUE, ignore.case = TRUE)  # Extract year from filenames years &lt;- str_extract(basename(pdf_files), "^[0-9]{4}")  # Read PDF text dod_texts &lt;- map_chr(pdf_files, function(f) {   tryCatch(     paste(pdf_text(f), collapse = " "),     error = function(e) ""   ) })  # Build corpus corp_dod &lt;- corpus(dod_texts,                    docnames = paste0("DOD_", years),                    docvars = data.frame(year = as.integer(years)))  summary(corp_dod)}</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set path to USDOD folder</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>dod_path <span class="ot">&lt;-</span> <span class="st">"USDOD/USDOD/"</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># List all PDF files</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>pdf_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(dod_path, <span class="at">pattern =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">.pdf$|</span><span class="sc">\\</span><span class="st">.PDF$"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                        <span class="at">full.names =</span> <span class="cn">TRUE</span>, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract year from filenames</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>years <span class="ot">&lt;-</span> <span class="fu">str_extract</span>(<span class="fu">basename</span>(pdf_files), <span class="st">"^[0-9]{4}"</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove files where year could not be extracted</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>valid <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">is.na</span>(years)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>pdf_files <span class="ot">&lt;-</span> pdf_files[valid]</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>years <span class="ot">&lt;-</span> years[valid]</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Read PDF text</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>dod_texts <span class="ot">&lt;-</span> <span class="fu">map_chr</span>(pdf_files, <span class="cf">function</span>(f) {</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tryCatch</span>(</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="fu">pdf_text</span>(f), <span class="at">collapse =</span> <span class="st">" "</span>),</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">error =</span> <span class="cf">function</span>(e) <span class="st">""</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Build corpus</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>corp_dod <span class="ot">&lt;-</span> <span class="fu">corpus</span>(dod_texts,</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>                   <span class="at">docnames =</span> <span class="fu">paste0</span>(<span class="st">"DOD_"</span>, years),</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>                   <span class="at">docvars =</span> <span class="fu">data.frame</span>(<span class="at">year =</span> <span class="fu">as.integer</span>(years)))</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(corp_dod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Corpus consisting of 27 documents, showing 27 documents:
+
+     Text Types Tokens Sentences year
+ DOD_1999 16068 301499     13120 1999
+ DOD_2000  2990  15078       584 2000
+ DOD_2001 14864 186150      7583 2001
+ DOD_2002  4178  25908      1174 2002
+ DOD_2003  4068  25848      1138 2003
+ DOD_2004  4056  25091      1016 2004
+ DOD_2005  3730  20326       880 2005
+ DOD_2006  4002  21855       705 2006
+ DOD_2007  3669  18144       571 2007
+ DOD_2008  4651  26390       810 2008
+ DOD_2009  5124  31910      1061 2009
+ DOD_2010  5002  33621       993 2010
+ DOD_2011  5400  35578      1140 2011
+ DOD_2012  3156  14293       586 2012
+ DOD_2013  4955  30563       977 2013
+ DOD_2014  4960  31111      1021 2014
+ DOD_2015  5335  34712      1118 2015
+ DOD_2016  5524  38929      1331 2016
+ DOD_2017  5080  33380      1124 2017
+ DOD_2018  5759  45684      1475 2018
+ DOD_2019  5868  45760      1437 2019
+ DOD_2020  7373  74334      2807 2020
+ DOD_2021  7727  79375      2798 2021
+ DOD_2022  8086  83275      2734 2022
+ DOD_2023  9113  95483      3205 2023
+ DOD_2024  8633  94628      3241 2024
+ DOD_2025  5986  43945      1345 2025</code></pre>
+</div>
+</div>
 </section>
 <section id="tokenize-and-build-dfm" class="level3">
 <h3 class="anchored" data-anchor-id="tokenize-and-build-dfm">Tokenize and Build DFM</h3>
-<p><code>apn toks_dod &lt;- tokens(corp_dod,                    remove_punct = TRUE,                    remove_numbers = TRUE,                    remove_symbols = TRUE) %&gt;%   tokens_remove(stopwords("en")) %&gt;%   tokens_remove(c("also", "will", "may", "china", "chinese",                   "prc", "dod", "report", "military")) %&gt;%   tokens_wordstem()  dfm_dod &lt;- dfm(toks_dod) dfm_dod}</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>toks_dod <span class="ot">&lt;-</span> <span class="fu">tokens</span>(corp_dod,</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">remove_punct =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">stopwords</span>(<span class="st">"en"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">c</span>(<span class="st">"also"</span>, <span class="st">"will"</span>, <span class="st">"may"</span>, <span class="st">"china"</span>, <span class="st">"chinese"</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"prc"</span>, <span class="st">"dod"</span>, <span class="st">"report"</span>, <span class="st">"military"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_wordstem</span>()</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>dfm_dod <span class="ot">&lt;-</span> <span class="fu">dfm</span>(toks_dod)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>dfm_dod</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Document-feature matrix of: 27 documents, 21,136 features (82.83% sparse) and 1 docvar.
+          features
+docs        u.s national securiti commercial concerns people’s republic volume
+  DOD_1999 1676       12       35         34        9        8        9    410
+  DOD_2000    2        0        2          0        0        1        1      0
+  DOD_2001  651        5       10          1        1        0        0      0
+  DOD_2002   35        0        1          0        0        1        1      0
+  DOD_2003   41        0        2          0        0        1        1      0
+  DOD_2004   57        0        2          0        0        1        1      0
+          features
+docs       select committee
+  DOD_1999   1368       911
+  DOD_2000      5         0
+  DOD_2001     92         2
+  DOD_2002      4         0
+  DOD_2003      5         0
+  DOD_2004      2         0
+[ reached max_ndoc ... 21 more documents, reached max_nfeat ... 21,126 more features ]</code></pre>
+</div>
+</div>
 </section>
 <section id="top-features-in-dod-reports" class="level3">
 <h3 class="anchored" data-anchor-id="top-features-in-dod-reports">Top Features in DOD Reports</h3>
-<pre class="{r} topfeatures(dfm_dod, 20)}"><code></code></pre>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">topfeatures</span>(dfm_dod, <span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     forc   develop       pla    defens    china’      oper     secur    capabl 
+     7083      6734      6469      6234      5908      5771      5549      4884 
+   system       u.s    nation technolog    includ     state    missil   support 
+     4472      4331      4206      4158      4135      3868      3693      3309 
+      use    taiwan   continu     prc’s 
+     3273      3186      2888      2878 </code></pre>
+</div>
+</div>
 </section>
 <section id="wordcloud-of-dod-reports" class="level3">
 <h3 class="anchored" data-anchor-id="wordcloud-of-dod-reports">Wordcloud of DOD Reports</h3>
-<p><code>apn set.seed(6323) textplot_wordcloud(dfm_dod,                    max_words = 100,                    color = c("#2980b9", "#e74c3c", "#e67e22"))}</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">6323</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_wordcloud</span>(dfm_dod,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">max_words =</span> <span class="dv">100</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">color =</span> <span class="fu">c</span>(<span class="st">"#2980b9"</span>, <span class="st">"#e74c3c"</span>, <span class="st">"#e67e22"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assignment04_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="key-terms-over-time" class="level3">
 <h3 class="anchored" data-anchor-id="key-terms-over-time">Key Terms Over Time</h3>
-<p><code>apn key_terms &lt;- c("taiwan", "nuclear", "cyber", "space", "missil", "naval", "technolog")  term_trends &lt;- dfm_dod %&gt;%   dfm_select(pattern = key_terms) %&gt;%   convert(to = "data.frame") %&gt;%   bind_cols(docvars(dfm_dod)) %&gt;%   pivot_longer(cols = all_of(key_terms),                names_to = "term", values_to = "count") %&gt;%   group_by(year, term) %&gt;%   summarise(count = sum(count), .groups = "drop")  ggplot(term_trends, aes(x = year, y = count, color = term)) +   geom_line(size = 1) +   geom_point(size = 2) +   labs(title = "Key Term Frequencies in DOD China Reports (1999–2025)",        x = "Year", y = "Word Count", color = "Term") +   theme_minimal(base_size = 14)}</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>key_terms <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"taiwan"</span>, <span class="st">"nuclear"</span>, <span class="st">"cyber"</span>, <span class="st">"space"</span>, <span class="st">"missil"</span>, <span class="st">"naval"</span>, <span class="st">"technolog"</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>term_trends <span class="ot">&lt;-</span> dfm_dod <span class="sc">%&gt;%</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_select</span>(<span class="at">pattern =</span> key_terms) <span class="sc">%&gt;%</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">convert</span>(<span class="at">to =</span> <span class="st">"data.frame"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(<span class="fu">docvars</span>(dfm_dod)) <span class="sc">%&gt;%</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">all_of</span>(key_terms),</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"term"</span>, <span class="at">values_to =</span> <span class="st">"count"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, term) <span class="sc">%&gt;%</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">sum</span>(count), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(term_trends, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> count, <span class="at">color =</span> term)) <span class="sc">+</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Key Term Frequencies in DOD China Reports (1999–2025)"</span>,</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Word Count"</span>, <span class="at">color =</span> <span class="st">"Term"</span>) <span class="sc">+</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assignment04_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 <hr>
 </section>
 </section>
@@ -315,15 +743,124 @@ ul.task-list li input[type="checkbox"] {
 <p>In the context of DOD reports, Wordfish can reveal how the rhetorical framing of China’s military threat has shifted across administrations and years.</p>
 <section id="run-wordfish-on-dod-reports" class="level3">
 <h3 class="anchored" data-anchor-id="run-wordfish-on-dod-reports">Run Wordfish on DOD Reports</h3>
-<p><code>apn # Trim low-frequency terms for stability dfm_dod_trim &lt;- dfm_trim(dfm_dod, min_termfreq = 5, min_docfreq = 2)  # Run Wordfish set.seed(6323) wf_model &lt;- textmodel_wordfish(dfm_dod_trim) summary(wf_model)}</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Trim low-frequency terms for stability</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>dfm_dod_trim <span class="ot">&lt;-</span> <span class="fu">dfm_trim</span>(dfm_dod, <span class="at">min_termfreq =</span> <span class="dv">5</span>, <span class="at">min_docfreq =</span> <span class="dv">2</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run Wordfish</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">6323</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>wf_model <span class="ot">&lt;-</span> <span class="fu">textmodel_wordfish</span>(dfm_dod_trim)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(wf_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+textmodel_wordfish.dfm(x = dfm_dod_trim)
+
+Estimated Document Positions:
+            theta       se
+DOD_1999 -4.25608 0.006037
+DOD_2000 -0.34654 0.032778
+DOD_2001 -1.75912 0.010987
+DOD_2002 -0.47954 0.025796
+DOD_2003 -0.30698 0.024718
+DOD_2004 -0.22540 0.024274
+DOD_2005 -0.15133 0.026590
+DOD_2006 -0.06551 0.024318
+DOD_2007 -0.05734 0.026522
+DOD_2008  0.01742 0.020930
+DOD_2009  0.05753 0.018500
+DOD_2010  0.04382 0.018879
+DOD_2011  0.17818 0.015449
+DOD_2012  0.22465 0.023589
+DOD_2013  0.25997 0.015148
+DOD_2014  0.31948 0.013897
+DOD_2015  0.36385 0.012252
+DOD_2016  0.47306 0.009468
+DOD_2017  0.53896 0.008715
+DOD_2018  0.58566 0.006508
+DOD_2019  0.60045 0.006250
+DOD_2020  0.65049 0.004200
+DOD_2021  0.67498 0.003768
+DOD_2022  0.67712 0.003633
+DOD_2023  0.69559 0.003186
+DOD_2024  0.71163 0.003105
+DOD_2025  0.57500 0.007353
+
+Estimated Feature Scores:
+         u.s national securiti commercial concerns people’s republic  select
+beta -0.3585 -0.25621  -0.3115     -1.587   -1.184   0.0574  -0.3722 -0.9279
+psi   4.4928 -0.08912   0.7598     -4.577   -4.175   0.4015  -0.8602  1.8943
+     committee  united  states congress session       mr california chairman
+beta    -2.527 -1.3788 -1.3846   0.6147 -0.3263 -0.05072    -0.6709   -0.177
+psi     -5.291 -0.4331 -0.4568   4.1999  0.2331  1.20676    -0.8422    2.332
+     januari   commit committe    whole    hous   state   union   order   print
+beta -0.1596 -0.09556  -0.8294 -0.02731 -0.6014 -0.1991 -0.1836 -0.1026 -0.4951
+psi   2.1517  2.14976   2.1194  0.55225  1.0203  4.6012  1.3742  2.7890 -1.6720
+     subject  review    part pursuant  resolut
+beta -0.5503 -0.9793 -0.2744  -0.3703 -0.00104
+psi   0.9820  1.3082  3.3001   0.4553  1.74493</code></pre>
+</div>
+</div>
 </section>
 <section id="visualize-document-positions-θ" class="level3">
 <h3 class="anchored" data-anchor-id="visualize-document-positions-θ">Visualize Document Positions (θ)</h3>
-<p><code>apn # Extract document positions wf_positions &lt;- data.frame(   document = docnames(dfm_dod_trim),   year = docvars(dfm_dod_trim, "year"),   theta = wf_model$theta,   se = wf_model$se.theta )  ggplot(wf_positions, aes(x = year, y = theta)) +   geom_point(size = 3, color = "#2980b9") +   geom_errorbar(aes(ymin = theta - 1.96 * se,                     ymax = theta + 1.96 * se),                 width = 0.5, color = "#2980b9", alpha = 0.6) +   geom_line(color = "#2980b9", alpha = 0.5) +   geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +   labs(title = "Wordfish Document Positions: DOD China Reports (1999–2025)",        subtitle = "Estimated latent position (θ) with 95% confidence intervals",        x = "Year", y = "Estimated Position (θ)") +   theme_minimal(base_size = 14)}</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract document positions</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>wf_positions <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">document =</span> <span class="fu">docnames</span>(dfm_dod_trim),</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">year =</span> <span class="fu">docvars</span>(dfm_dod_trim, <span class="st">"year"</span>),</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">theta =</span> wf_model<span class="sc">$</span>theta,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">se =</span> wf_model<span class="sc">$</span>se.theta</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(wf_positions, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> theta)) <span class="sc">+</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"#2980b9"</span>) <span class="sc">+</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> theta <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> se,</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ymax =</span> theta <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> se),</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.5</span>, <span class="at">color =</span> <span class="st">"#2980b9"</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"#2980b9"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray50"</span>) <span class="sc">+</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Wordfish Document Positions: DOD China Reports (1999–2025)"</span>,</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Estimated latent position (θ) with 95% confidence intervals"</span>,</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Estimated Position (θ)"</span>) <span class="sc">+</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assignment04_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="word-level-discrimination-β" class="level3">
 <h3 class="anchored" data-anchor-id="word-level-discrimination-β">Word-Level Discrimination (β)</h3>
-<p><code>apn # Plot word features by position textplot_scale1d(wf_model,                  margin = "features",                  highlighted = c("taiwan", "nuclear", "cyber",                                  "space", "missil", "technolog",                                  "naval", "aggress", "cooper")) +   labs(title = "Wordfish: Word Discrimination Parameters (β)",        subtitle = "Words driving positional differences across DOD reports")}</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot word features by position</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_scale1d</span>(wf_model,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">margin =</span> <span class="st">"features"</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">highlighted =</span> <span class="fu">c</span>(<span class="st">"taiwan"</span>, <span class="st">"nuclear"</span>, <span class="st">"cyber"</span>,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"space"</span>, <span class="st">"missil"</span>, <span class="st">"technolog"</span>,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"naval"</span>, <span class="st">"aggress"</span>, <span class="st">"cooper"</span>)) <span class="sc">+</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Wordfish: Word Discrimination Parameters (β)"</span>,</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Words driving positional differences across DOD reports"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assignment04_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 <hr>
 </section>
 </section>
@@ -337,11 +874,77 @@ ul.task-list li input[type="checkbox"] {
 <section id="method-2-wordscores-supervised-scaling" class="level3">
 <h3 class="anchored" data-anchor-id="method-2-wordscores-supervised-scaling">Method 2: Wordscores (Supervised Scaling)</h3>
 <p>Wordscores requires reference texts with known positions. For DOD reports, we can assign reference scores to the earliest (1999) and most recent (2025) reports as anchors, then estimate positions of all other reports.</p>
-<p><code>apn # Assign reference scores: 1999 = -1 (baseline), 2025 = +1 (most recent) ref_scores &lt;- rep(NA, ndoc(dfm_dod_trim)) ref_scores[docvars(dfm_dod_trim, "year") == min(docvars(dfm_dod_trim, "year"))] &lt;- -1 ref_scores[docvars(dfm_dod_trim, "year") == max(docvars(dfm_dod_trim, "year"))] &lt;- 1  ws_model &lt;- textmodel_wordscores(dfm_dod_trim, y = ref_scores)  # Predict scores for all documents ws_pred &lt;- predict(ws_model, se.fit = TRUE, newdata = dfm_dod_trim)  ws_positions &lt;- data.frame(   year = docvars(dfm_dod_trim, "year"),   score = ws_pred$fit,   se = ws_pred$se.fit )  ggplot(ws_positions, aes(x = year, y = score)) +   geom_point(size = 3, color = "#e74c3c") +   geom_errorbar(aes(ymin = score - 1.96 * se,                     ymax = score + 1.96 * se),                 width = 0.5, color = "#e74c3c", alpha = 0.6) +   geom_line(color = "#e74c3c", alpha = 0.5) +   geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +   labs(title = "Wordscores Document Positions: DOD China Reports",        subtitle = "Supervised scaling anchored at 1999 (−1) and 2025 (+1)",        x = "Year", y = "Estimated Score") +   theme_minimal(base_size = 14)}</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign reference scores: 1999 = -1 (baseline), 2025 = +1 (most recent)</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>ref_scores <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="fu">ndoc</span>(dfm_dod_trim))</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>ref_scores[<span class="fu">docvars</span>(dfm_dod_trim, <span class="st">"year"</span>) <span class="sc">==</span> <span class="fu">min</span>(<span class="fu">docvars</span>(dfm_dod_trim, <span class="st">"year"</span>))] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>ref_scores[<span class="fu">docvars</span>(dfm_dod_trim, <span class="st">"year"</span>) <span class="sc">==</span> <span class="fu">max</span>(<span class="fu">docvars</span>(dfm_dod_trim, <span class="st">"year"</span>))] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>ws_model <span class="ot">&lt;-</span> <span class="fu">textmodel_wordscores</span>(dfm_dod_trim, <span class="at">y =</span> ref_scores)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict scores for all documents</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>ws_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(ws_model, <span class="at">se.fit =</span> <span class="cn">TRUE</span>, <span class="at">newdata =</span> dfm_dod_trim)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>ws_positions <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">year =</span> <span class="fu">docvars</span>(dfm_dod_trim, <span class="st">"year"</span>),</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">score =</span> ws_pred<span class="sc">$</span>fit,</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">se =</span> ws_pred<span class="sc">$</span>se.fit</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ws_positions, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> score)) <span class="sc">+</span></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"#e74c3c"</span>) <span class="sc">+</span></span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> score <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> se,</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ymax =</span> score <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> se),</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.5</span>, <span class="at">color =</span> <span class="st">"#e74c3c"</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"#e74c3c"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray50"</span>) <span class="sc">+</span></span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Wordscores Document Positions: DOD China Reports"</span>,</span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Supervised scaling anchored at 1999 (−1) and 2025 (+1)"</span>,</span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Estimated Score"</span>) <span class="sc">+</span></span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assignment04_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="method-3-comparing-wordfish-vs.-wordscores" class="level3">
 <h3 class="anchored" data-anchor-id="method-3-comparing-wordfish-vs.-wordscores">Method 3: Comparing Wordfish vs.&nbsp;Wordscores</h3>
-<p><code>apn # Combine both estimates for comparison comparison_df &lt;- data.frame(   year = wf_positions$year,   Wordfish = scale(wf_positions$theta)[, 1],   Wordscores = scale(ws_positions$score)[, 1] ) %&gt;%   pivot_longer(cols = c("Wordfish", "Wordscores"),                names_to = "method", values_to = "position")  ggplot(comparison_df, aes(x = year, y = position, color = method)) +   geom_line(size = 1) +   geom_point(size = 2) +   scale_color_manual(values = c("Wordfish" = "#2980b9", "Wordscores" = "#e74c3c")) +   labs(title = "Comparing Wordfish vs. Wordscores Positions",        subtitle = "DOD China Reports (1999–2025), both scaled to z-scores",        x = "Year", y = "Scaled Position", color = "Method") +   theme_minimal(base_size = 14)}</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine both estimates for comparison</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>comparison_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">year =</span> wf_positions<span class="sc">$</span>year,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Wordfish =</span> <span class="fu">scale</span>(wf_positions<span class="sc">$</span>theta)[, <span class="dv">1</span>],</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Wordscores =</span> <span class="fu">scale</span>(ws_positions<span class="sc">$</span>score)[, <span class="dv">1</span>]</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"Wordfish"</span>, <span class="st">"Wordscores"</span>),</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"method"</span>, <span class="at">values_to =</span> <span class="st">"position"</span>)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(comparison_df, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> position, <span class="at">color =</span> method)) <span class="sc">+</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Wordfish"</span> <span class="ot">=</span> <span class="st">"#2980b9"</span>, <span class="st">"Wordscores"</span> <span class="ot">=</span> <span class="st">"#e74c3c"</span>)) <span class="sc">+</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Comparing Wordfish vs. Wordscores Positions"</span>,</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"DOD China Reports (1999–2025), both scaled to z-scores"</span>,</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Scaled Position"</span>, <span class="at">color =</span> <span class="st">"Method"</span>) <span class="sc">+</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assignment04_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="interpretation" class="level3">
 <h3 class="anchored" data-anchor-id="interpretation">Interpretation</h3>
