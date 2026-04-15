@@ -1,0 +1,23 @@
+---
+title: "EPPS 6323 Assignments"
+---
+
+Below are the links to my coursework for **EPPS 6323 – Knowledge Mining**.
+
+## Assignments
+
+- [Assignment 01: Brush up R and Quarto](Assignment01.html)
+- [Assignment 02: Prompt Exercise](Assignment02.html)
+- [Assignment 03: ML exercise](Assignment03.html)
+- [Assignment 04: Text Analytics using quanteda](Assignment04.html)
+
+## Reflctions
+
+- [Reflctions 01: AI, Originality, AGI, and Scientific Research](reflctions01.html)
+
+
+## Labs
+
+- [Lab 01: R Programming Basics I](Lab01.html)
+- [Lab 02: R Programming Basics II](Lab02.html)
+- [Lab ML01.R: Simple and Multiple Linear Regression](Lab ML01.R.html)

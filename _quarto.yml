@@ -39,6 +39,12 @@ website:
           - text: "Assignment 04"
             href: assignment04.html
             
+          - text: "— Reflctions —"
+            href: assignments.html
+            
+          - text: "Reflction 01: AI, Originality, AGI, and Scientific Research"
+            href: assignments.html
+            
           - text: "— Labs —"
             href: assignments.html
             

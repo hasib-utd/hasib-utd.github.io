@@ -1,0 +1,16 @@
+---
+title: "Using AI in Research Projects"
+editor: visual
+---
+
+**Using AI for My Project**
+
+My research focuses on the adoption of artificial intelligence in public services. At this stage, my primary challenge is refining research questions and navigating a large interdisciplinary literature. I plan to start using AI as a cognitive support tool to organize ideas and explore alternative analytical strategies rather than as a replacement for original thinking.
+
+**AI Model 1: ChatGPT**
+
+I plan to use ChatGPT to translate theoretical concepts into analytical steps, assist with R code development, and clarify methodological tradeoffs. This model is particularly useful for iterative questioning and debugging. However, I will independently verify outputs to avoid over‑reliance.
+
+**AI Model 2: Claude**
+
+I will use this model primarily for literature discovery and summarization, especially in unfamiliar domains. Its ability to point to sources helps me maintain transparency and research integrity.
