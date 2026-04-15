@@ -1,5 +1,12 @@
 ---
---- title: "Assignment 03: ML Exercise" author: "Muhammad Al Hasib" format: html editor: visual execute:   echo: true   warning: false   message: false ---
+title: "Assignment 03: ML Exercise"
+author: "Muhammad Al Hasib"
+format: html
+editor: visual
+execute:
+  echo: true
+  warning: false
+  message: false
 ---
 
 ## Setup: Packages and Data
