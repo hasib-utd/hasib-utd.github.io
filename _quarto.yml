@@ -22,21 +22,21 @@ website:
       - text: "EPPS 6323"
         menu:
           - text: "Coursework"
-            href: assignments.qmd
+            href: assignments.html
           - text: "---" # Visual separator
           - text: "Assignment 01"
-            href: assignment01.qmd
+            href: assignment01.html
           - text: "Assignment 02"
-            href: assignment02.qmd
+            href: assignment02.html
           - text: "Assignment 03"
-            href: assignment03.qmd
+            href: assignment03.html
           - text: "---" # Visual separator for Labs
           - text: "Lab 01: R Programming Basics I"
             href: Lab01.html
           - text: "Lab 02: R Programming Basics II"
             href: Lab02.html
           - text: "Lab ML01: Simple and Multiple Linear Regression"
-            href: Lab_ML01.qmd
+            href: Lab_ML01.html
         
   page-footer:
     center: "© 2026 Muhammad Al Hasib"
