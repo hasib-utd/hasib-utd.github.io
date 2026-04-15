@@ -30,6 +30,8 @@ website:
             href: assignment02.html
           - text: "Assignment 03"
             href: assignment03.html
+          - text: "Assignment 04"
+            href: assignment04.html
           - text: "---" # Visual separator for Labs
           - text: "Lab 01: R Programming Basics I"
             href: Lab01.html
