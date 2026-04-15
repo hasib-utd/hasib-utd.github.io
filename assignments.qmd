@@ -13,7 +13,7 @@ Below are the links to my coursework for **EPPS 6323 – Knowledge Mining**.
 
 ## Reflctions
 
-- [Reflction 01: : AI, Originality, AGI, and Scientific Research](Reflection01.html)
+- [Reflction 01: : AI, Originality, AGI, and Scientific Research](reflection01.html)
 
 ## Labs
 
