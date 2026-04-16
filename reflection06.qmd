@@ -1,0 +1,87 @@
+---
+title: "Reflection 06 (Class 10): Retrieval-Augmented Generation and Its Limitations"
+author: "Muhammad Al Hasib"
+format:
+  html:
+    embed-resources: true
+editor: visual
+---
+
+## Q4a. What is Retrieval-Augmented Generation (RAG) and Why Does It Matter for Research?
+
+### What is RAG?
+
+Retrieval-Augmented Generation (RAG) is an AI architecture that combines the generative capabilities of large language models with an external retrieval mechanism to ground model outputs in verifiable, up-to-date documents. Introduced by Lewis et al. (2020), RAG addresses one of the most critical limitations of standard LLMs: the inability to access information beyond their training data and the tendency to hallucinate when queried on knowledge-intensive topics.
+
+The RAG pipeline operates in two stages:
+
+1.  **Retrieval:** When a query is submitted, the system searches an external knowledge base — a document corpus, academic database, or web index — using dense vector retrieval or sparse keyword matching to identify the most relevant passages or documents.
+2.  **Generation:** The retrieved documents are passed to the LLM as context alongside the original query. The model generates a response that is grounded in the retrieved material rather than relying solely on parametric knowledge encoded in its weights.
+
+This architecture separates *what the model knows* (parametric knowledge, encoded during training) from *what the model can access* (non-parametric knowledge, retrieved at inference time), enabling the system to produce more accurate, verifiable, and current responses.
+
+### Why RAG Matters for Research
+
+RAG is particularly consequential for academic research for several interconnected reasons:
+
+**1. Factual grounding and citation traceability** Standard LLMs frequently hallucinate citations — generating plausible-sounding but nonexistent references. RAG systems that retrieve from indexed academic databases (e.g., Semantic Scholar, PubMed, arXiv) can ground responses in real documents, making citations verifiable. For researchers who use AI to assist with literature synthesis, this fundamentally changes the reliability of the output.
+
+**2. Access to current knowledge** LLMs have a training cutoff — they cannot access publications, policy documents, or data released after training. RAG overcomes this by retrieving from live or regularly updated corpora, enabling AI systems to engage with the most recent scholarship. For a fast-moving field like computational social science or AI governance, this is essential.
+
+**3. Domain adaptation without retraining** RAG allows LLMs to operate effectively in specialized domains — legal documents, medical records, government administrative data — without the cost of full model retraining or fine-tuning. Researchers can build domain-specific RAG systems over their own document collections, enabling AI assistance that is tailored to their specific research context.
+
+**4. Transparency and auditability** Because RAG responses are grounded in retrieved documents, researchers can inspect the source material that informed a given output. This increases the auditability of AI-assisted research and supports the kind of transparent methodology documentation that academic integrity requires.
+
+**5. Implications for public administration research** In my own research on public trust and e-government, a RAG system built over a corpus of government policy documents, citizen feedback archives, and public administration literature could enable systematic analysis of how institutional language and policy framing have evolved — while keeping outputs traceable to specific source documents rather than generalized model outputs.
+
+### How Grounding Changes Trustworthiness
+
+The fundamental difference between a standard LLM response and a RAG-grounded response is the epistemological status of the output. A standard LLM generates text by predicting statistically likely continuations based on patterns in training data — it has no mechanism for distinguishing between accurate recall and plausible confabulation. A RAG system, by contrast, generates text in the context of specific retrieved passages, making the basis for the response explicit and checkable.
+
+This does not make RAG outputs fully trustworthy — the retrieval system may return irrelevant or low-quality documents, the model may misinterpret retrieved passages, or the underlying corpus may itself contain errors. But it substantially raises the epistemic floor by making AI outputs falsifiable: a researcher can check whether the retrieved documents actually support the claim the model has made.
+
+------------------------------------------------------------------------
+
+## Q4b. Recent Criticisms of RAG and Suggestions for Improvement
+
+### Criticisms
+
+Despite its advantages over standard LLMs, RAG has attracted significant criticism as it has been more widely deployed and scrutinized:
+
+**1. Retrieval quality bottleneck** RAG is only as good as its retrieval component. If the retrieval system fails to surface the most relevant documents — due to vocabulary mismatch, poor embedding quality, or inadequate corpus coverage — the generator receives unhelpful context and may produce worse outputs than a standard LLM that relies on its parametric knowledge. Studies have shown that RAG can actively hurt performance when retrieved documents are irrelevant or contradictory to the query.
+
+**2. Context window limitations** Retrieved documents must fit within the LLM's context window. For long documents or queries requiring synthesis across many sources, this creates a hard constraint on how much retrieved information can inform a single generation step. Important passages may be truncated or excluded, leading to incomplete or biased responses.
+
+**3. Faithfulness vs. groundedness tension** RAG systems face a fundamental tension: the model should be *faithful* to retrieved documents (not contradicting them) and *grounded* in them (using them as the primary basis for the response). In practice, models often blend parametric knowledge with retrieved information in ways that are difficult to disentangle, producing outputs that are partially grounded but not transparently so.
+
+**4. Multi-hop reasoning failures** Many research questions require synthesizing information across multiple documents through chains of reasoning — for example, tracing how a policy concept evolved across ten years of government reports. Standard RAG architectures retrieve documents independently and pass them to the generator as a flat context, making complex multi-hop reasoning difficult. The model may identify relevant passages in individual documents but fail to connect them into coherent analytical conclusions.
+
+**5. Corpus quality and bias** RAG systems inherit the biases of their retrieval corpus. If the indexed documents over-represent certain perspectives, time periods, geographic regions, or methodological traditions, the system's outputs will reflect those imbalances — potentially in ways that are less visible than the biases of a standard LLM, since the retrieved documents create an illusion of empirical grounding.
+
+**6. Computational cost** RAG systems require maintaining and indexing large document corpora, running dense retrieval at inference time, and passing large contexts to the generator. This substantially increases the computational and financial cost of AI-assisted research compared to direct LLM querying, which may limit accessibility for researchers without institutional infrastructure.
+
+------------------------------------------------------------------------
+
+### Suggestions for Improving RAG
+
+**1. Iterative and adaptive retrieval** Rather than retrieving once at the start of a query, iterative RAG architectures retrieve multiple times during generation — using intermediate outputs to refine subsequent retrievals. This improves multi-hop reasoning and allows the system to progressively narrow in on relevant information.
+
+**2. Re-ranking and relevance filtering** Adding a re-ranking step between retrieval and generation — using a cross-encoder model to score retrieved passages by relevance — substantially improves the quality of the context passed to the generator and reduces the noise introduced by irrelevant documents.
+
+**3. Self-RAG and reflective generation** Self-RAG (Asai et al., 2023) trains models to decide when retrieval is needed, evaluate the relevance of retrieved passages, and assess whether their outputs are grounded — generating explicit reflection tokens that make the model's epistemic state transparent. This addresses both the retrieval quality bottleneck and the faithfulness tension.
+
+**4. Knowledge graph integration** Combining RAG with structured knowledge graphs enables more reliable multi-hop reasoning by providing explicit relational structures that the model can traverse, rather than requiring it to infer relationships from unstructured retrieved passages.
+
+**5. Corpus curation and bias auditing** Research RAG systems should be built on carefully curated, bias-audited corpora with transparent documentation of coverage, inclusion criteria, and known limitations. For academic research, this means preferring indexed peer-reviewed databases over open web retrieval and documenting corpus composition as part of the research methods.
+
+**6. Hybrid parametric-retrieval architectures** Future RAG systems should more explicitly manage the boundary between parametric knowledge (when the model should rely on what it learned during training) and retrieved knowledge (when it should defer to external documents), rather than blending them implicitly. This would improve both transparency and factual accuracy.
+
+------------------------------------------------------------------------
+
+## References
+
+-   Asai, A., et al. (2023). Self-RAG: Learning to retrieve, generate, and critique through self-reflection. *arXiv preprint arXiv:2310.11511*.
+-   Lewis, M., et al. (2020). Retrieval-augmented generation for knowledge-intensive NLP tasks. *Advances in Neural Information Processing Systems*, 33, 9459–9474.
+-   Linegar, M., Kocielnik, R., & Alvarez, R. M. (2023). Large language models and political science. *Frontiers in Political Science*, 5, 1257092.
+-   Thapa, S., et al. (2025). Large language models (LLM) in computational social science: Prospects, current state, and challenges. *Social Network Analysis and Mining*, 15(1), 1–30.
+-   Zhao, W. X., et al. (2023). A survey of large language models. *arXiv preprint arXiv:2303.18223*.
