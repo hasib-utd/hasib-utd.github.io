@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -192,7 +227,10 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#c.-vote-choice-by-income" id="toc-c.-vote-choice-by-income" class="nav-link" data-scroll-target="#c.-vote-choice-by-income">c.&nbsp;Vote Choice by Income</a></li>
   </ul></li>
   <li><a href="#what-is-the-problem-why" id="toc-what-is-the-problem-why" class="nav-link" data-scroll-target="#what-is-the-problem-why">4. What is the Problem? Why?</a></li>
-  <li><a href="#what-can-be-done-to-improve-prediction" id="toc-what-can-be-done-to-improve-prediction" class="nav-link" data-scroll-target="#what-can-be-done-to-improve-prediction">5. What Can Be Done to Improve Prediction?</a></li>
+  <li><a href="#what-can-be-done-to-improve-prediction" id="toc-what-can-be-done-to-improve-prediction" class="nav-link" data-scroll-target="#what-can-be-done-to-improve-prediction">5. What Can Be Done to Improve Prediction?</a>
+  <ul class="collapse">
+  <li><a href="#logistic-regression-plots" id="toc-logistic-regression-plots" class="nav-link" data-scroll-target="#logistic-regression-plots">Logistic Regression Plots</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -226,59 +264,252 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="setup-packages-and-data" class="level2">
 <h2 class="anchored" data-anchor-id="setup-packages-and-data">Setup: Packages and Data</h2>
-<pre class="{r} library(haven) library(tidyverse)}"><code></code></pre>
-<p><code>rrr TEDS_2016 &lt;- read_stata("https://github.com/datageneration/home/blob/master/DataProgramming/data/TEDS_2016.dta?raw=true")}</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>TEDS_2016 <span class="ot">&lt;-</span> <span class="fu">read_stata</span>(<span class="st">"https://github.com/datageneration/home/blob/master/DataProgramming/data/TEDS_2016.dta?raw=true"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
 <hr>
 </section>
 <section id="multiple-regression-model" class="level2">
 <h2 class="anchored" data-anchor-id="multiple-regression-model">1. Multiple Regression Model</h2>
-<p>I am using <code>votetsai</code> as the dependent variable and <code>Age</code>, <code>Education</code>, and <code>Income</code> as predictors.</p>
-<p><code>rrr model &lt;- lm(votetsai ~ Age + Edu + income, data = TEDS_2016) summary(model)}</code></p>
+<p>Using <code>votetsai</code> as the dependent variable and <code>age</code>, <code>edu</code>, and <code>income</code> as predictors.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(votetsai <span class="sc">~</span> age <span class="sc">+</span> edu <span class="sc">+</span> income, <span class="at">data =</span> TEDS_2016)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = votetsai ~ age + edu + income, data = TEDS_2016)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.8095 -0.5806  0.3123  0.3751  0.6035 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  1.085494   0.085071  12.760  &lt; 2e-16 ***
+age         -0.005045   0.001058  -4.766 2.10e-06 ***
+edu         -0.055280   0.012286  -4.499 7.45e-06 ***
+income      -0.004692   0.005155  -0.910    0.363    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.4789 on 1253 degrees of freedom
+  (433 observations deleted due to missingness)
+Multiple R-squared:  0.02362,   Adjusted R-squared:  0.02128 
+F-statistic:  10.1 on 3 and 1253 DF,  p-value: 1.407e-06</code></pre>
+</div>
+</div>
 <hr>
 </section>
 <section id="the-regplot-function" class="level2">
 <h2 class="anchored" data-anchor-id="the-regplot-function">2. The <code>regplot</code> Function</h2>
-<p>Now I am creating a function that combines <code>lm()</code>, <code>plot()</code>, and <code>abline()</code> to plot a regression fit line.</p>
-<p><code>rrr regplot &lt;- function(x, y) {   fit &lt;- lm(y ~ x)   plot(x, y)   abline(fit, col = "red") }</code></p>
+<p>Creating a function that combines <code>lm()</code>, <code>plot()</code>, and <code>abline()</code> to plot a regression fit line.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>regplot <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(x, y)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(fit, <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
 <hr>
 </section>
 <section id="running-regplot-on-the-dependent-variable" class="level2">
 <h2 class="anchored" data-anchor-id="running-regplot-on-the-dependent-variable">3. Running <code>regplot</code> on the Dependent Variable</h2>
 <section id="a.-vote-choice-by-age" class="level3">
 <h3 class="anchored" data-anchor-id="a.-vote-choice-by-age">a. Vote Choice by Age</h3>
-<p><code>rrr regplot(TEDS_2016$Age, TEDS_2016$votetsai) title(main = "Vote Choice (Tsai) by Age", xlab = "Age", ylab = "Vote (0 = Other, 1 = Tsai)")}</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">regplot</span>(TEDS_2016<span class="sc">$</span>age, TEDS_2016<span class="sc">$</span>votetsai)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">main =</span> <span class="st">"Vote Choice (Tsai) by Age"</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">"Age"</span>, <span class="at">ylab =</span> <span class="st">"Vote (0 = Other, 1 = Tsai)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assignment03_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="b.-vote-choice-by-education" class="level3">
 <h3 class="anchored" data-anchor-id="b.-vote-choice-by-education">b. Vote Choice by Education</h3>
-<p><code>rrr regplot(TEDS_2016$Edu, TEDS_2016$votetsai) title(main = "Vote Choice (Tsai) by Education", xlab = "Education", ylab = "Vote (0 = Other, 1 = Tsai)")}</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">regplot</span>(TEDS_2016<span class="sc">$</span>edu, TEDS_2016<span class="sc">$</span>votetsai)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">main =</span> <span class="st">"Vote Choice (Tsai) by Education"</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">"Education"</span>, <span class="at">ylab =</span> <span class="st">"Vote (0 = Other, 1 = Tsai)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assignment03_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="c.-vote-choice-by-income" class="level3">
 <h3 class="anchored" data-anchor-id="c.-vote-choice-by-income">c.&nbsp;Vote Choice by Income</h3>
-<p><code>rrr regplot(TEDS_2016$income, TEDS_2016$votetsai) title(main = "Vote Choice (Tsai) by Income", xlab = "Income", ylab = "Vote (0 = Other, 1 = Tsai)")}</code></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">regplot</span>(TEDS_2016<span class="sc">$</span>income, TEDS_2016<span class="sc">$</span>votetsai)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">main =</span> <span class="st">"Vote Choice (Tsai) by Income"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">"Income"</span>, <span class="at">ylab =</span> <span class="st">"Vote (0 = Other, 1 = Tsai)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assignment03_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 <hr>
 </section>
 </section>
 <section id="what-is-the-problem-why" class="level2">
 <h2 class="anchored" data-anchor-id="what-is-the-problem-why">4. What is the Problem? Why?</h2>
-<p>The problem is that the dependent variable <code>votetsai</code> is binary (0 = voted for other candidate, 1 = voted for Tsai Ing-wen). Linear regression assumes the outcome is continuous, so applying it to a binary variable produces several issues:</p>
+<p>The problem is that the dependent variable <code>votetsai</code> is <strong>binary</strong> (0 = voted for other candidate, 1 = voted for Tsai Ing-wen). Linear regression assumes the outcome is <strong>continuous</strong>, so applying it to a binary variable produces several issues:</p>
 <ul>
-<li>The regression line can predict values outside the range of 0 and 1, which are not valid probabilities</li>
-<li>The relationship between predictors and a binary outcome is inherently non-linear</li>
-<li>The assumption of normally distributed residuals is violated since the DV only takes two values</li>
-<li>This makes the regression line a poor and misleading fit, as visible in the plots above</li>
+<li>The regression line can predict values <strong>outside the range of 0 and 1</strong>, which are not valid probabilities</li>
+<li>The relationship between predictors and a binary outcome is inherently <strong>non-linear</strong></li>
+<li>The assumption of <strong>normally distributed residuals</strong> is violated since the DV only takes two values</li>
+<li>This makes the regression line a poor and misleading fit, as visible in the plots above where data points cluster at 0 and 1 but the fitted line cuts through the middle</li>
 </ul>
 <hr>
 </section>
 <section id="what-can-be-done-to-improve-prediction" class="level2">
 <h2 class="anchored" data-anchor-id="what-can-be-done-to-improve-prediction">5. What Can Be Done to Improve Prediction?</h2>
-<p>Since the dependent variable is binary, logistic regression is the appropriate model. It models the log-odds of the outcome and constrains predictions between 0 and 1.</p>
-<p><code>rrr logit_model &lt;- glm(votetsai ~ Age + Edu + income,                    data = TEDS_2016,                    family = binomial) summary(logit_model)}</code></p>
-<p>We can visualize the logistic fit for Age:</p>
-<p><code>rrr TEDS_2016_clean &lt;- TEDS_2016 %&gt;%   dplyr::select(votetsai, Age, Edu, income) %&gt;%   drop_na()  ggplot(TEDS_2016_clean, aes(x = Age, y = votetsai)) +   geom_jitter(height = 0.05, alpha = 0.3, color = "steelblue") +   geom_smooth(method = "glm",               method.args = list(family = binomial),               se = TRUE,               color = "red") +   labs(title = "Logistic Regression: Vote Choice (Tsai) by Age",        x = "Age", y = "Probability of Voting for Tsai") +   theme_minimal(base_size = 16)}</code></p>
-<p><code>rrr ggplot(TEDS_2016_clean, aes(x = Edu, y = votetsai)) +   geom_jitter(height = 0.05, alpha = 0.3, color = "steelblue") +   geom_smooth(method = "glm",               method.args = list(family = binomial),               se = TRUE,               color = "red") +   labs(title = "Logistic Regression: Vote Choice (Tsai) by Education",        x = "Education", y = "Probability of Voting for Tsai") +   theme_minimal(base_size = 16)}</code></p>
-<p><code>rrr ggplot(TEDS_2016_clean, aes(x = income, y = votetsai)) +   geom_jitter(height = 0.05, alpha = 0.3, color = "steelblue") +   geom_smooth(method = "glm",               method.args = list(family = binomial),               se = TRUE,               color = "red") +   labs(title = "Logistic Regression: Vote Choice (Tsai) by Income",        x = "Income", y = "Probability of Voting for Tsai") +   theme_minimal(base_size = 16)}</code></p>
+<p>Since the dependent variable is binary, <strong>logistic regression</strong> is the appropriate model. It models the <strong>log-odds</strong> of the outcome and constrains all predictions between 0 and 1.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>logit_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(votetsai <span class="sc">~</span> age <span class="sc">+</span> edu <span class="sc">+</span> income,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> TEDS_2016,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">family =</span> binomial)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = votetsai ~ age + edu + income, family = binomial, 
+    data = TEDS_2016)
+
+Coefficients:
+             Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)  2.508583   0.379569   6.609 3.87e-11 ***
+age         -0.021731   0.004656  -4.668 3.05e-06 ***
+edu         -0.238448   0.054069  -4.410 1.03e-05 ***
+income      -0.020470   0.022460  -0.911    0.362    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1661.8  on 1256  degrees of freedom
+Residual deviance: 1632.0  on 1253  degrees of freedom
+  (433 observations deleted due to missingness)
+AIC: 1640
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+<section id="logistic-regression-plots" class="level3">
+<h3 class="anchored" data-anchor-id="logistic-regression-plots">Logistic Regression Plots</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>TEDS_2016_clean <span class="ot">&lt;-</span> TEDS_2016 <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(votetsai, age, edu, income) <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(TEDS_2016_clean, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> votetsai)) <span class="sc">+</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height =</span> <span class="fl">0.05</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">color =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"glm"</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">method.args =</span> <span class="fu">list</span>(<span class="at">family =</span> binomial),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">se =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Logistic Regression: Vote Choice (Tsai) by Age"</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Age"</span>, <span class="at">y =</span> <span class="st">"Probability of Voting for Tsai"</span>) <span class="sc">+</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">16</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assignment03_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(TEDS_2016_clean, <span class="fu">aes</span>(<span class="at">x =</span> edu, <span class="at">y =</span> votetsai)) <span class="sc">+</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height =</span> <span class="fl">0.05</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">color =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"glm"</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">method.args =</span> <span class="fu">list</span>(<span class="at">family =</span> binomial),</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">se =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Logistic Regression: Vote Choice (Tsai) by Education"</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Education"</span>, <span class="at">y =</span> <span class="st">"Probability of Voting for Tsai"</span>) <span class="sc">+</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">16</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assignment03_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(TEDS_2016_clean, <span class="fu">aes</span>(<span class="at">x =</span> income, <span class="at">y =</span> votetsai)) <span class="sc">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height =</span> <span class="fl">0.05</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">color =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"glm"</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">method.args =</span> <span class="fu">list</span>(<span class="at">family =</span> binomial),</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">se =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Logistic Regression: Vote Choice (Tsai) by Income"</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Income"</span>, <span class="at">y =</span> <span class="st">"Probability of Voting for Tsai"</span>) <span class="sc">+</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">16</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assignment03_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
