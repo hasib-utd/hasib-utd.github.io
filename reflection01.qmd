@@ -1,10 +1,16 @@
 ---
-title: "AI, Originality, AGI, and Scientific Research"
+title: "Reflection Class 03: AI, Originality, AGI, and Scientific Research"
+author: "Muhammad Al Hasib"
+format:
+  html:
+    embed-resources: true
 editor: visual
 ---
 
-**AI and Originality**\
+## AI and Originality
+
 AI complicates traditional ideas of originality by shifting the focus from producing content to curating, interpreting, and refining ideas. While AI can assist with drafting or coding, the originality may lie in how researchers frame questions, evaluate outputs, and make normative judgments. From this perspective, AI does not eliminate originality but changes what counts as original intellectual contribution.
 
-**AGI and Scientific Research**\
+## AGI and Scientific Research
+
 Artificial General Intelligence (AGI) refers to systems capable of performing a wide range of cognitive tasks at or beyond human levels. If developed, AGI could dramatically accelerate scientific discovery by automating data analysis and hypothesis generation. However, it also raises concerns about epistemic authority, transparency, and the role of human judgment in research.
