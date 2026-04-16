@@ -1,0 +1,94 @@
+---
+title: "Reflection 05 (Class 9): LLMs - Capabilities, Failures, and the Future of Research"
+author: "Muhammad Al Hasib"
+format:
+  html:
+    embed-resources: true
+editor: visual
+---
+
+## What can LLMs do well, and where do they fail?
+
+### What LLMs do well
+
+Large language models have demonstrated remarkable capabilities across a wide range of knowledge-intensive tasks. Drawing on the transformer architecture introduced by Vaswani et al. (2017) and the bidirectional pre-training paradigm of BERT (Devlin et al., 2019), modern LLMs have achieved near-human or superhuman performance on several classes of problems:
+
+**Text understanding and generation:** LLMs excel at summarizing documents, generating coherent long-form text, translating between languages, and reformulating ideas across registers and audiences. For researchers, this translates into powerful tools for literature synthesis, draft generation, and communication.
+
+**In-context reasoning:** With chain-of-thought prompting, LLMs can solve multi-step reasoning problems, perform mathematical calculations, and work through logical arguments in a stepwise manner, capabilities that were largely absent in earlier language models.
+
+**Information retrieval and synthesis:** When grounded with retrieval-augmented generation (RAG) - as demonstrated by Lewis et al. (2020) - LLMs can combine parametric knowledge (stored in model weights) with non-parametric knowledge (retrieved from external documents), substantially improving factual accuracy on knowledge-intensive tasks.
+
+**Code generation and debugging:** LLMs can write, explain, and debug code across programming languages, significantly accelerating computational research workflows, including data cleaning, analysis scripting, and visualization.
+
+**Few-shot and zero-shot generalization:** Unlike traditional supervised models that require large labeled datasets for each new task, LLMs can perform new tasks from a small number of examples or even a natural language description alone, enabling rapid prototyping of analytical pipelines.
+
+------------------------------------------------------------------------
+
+### Where LLMs fail: A specific failure mode - Hallucination
+
+Despite their capabilities, LLMs exhibit several well-documented failure modes. The one I have encountered most directly and consider most consequential for academic research is **hallucination** - the confident generation of factually incorrect, fabricated, or internally inconsistent information.
+
+**What hallucination looks like in practice:** During the preparation of Assignment 02 for this course, I used multiple LLMs to generate systematic literature reviews. When I asked models to provide specific citations, several returned references that appeared formally correct - complete with author names, journal titles, volume numbers, and page ranges - but did not correspond to any real publication. For example, one model cited "Bhatore, S., Mohan, L., & Reddy, Y. R. (2020). Machine learning techniques for credit risk evaluation. *Journal of Banking and Financial Technology*, 4(1), 111–138" - a citation that looks entirely credible but required independent verification before it could be trusted. In another instance, a model cited a paper with a real author but an incorrect title, journal, and year, effectively fabricating a plausible-sounding but non-existent version of a real person's work.
+
+**Why hallucination occurs:** LLMs are trained to predict the most statistically likely next token given a context. They do not have a truth-verification mechanism - they cannot distinguish between accurate recall and plausible confabulation. When asked for a citation in a domain where training data is sparse or ambiguous, the model generates a statistically coherent but factually ungrounded response. This is qualitatively different from human error: a researcher who fabricates a citation knows they are doing so, while an LLM has no awareness of the distinction between recall and generation.
+
+**Why it is especially dangerous in academic research:** Hallucinated citations that pass into the literature without verification can corrupt the knowledge base, mislead other researchers, and undermine the cumulative nature of scientific inquiry. Chang et al. (2024) specifically identify factuality as one of the primary evaluation challenges for LLMs, noting that models perform inconsistently even on well-known factual questions. The risk is amplified when researchers use AI outputs under time pressure without systematic verification.
+
+**Mitigation strategies:** The most reliable mitigation is mandatory verification of every factual claim against primary sources. RAG architectures reduce hallucination by grounding model outputs in retrieved documents, but do not eliminate it. Calibrated uncertainty - teaching models to express confidence levels rather than generating all outputs with equal apparent authority - is an active area of research.
+
+------------------------------------------------------------------------
+
+## How generative AI will reshape Public Administration research in the next five years
+
+### The discipline: Public Administration and Behavioral Public Administration
+
+Public administration as a field sits at the intersection of political science, organizational theory, psychology, and policy analysis. Its research methods range from quantitative survey analysis and administrative data mining to qualitative case studies and ethnographic fieldwork. Generative AI will reshape this discipline unevenly - transforming some research tasks dramatically while others must remain fundamentally human-driven.
+
+------------------------------------------------------------------------
+
+### Research tasks that will change most
+
+**1. Literature synthesis and gap identification:** The volume of published research in public administration has grown beyond what any individual researcher can systematically track. Within five years, AI-assisted literature synthesis tools combining LLMs with RAG over indexed academic databases will become standard practice for scoping reviews, meta-analyses, and research proposal development. What currently takes months of reading and note-taking may be compressed into days of AI-assisted synthesis followed by targeted close reading.
+
+**2. Automated coding of qualitative data:** A substantial proportion of public administration research relies on qualitative data: open-ended survey responses, interview transcripts, policy documents, and legislative records. LLM-based coding assistance, in which the model proposes thematic codes that human researchers verify and refine, will significantly reduce the labor cost of qualitative analysis while potentially improving inter-rater reliability through standardized prompting.
+
+**3. Administrative data analysis and pattern detection:** Governments generate enormous volumes of administrative data, procurement records, service delivery logs, compliance filings, and citizen interaction records that are currently underutilized due to analytical capacity constraints. NLP pipelines and LLMs will enable researchers to mine these datasets for patterns in bureaucratic behavior, service delivery equity, and institutional responsiveness that are currently invisible.
+
+**4. Citizen sentiment and trust monitoring:** LLM-powered sentiment analysis of social media, e-participation platforms, and digital government service reviews will enable near-real-time monitoring of public trust and satisfaction with government institutions, transforming what is currently a slow, expensive survey-based process into a continuous, high-frequency analytical capability.
+
+**5. Cross-lingual comparative research:** Public administration is inherently comparative, but language barriers limit most researchers to English-language literature and cases. LLMs with strong multilingual capabilities will enable researchers to engage with non-English administrative documents, policy texts, and citizen feedback, substantially broadening the empirical base of comparative public administration.
+
+------------------------------------------------------------------------
+
+### What Should Remain Human-Driven
+
+**1. Normative and ethical judgment:** Public administration is fundamentally a normative discipline; it is concerned not only with what governments do but with what they should do. Questions about equity, democratic accountability, public value, and the ethics of governance cannot be delegated to AI systems that have no stake in the outcomes and no capacity for genuine moral reasoning. Researchers must retain the interpretive and evaluative authority to make normative claims.
+
+**2. Research design and causal inference:** Designing valid research specifying causal mechanisms, selecting appropriate identification strategies, and anticipating confounders requires deep contextual knowledge, theoretical grounding, and scientific judgment that LLMs cannot reliably provide. AI can assist with implementing a chosen design, but the design itself must remain human-driven.
+
+**3. Fieldwork and contextual knowledge production:** Ethnographic research, interviews, and participatory observation produce forms of knowledge, a tacit understanding of organizational culture, trust-based relationships with research participants, and sensitivity to irreducibly human power dynamics. Generative AI cannot conduct fieldwork, build rapport, or navigate the ethical complexities of research relationships.
+
+**4. Peer review and quality control:** The evaluation of research contributions assessing theoretical originality, methodological rigor, and substantive significance requires expert judgment that cannot be automated without degrading the quality of the scholarly record. As AI-generated text becomes more prevalent, human peer review becomes more rather than less important.
+
+**5. Accountability for research claims:** Regardless of how AI tools assist in the research process, intellectual and ethical accountability for published claims must remain with human researchers. The growing use of AI in research makes transparent disclosure of AI contributions more important, not less, and the responsibility for errors, omissions, and harms rests with the authors, not the tools they used.
+
+------------------------------------------------------------------------
+
+### A Personal Research Perspective
+
+For my own research on public trust in government and e-government adoption, generative AI will most substantially change how I collect and analyze citizen feedback data, synthesize interdisciplinary literature, and pre-test survey instruments. However, the core intellectual contributions theorizing the mechanisms through which technology shapes trust, designing causal identification strategies, and making normative arguments about what transparent and accountable digital government should look like must remain mine. AI is a powerful research assistant. It is not, and should not become, a substitute for the researcher.
+
+------------------------------------------------------------------------
+
+## References
+
+Chang, Y., et al. (2024). A survey on the evaluation of large language models. *ACM Transactions on Intelligent Systems and Technology*, 15, 31–45.
+
+Devlin, J., Chang, M.-W., Lee, K., & Toutanova, K. (2019). BERT: Pre-training of deep bidirectional transformers for language understanding. *Proceedings of NAACL*, 4171–4186.
+
+Lewis, M., et al. (2020). Retrieval-augmented generation for knowledge-intensive NLP tasks. *Advances in Neural Information Processing Systems*, 33, 9459–9474.
+
+Vaswani, A., et al. (2017). Attention is all you need. *Advances in Neural Information Processing Systems*, 30, 5998–6008.
+
+Zhao, W. X., et al. (2023). A survey of large language models. *arXiv preprint arXiv:2303.18223*.
