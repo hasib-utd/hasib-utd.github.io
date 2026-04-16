@@ -51,6 +51,9 @@ website:
           - text: "Reflection Week 03"
             href: reflection03.html
             
+          - text: "Reflection 04 (Class 8)"
+            href: reflection04.html
+            
           - text: "— Labs —"
             href: assignments.html
             
