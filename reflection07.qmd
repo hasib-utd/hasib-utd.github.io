@@ -1,0 +1,171 @@
+---
+title: "Reflection 07 (Class 11): Knowledge Graphs and Research Domain Mapping"
+author: "Muhammad Al Hasib"
+format:
+  html:
+    embed-resources: true
+editor: visual
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## What is a knowledge graph and how does it differ from a traditional database or vector store?
+
+### What is a Knowledge Graph?
+
+A knowledge graph is a structured representation of knowledge in which entities (nodes) and the relationships between them (edges) are explicitly encoded in a graph format. Each node represents a real-world object, concept, or event a person, organization, policy, institution, or idea and each edge represents a named, typed relationship between two nodes. For example: **\[Citizen\] --trusts--\> \[Government Institution\]**, or **\[E-Government Platform\] --increases--\> \[Service Quality\]**.
+
+Knowledge graphs originated in semantic web research and were popularized at scale by Google's Knowledge Graph (2012), which powers the factual panels in search results. Since then, they have been adopted across biomedical research, financial intelligence, and social science as a way of representing complex, interconnected domain knowledge in a machine-readable and queryable format.
+
+------------------------------------------------------------------------
+
+### How knowledge graphs differ from traditional databases and vector stores
+
+| Feature | Traditional Database | Vector Store | Knowledge Graph |
+|------------------|------------------|------------------|------------------|
+| **Structure** | Tabular (rows and columns) | High-dimensional vectors | Graph (nodes and edges) |
+| **Relationships** | Implicit via foreign keys | Similarity via distance | Explicit, named, typed |
+| **Query language** | SQL | Nearest-neighbor search | SPARQL, Cypher, graph traversal |
+| **Semantics** | Schema-defined, rigid | Learned from embeddings | Ontology-defined, flexible |
+| **Reasoning** | Limited to joins | Semantic similarity | Multi-hop inference |
+| **Interpretability** | High | Low | High |
+| **Best for** | Structured, uniform data | Unstructured text similarity | Complex relational reasoning |
+
+**Traditional relational databases:** They store data in fixed schema tables with predefined columns and types. Relationships between tables are expressed through foreign key constraints and resolved through SQL joins. While powerful for structured, uniform data, relational databases cannot easily represent heterogeneous entities, dynamic relationship types, or chains of reasoning that span multiple hops across entities.
+
+**Vector stores** (such as Pinecone, Weaviate, or FAISS) store data as high-dimensional embedding vectors and support retrieval based on semantic similarity. They are highly effective for finding documents or passages that are semantically related to a query, a core component of RAG systems. However, vector stores do not encode explicit relationships between entities: they can tell you that two documents are similar, but not *how* or *why* they are related, or what kind of relationship connects the entities they describe.
+
+**Knowledge graphs** combine the interpretability of relational databases with the flexibility to represent heterogeneous entities and explicit, typed relationships. They support multi-hop reasoning traversing chains of relationships to answer complex questions and can be integrated with language models to ground reasoning in structured domain knowledge.
+
+------------------------------------------------------------------------
+
+### Why relationships between entities are valuable for knowledge mining
+
+The core value of a knowledge graph for knowledge mining lies in the explicit representation of relationships, which enables several analytical capabilities unavailable to flat datasets:
+
+**1. Multi-hop inference:** A knowledge graph can answer questions like "Which government institutions are trusted by citizens who have used digital services that were rated highly for transparency?", a question requiring traversal of three relationship types across four entity types. No flat dataset or vector store can answer this directly.
+
+**2. Path analysis:** Knowledge graphs reveal the pathways through which influence, information, or causal effects propagate across a system, for example, how a change in digital infrastructure policy flows through institutional adoption decisions to citizen trust outcomes.
+
+**3. Contextual disambiguation:** The same entity can have different meanings in different relational contexts. Knowledge graphs encode these contextual relationships explicitly, enabling more precise analytical inferences.
+
+**4. Anomaly detection:** Unexpected relationship patterns, entities that should be connected but are not, or unexpected connection paths can reveal gaps, contradictions, or novel patterns in the knowledge domain.
+
+**5. Integration of heterogeneous sources:** Knowledge graphs can integrate entities and relationships extracted from multiple data sources, survey datasets, policy documents, administrative records, and social media into a unified relational structure that enables cross-source inference.
+
+------------------------------------------------------------------------
+
+## A knowledge graph for my research domain
+
+### Research Domain: Public Trust, E-Government Adoption, and Behavioral Public Administration
+
+My research examines how citizens' behavioral responses to digital government technologies shape their trust in public institutions. The following knowledge graph identifies three core entities and three relationships that structure this domain.
+
+### Three Entities
+
+1.  **Citizen**: An individual who interacts with government services, forms attitudes toward public institutions, and makes behavioral decisions about adopting or avoiding digital government platforms
+2.  **E-Government Platform**: A digital interface through which government services are delivered to citizens (e.g., online tax filing, digital ID systems, e-participation portals, social welfare applications)
+3.  **Government Institution**: A public organization responsible for designing, deploying, and administering government services and digital infrastructure (e.g., tax authority, social services agency, municipal government)
+
+### Three Relationships
+
+1.  **\[Citizen\] --trusts--\> \[Government Institution\]**: Citizens hold varying levels of institutional trust toward specific government organizations, shaped by their prior experiences, values, and perceptions of institutional competence, integrity, and benevolence
+2.  **\[Citizen\] --adopts--\> \[E-Government Platform\]**: Citizens make behavioral adoption decisions about digital government services, influenced by perceived usefulness, ease of use, digital literacy, and trust in the deploying institution
+3.  **\[E-Government Platform\] --deployed_by--\> \[Government Institution\]**: Digital platforms are designed, deployed, and maintained by specific government institutions, whose reputation, communication style, and service quality shape citizen perceptions of those platforms
+
+### Knowledge graph visualization
+
+```{r}
+#| fig-width: 10
+#| fig-height: 6
+
+library(ggplot2)
+
+# Nodes
+nodes <- data.frame(
+  x = c(1, 5, 9),
+  y = c(3, 6, 3),
+  label = c("Citizen", "E-Government\nPlatform", "Government\nInstitution"),
+  type = c("citizen", "platform", "institution")
+)
+
+# Edges with labels
+edges <- data.frame(
+  x    = c(1,   1,   5),
+  y    = c(3,   3,   6),
+  xend = c(5,   9,   9),
+  yend = c(6,   3,   3),
+  label = c("adopts", "trusts", "deployed_by")
+)
+
+# Midpoints for edge labels
+edges$mx <- (edges$x + edges$xend) / 2
+edges$my <- (edges$y + edges$yend) / 2
+
+colors <- c("citizen" = "#2980b9",
+            "platform" = "#27ae60",
+            "institution" = "#e74c3c")
+
+ggplot() +
+  geom_segment(data = edges,
+               aes(x = x, y = y, xend = xend, yend = yend),
+               arrow = arrow(length = unit(0.35, "cm"), type = "closed"),
+               color = "gray50", linewidth = 1.2) +
+  geom_label(data = edges,
+             aes(x = mx, y = my, label = label),
+             size = 4, fontface = "italic",
+             fill = "white", color = "gray30",
+             label.size = 0.3) +
+  geom_point(data = nodes,
+             aes(x = x, y = y, color = type),
+             size = 22, alpha = 0.92) +
+  geom_text(data = nodes,
+            aes(x = x, y = y, label = label),
+            size = 4, fontface = "bold", color = "white",
+            lineheight = 0.9) +
+  scale_color_manual(values = colors) +
+  labs(title = "Knowledge Graph: Public Trust and E-Government Adoption",
+       subtitle = "Technology and Public Management — Behavioral Public Administration") +
+  theme_void(base_size = 13) +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5, size = 14),
+        plot.subtitle = element_text(hjust = 0.5, color = "gray50", size = 11),
+        legend.position = "none")
+```
+
+------------------------------------------------------------------------
+
+### How this structure helps answer questions, a flat dataset cannot
+
+A flat dataset in this research domain would typically contain rows representing individual citizens, with columns for demographic variables, adoption behavior, and trust scores. While this supports regression analysis and descriptive statistics, it cannot answer several classes of questions that the knowledge graph structure enables:
+
+**1. Path-dependent questions:** *"Does the pathway from citizen adoption to institutional trust differ depending on which specific e-government platform was used and which institution deployed it?"*
+
+A flat dataset with aggregate adoption and trust scores cannot distinguish between pathways it can only test whether adoption and trust are correlated. The knowledge graph encodes the specific platform-institution deployment relationships, enabling analysis of whether trust effects are platform-specific or institution-specific.
+
+**2. Indirect relationship questions:** *"Are citizens who trust high-performing institutions more likely to adopt platforms deployed by those institutions, and does that adoption in turn reinforce trust?"*
+
+This question involves a feedback loop, trust influences adoption, which influences trust that a static flat dataset cannot represent. The knowledge graph can encode longitudinal or dynamic relationship updates that model reciprocal causation.
+
+**3. Missing relationship detection:** *"Which government institutions have deployed e-government platforms but have no citizen adoption records in high-trust segments?"*
+
+This is a graph query about the absence of expected relationships, a class of questions that is straightforward in graph traversal but extremely difficult in tabular SQL queries.
+
+**4. Network centrality and influence:** *"Which e-government platforms are most central to the trust network, meaning their adoption or failure has the greatest downstream effect on institutional trust across the broadest range of citizens?"*
+
+Network centrality measures (degree, betweenness, PageRank) applied to the knowledge graph can identify structurally influential entities that would be invisible in a flat dataset focused on individual-level correlations.
+
+**5. Cross-domain integration:** The knowledge graph can be extended to integrate entities from other data sources policy documents, administrative performance records, and social media sentiment linking them to the same citizen, platform, and institution nodes. A flat dataset would require complex merging operations that often lose relational context; the knowledge graph preserves it by design.
+
+------------------------------------------------------------------------
+
+## References
+
+Koroteev, M. V. (2021). BERT: A review of applications in natural language processing and understanding. *arXiv preprint arXiv:2103.11943*.
+
+Molnar, C. (2019). *Interpretable Machine Learning: A Guide for Making Black Box Models Explainable*. Retrieved from https://christophm.github.io/interpretable-ml-book/
+
+Hogan, A., et al. (2021). Knowledge graphs. *ACM Computing Surveys*, 54(4), 1–37.
+
+Bannister, F., & Connolly, R. (2011). Trust and transformational government. *Government Information Quarterly*, 28(2), 137–147.
