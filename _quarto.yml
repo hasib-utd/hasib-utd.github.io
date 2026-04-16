@@ -42,11 +42,14 @@ website:
           - text: "— Reflections —"
             href: assignments.html
             
-          - text: "Reflection 01"
+          - text: "Reflection Week 01"
             href: reflection01.html
             
-          - text: "Reflection 02"
+          - text: "Reflection Week 02"
             href: reflection02.html
+            
+          - text: "Reflection Week 03"
+            href: reflection03.html
             
           - text: "— Labs —"
             href: assignments.html

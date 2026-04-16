@@ -1,8 +1,0 @@
----
-title: "reflection04"
-editor: visual
----
-
-After building a simple machine learning pipeline, I realized that achieving a reasonable accuracy score did not mean the model had learned meaningful patterns. Error analysis revealed that certain cases were consistently misclassified, suggesting that the model struggled with boundary cases rather than general patterns.
-
-This experience highlighted how overfitting reflects the difference between knowledge and noise. While the model appeared accurate on training data, it failed to generalize, indicating that it had memorized noise rather than learned knowledge.

@@ -2,7 +2,7 @@
 title: "Muhammad Al Hasib"
 about:
   template: trestles
-  image: images/IMAGE01.PNG
+  image: IMAGE01.PNG
   links:
     - icon: linkedin
       text: LinkedIn

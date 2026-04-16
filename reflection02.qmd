@@ -1,16 +1,147 @@
 ---
-title: "Using AI in Research Projects"
+title: "Reflection 02 (Class 6): ML Pipeline, Error Analysis, and Overfitting"
+author: "Muhammad Al Hasib"
+format:
+  html:
+    embed-resources: true
 editor: visual
+execute:
+  echo: true
+  warning: false
+  message: false
 ---
 
-**Using AI for My Project**
+## First ML Pipeline: Predicting Vote Choice with TEDS 2016
 
-My research focuses on the adoption of artificial intelligence in public services. At this stage, my primary challenge is refining research questions and navigating a large interdisciplinary literature. I plan to start using AI as a cognitive support tool to organize ideas and explore alternative analytical strategies rather than as a replacement for original thinking.
+The following ML pipeline uses the TEDS 2016 dataset to predict vote choice for Tsai Ing-wen using logistic regression, a decision tree, and a random forest. The pipeline covers data preparation, model training, evaluation, and error analysis.
 
-**AI Model 1: ChatGPT**
+### Setup
 
-I plan to use ChatGPT to translate theoretical concepts into analytical steps, assist with R code development, and clarify methodological tradeoffs. This model is particularly useful for iterative questioning and debugging. However, I will independently verify outputs to avoid over‑reliance.
+```{r}
+library(haven)
+library(tidyverse)
+library(caret)
+library(rpart)
+library(rpart.plot)
+library(randomForest)
+```
 
-**AI Model 2: Claude**
+### Load and Prepare Data
 
-I will use this model primarily for literature discovery and summarization, especially in unfamiliar domains. Its ability to point to sources helps me maintain transparency and research integrity.
+```{r}
+TEDS_2016 <- read_stata("https://github.com/datageneration/home/blob/master/DataProgramming/data/TEDS_2016.dta?raw=true")
+
+teds <- TEDS_2016 %>%
+  mutate(
+    vote = factor(votetsai, levels = c(0, 1), labels = c("Other", "Tsai")),
+    gender = factor(female, levels = c(0, 1), labels = c("Male", "Female"))
+  ) %>%
+  dplyr::select(vote, gender, age, edu, income, Taiwanese, Econ_worse, DPP) %>%
+  drop_na()
+
+glimpse(teds)
+```
+
+### Train-Test Split
+
+```{r}
+set.seed(6323)
+train_index <- createDataPartition(teds$vote, p = 0.7, list = FALSE)
+train_data <- teds[train_index, ]
+test_data  <- teds[-train_index, ]
+
+cat("Training set:", nrow(train_data), "observations\n")
+cat("Test set:", nrow(test_data), "observations\n")
+```
+
+### Model 1: Logistic Regression
+
+```{r}
+logit_model <- glm(vote ~ age + gender + edu + income + Taiwanese + Econ_worse + DPP,
+                   data = train_data,
+                   family = binomial)
+
+logit_probs <- predict(logit_model, newdata = test_data, type = "response")
+logit_pred  <- factor(ifelse(logit_probs > 0.5, "Tsai", "Other"), levels = c("Other", "Tsai"))
+
+cm_logit <- confusionMatrix(logit_pred, test_data$vote)
+cm_logit
+```
+
+### Model 2: Decision Tree
+
+```{r}
+tree_model <- rpart(vote ~ age + gender + edu + income + Taiwanese + Econ_worse + DPP,
+                    data = train_data, method = "class")
+
+rpart.plot(tree_model, type = 4, extra = 104,
+           main = "Decision Tree: Vote Choice",
+           box.palette = "BuGn", cex = 1.1)
+
+tree_pred <- predict(tree_model, newdata = test_data, type = "class")
+cm_tree <- confusionMatrix(tree_pred, test_data$vote)
+cm_tree
+```
+
+### Model 3: Random Forest
+
+```{r}
+set.seed(6323)
+rf_model <- randomForest(vote ~ age + gender + edu + income + Taiwanese + Econ_worse + DPP,
+                         data = train_data, ntree = 500, importance = TRUE)
+
+rf_pred <- predict(rf_model, newdata = test_data)
+cm_rf <- confusionMatrix(rf_pred, test_data$vote)
+cm_rf
+```
+
+### Model Comparison
+
+```{r}
+results <- tibble(
+  Model    = c("Logistic Regression", "Decision Tree", "Random Forest"),
+  Accuracy = c(cm_logit$overall["Accuracy"],
+               cm_tree$overall["Accuracy"],
+               cm_rf$overall["Accuracy"]),
+  Sensitivity = c(cm_logit$byClass["Sensitivity"],
+                  cm_tree$byClass["Sensitivity"],
+                  cm_rf$byClass["Sensitivity"]),
+  Specificity = c(cm_logit$byClass["Specificity"],
+                  cm_tree$byClass["Specificity"],
+                  cm_rf$byClass["Specificity"]),
+  Kappa = c(cm_logit$overall["Kappa"],
+            cm_tree$overall["Kappa"],
+            cm_rf$overall["Kappa"])
+)
+
+knitr::kable(results, digits = 3,
+             caption = "Model Comparison: Accuracy, Sensitivity, Specificity, and Kappa")
+```
+
+------------------------------------------------------------------------
+
+## Error Analysis: What Did Accuracy Alone Miss? How Does Overfitting Relate to Knowledge vs. Noise?
+
+### What Error Analysis Revealed
+
+Accuracy alone is an incomplete measure of model performance, particularly when classes are imbalanced or when the costs of different error types differ.
+
+In this pipeline, the TEDS 2016 dataset has an imbalanced vote distribution: approximately 63% of respondents voted for Tsai and 37% for other candidates. A naive model that always predicted "Tsai" would achieve 63% accuracy without learning anything meaningful. Accuracy alone would not expose this failure.
+
+Error analysis through the confusion matrix reveals two types of errors:
+
+-   **False Positives (Type I Error):** Predicting "Tsai" when the respondent voted for another candidate
+-   **False Negatives (Type II Error):** Predicting "Other" when the respondent actually voted for Tsai
+
+The **sensitivity** and **specificity** from the confusion matrix reveal that the three models differ meaningfully in how they distribute these errors — even when their overall accuracy is similar. The decision tree showed higher sensitivity but lower specificity than logistic regression, meaning it was better at identifying Tsai voters but more likely to misclassify non-Tsai voters. This tradeoff is invisible if we only examine accuracy.
+
+**Kappa** — which corrects for chance agreement — provides a more honest assessment of model performance than raw accuracy under class imbalance.
+
+### Overfitting: Knowledge vs. Noise
+
+Overfitting occurs when a model learns the noise and idiosyncratic patterns in the training data rather than the underlying generalizable signal. An overfit model performs well on training data but poorly on unseen test data.
+
+-   **Knowledge** refers to stable, generalizable patterns — the real relationships between variables and outcomes that hold across contexts (e.g., DPP partisanship predicts Tsai support)
+-   **Noise** refers to random variation, measurement error, and sample-specific quirks that do not generalize
+
+An overfit model mistakes noise for knowledge. Cross-validation, regularization, and ensemble methods like random forests address overfitting by averaging across multiple models, reducing variance without sacrificing too much bias. In this pipeline, the random forest's ensemble approach makes it more robust to overfitting than the single decision tree, evident in its higher test accuracy and more balanced error profile.
