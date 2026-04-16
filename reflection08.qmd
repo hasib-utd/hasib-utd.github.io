@@ -1,0 +1,97 @@
+---
+title: "Reflection 08 (Class 12): AI for Science and Agentic AI Research Workflows"
+author: "Muhammad Al Hasib"
+format:
+  html:
+    embed-resources: true
+editor: visual
+---
+
+## Q4a. What Does "AI for Science" Mean? How Do Agentic AI Systems Change the Research Workflow?
+
+### What Does "AI for Science" Mean?
+
+"AI for Science" refers to the deliberate application of artificial intelligence systems — including machine learning, natural language processing, and increasingly agentic AI — to accelerate, augment, and transform the core processes of scientific inquiry. It is distinct from AI as a research *object* (studying AI systems themselves) and from AI as a productivity *tool* (using AI to write emails or format documents). AI for Science treats AI as an active participant in the research process: generating hypotheses, designing experiments, analyzing data, synthesizing literature, and reasoning about uncertainty.
+
+The concept gained institutional momentum with major investments from funding agencies and research institutions — including Google DeepMind's AlphaFold, which predicted protein structures at a scale and accuracy previously unimaginable, and Microsoft's partnership with OpenAI to build AI-assisted research platforms. In social science and public administration, AI for Science is emerging more cautiously but with significant potential, particularly for analyzing administrative data at scale, synthesizing interdisciplinary literature, and modeling complex behavioral phenomena.
+
+At its core, AI for Science rests on three premises:
+
+1.  **Scale:** Scientific data — genomic sequences, climate records, administrative archives, social media corpora — has grown beyond the capacity of human researchers to process manually. AI systems can operate at scales that are qualitatively inaccessible to unaided human cognition.
+2.  **Pattern discovery:** AI systems can identify subtle, high-dimensional patterns in complex data that human researchers might not think to look for, generating hypotheses that can then be tested through conventional scientific methods.
+3.  **Acceleration:** AI can compress research timelines — reducing the time from data collection to insight, from hypothesis to experimental test, from literature search to synthesis — enabling faster iteration across the scientific cycle.
+
+------------------------------------------------------------------------
+
+### What is Agentic AI?
+
+A **single-prompt LLM interaction** is stateless and reactive: the researcher submits a query, the model generates a response, and the interaction ends. The model has no memory of prior exchanges, no ability to take actions in the world, and no capacity to plan across multiple steps. It is a powerful tool for answering questions but not for conducting research.
+
+An **agentic AI system** is fundamentally different. It combines an LLM with:
+
+-   **Planning:** The ability to decompose a complex goal into a sequence of sub-tasks and determine the order in which they must be completed
+-   **Tool use:** The ability to call external tools — web search, code execution, database queries, API calls, file reading and writing — to gather information and take actions in the world
+-   **Memory:** The ability to maintain state across steps, storing intermediate results and using them to inform subsequent decisions
+-   **Multi-step reasoning:** The ability to evaluate intermediate outputs, decide whether they are sufficient, and iterate — retrying failed steps, revising plans, and adjusting strategies based on what has been learned
+
+------------------------------------------------------------------------
+
+### How Agentic AI Changes the Research Workflow
+
+The shift from single-prompt to agentic AI interaction represents a qualitative change in how AI can participate in research — not just answering questions but conducting investigations.
+
+**1. From reactive to proactive research assistance**
+
+In a single-prompt workflow, the researcher must specify every step explicitly: "Summarize this paper." "Now identify the key variables." "Now compare it to this other paper." Each step requires human initiation and the researcher must hold the overall research plan in their own head.
+
+In an agentic workflow, the researcher specifies a high-level goal — "Conduct a systematic review of studies on e-government adoption and public trust published since 2018" — and the agent plans and executes the sub-tasks autonomously: searching databases, retrieving papers, extracting key findings, identifying patterns, and synthesizing results. The researcher reviews the output and provides feedback, but is not required to manage each step.
+
+**2. Tool use enables empirical grounding**
+
+Single-prompt LLMs can only reason about information in their training data. Agentic systems that can call web search APIs, execute R or Python code, query academic databases, and read uploaded files can conduct genuinely empirical investigations. For my research, an agent that can retrieve citizen feedback from government service portals, run sentiment analysis code, query a RAG system over policy documents, and synthesize the results into a structured analysis represents a qualitatively different research capability than a chatbot answering questions.
+
+**3. Multi-step reasoning enables complex inference**
+
+Research questions in public administration rarely have simple one-step answers. Understanding the relationship between e-government adoption and institutional trust requires: identifying relevant data sources, selecting appropriate measures, controlling for confounders, testing alternative specifications, and interpreting results in theoretical context. An agentic system with multi-step reasoning can work through this chain of analytical decisions sequentially, evaluating each step before proceeding — approximating the deliberative reasoning process of a human researcher.
+
+**4. Iteration and self-correction**
+
+Agentic systems can evaluate their own intermediate outputs and decide whether to continue, revise, or try an alternative approach. If a database search returns insufficient results, the agent can reformulate the search query. If a code execution fails, the agent can debug and retry. This capacity for self-correction substantially reduces the human labor required to manage AI-assisted research workflows.
+
+**5. Workflow automation and reproducibility**
+
+Agentic pipelines can be designed to execute entire research workflows — data collection, preprocessing, analysis, visualization, and reporting — in a documented, reproducible sequence. For computational social science research, this enables the kind of transparent, end-to-end reproducibility that is increasingly expected in the field.
+
+------------------------------------------------------------------------
+
+### Implications for My Research Project
+
+For my research on public trust and e-government adoption, a project pipeline integrating agentic AI would look like:
+
+**Data collection:** An agent retrieves citizen feedback from government service portals and social media using web scraping and API calls, stores data in a structured format, and flags data quality issues.
+
+**LLM + RAG:** A RAG system built over a corpus of government policy documents and academic literature provides context for interpreting citizen feedback in relation to institutional communication strategies.
+
+**Reasoning:** A reasoning agent applies sentiment analysis and topic modeling to the citizen feedback corpus, cross-references findings with retrieved policy documents, and generates structured summaries of patterns.
+
+**Synthesis:** The agent integrates quantitative outputs (sentiment scores, topic distributions) with qualitative context (retrieved policy excerpts, theoretical literature) into a coherent analytical narrative.
+
+This architecture moves beyond any single tool — it is a coordinated system in which each component performs the task it is best suited for, orchestrated by an agent that maintains the overall research goal across multiple steps.
+
+------------------------------------------------------------------------
+
+### Limitations and the Continued Role of Human Judgment
+
+Agentic AI systems introduce new risks alongside their capabilities. Autonomous multi-step systems can compound errors — a flawed early decision propagates through subsequent steps in ways that are harder to catch than single-prompt errors. Tool use introduces security and privacy risks, particularly when agents access external systems or handle sensitive research data. And the opacity of agentic planning processes raises accountability questions: when an agent makes a methodological decision autonomously, the researcher may not be aware of the choice that was made.
+
+The fundamental principle remains: agentic AI systems are powerful research assistants, but the intellectual and ethical responsibility for research outputs rests with the human researcher. Agentic workflows require more careful human oversight, not less — the researcher must understand what the agent is doing at each step, evaluate the quality of its decisions, and be prepared to intervene when the agent makes errors or takes inappropriate shortcuts.
+
+------------------------------------------------------------------------
+
+## References
+
+-   Lewis, M., et al. (2020). Retrieval-augmented generation for knowledge-intensive NLP tasks. *Advances in Neural Information Processing Systems*, 33, 9459–9474.
+-   Koroteev, M. V. (2021). BERT: A review of applications in natural language processing and understanding. *arXiv preprint arXiv:2103.11943*.
+-   Molnar, C. (2019). *Interpretable Machine Learning: A Guide for Making Black Box Models Explainable*. https://christophm.github.io/interpretable-ml-book/
+-   Wang, L., et al. (2024). A survey on large language model based autonomous agents. *Frontiers of Computer Science*, 18(6), 186345.
+-   Jumper, J., et al. (2021). Highly accurate protein structure prediction with AlphaFold. *Nature*, 596(7873), 583–589.
