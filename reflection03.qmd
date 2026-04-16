@@ -1,0 +1,92 @@
+---
+title: "Reflection 03 (Class 7): Prediction, Explanation, and Causal Reasoning"
+author: "Muhammad Al Hasib"
+format:
+  html:
+    embed-resources: true
+editor: visual
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## Prediction vs. Explanation
+
+**Prediction** asks: *What will happen?* **Explanation** asks: *Why does it happen?*
+
+**When explanation matters:** Policy design requires understanding mechanisms. If a government wants to reduce public distrust in digital services, knowing distrust correlates with low digital literacy is insufficient — policymakers must know whether digital literacy *causes* distrust or whether both are driven by age or socioeconomic status.
+
+**When prediction suffices:** Operational decisions often need only accurate forecasts. A city allocating road maintenance resources needs to know which roads will fail — not why deterioration occurs.
+
+**Research example:** For e-government adoption and citizen satisfaction, predictive models identify who will use digital services. But designing services that increase trust requires explanatory models identifying which interface features drive satisfaction, controlling for confounders.
+
+------------------------------------------------------------------------
+
+## Causal Diagram: Technology Adoption and Public Trust
+
+The diagram below illustrates a relationship central to my research in Technology and Public Management.
+
+```{r}
+#| fig-width: 10
+#| fig-height: 5
+
+library(ggplot2)
+
+nodes <- data.frame(
+  x = c(1, 5, 3, 3, 3),
+  y = c(3, 3, 5, 1, 3),
+  label = c("E-Government\nAdoption", "Public Trust\nin Government",
+            "Digital\nLiteracy", "Socioeconomic\nStatus",
+            "Perceived\nService Quality"),
+  type = c("treatment", "outcome", "confounder", "confounder", "mediator")
+)
+
+edges <- data.frame(
+  x    = c(1, 1, 3, 3, 3, 3),
+  y    = c(3, 3, 5, 5, 1, 1),
+  xend = c(3, 5, 1, 5, 1, 5),
+  yend = c(3, 3, 3, 3, 3, 3)
+)
+
+colors <- c("treatment" = "#2980b9", "outcome" = "#27ae60",
+            "confounder" = "#e74c3c", "mediator" = "#16a085")
+
+ggplot() +
+  geom_segment(data = edges,
+               aes(x = x, y = y, xend = xend, yend = yend),
+               arrow = arrow(length = unit(0.3, "cm"), type = "closed"),
+               color = "gray50", linewidth = 0.8, linetype = "dashed") +
+  geom_point(data = nodes,
+             aes(x = x, y = y, color = type),
+             size = 18, alpha = 0.9) +
+  geom_text(data = nodes,
+            aes(x = x, y = y, label = label),
+            size = 3.5, fontface = "bold", color = "white",
+            lineheight = 0.9) +
+  scale_color_manual(values = colors,
+                     labels = c("Confounder", "Mediator", "Outcome", "Treatment")) +
+  labs(title = "Causal Diagram: E-Government Adoption and Public Trust",
+       subtitle = "Technology and Public Management Research Area",
+       color = "Node Type") +
+  theme_void(base_size = 14) +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5, color = "gray50"),
+        legend.position = "bottom")
+```
+
+### Key Variables
+
+-   **Treatment:** E-Government Technology Adoption
+-   **Outcome:** Public Trust in Government
+-   **Mediator:** Perceived Service Quality
+-   **Confounders:** Digital Literacy, Socioeconomic Status
+
+### Distinguishing Causal Claims from Predictive Associations
+
+A predictive association establishes that adoption and trust co-occur. This could arise from true causation, reverse causation, or confounding. To establish causation:
+
+-   **RCTs:** Randomly assign citizens to use or not use e-government services
+-   **Instrumental Variables:** Use exogenous broadband infrastructure variation as instrument
+-   **Difference-in-Differences:** Compare trust changes across jurisdictions adopting at different times
+-   **SEM:** Explicitly model the mediating role of perceived service quality
