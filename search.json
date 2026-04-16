@@ -179,49 +179,49 @@
     "href": "assignment03.html",
     "title": "Assignment 03: ML Exercise",
     "section": "",
-    "text": "rrr TEDS_2016 &lt;- read_stata(\"https://github.com/datageneration/home/blob/master/DataProgramming/data/TEDS_2016.dta?raw=true\")}"
+    "text": "Code\nlibrary(haven)\nlibrary(tidyverse)\n\n\n\n\nCode\nTEDS_2016 &lt;- read_stata(\"https://github.com/datageneration/home/blob/master/DataProgramming/data/TEDS_2016.dta?raw=true\")"
   },
   {
     "objectID": "assignment03.html#setup-packages-and-data",
     "href": "assignment03.html#setup-packages-and-data",
     "title": "Assignment 03: ML Exercise",
     "section": "",
-    "text": "rrr TEDS_2016 &lt;- read_stata(\"https://github.com/datageneration/home/blob/master/DataProgramming/data/TEDS_2016.dta?raw=true\")}"
+    "text": "Code\nlibrary(haven)\nlibrary(tidyverse)\n\n\n\n\nCode\nTEDS_2016 &lt;- read_stata(\"https://github.com/datageneration/home/blob/master/DataProgramming/data/TEDS_2016.dta?raw=true\")"
   },
   {
     "objectID": "assignment03.html#multiple-regression-model",
     "href": "assignment03.html#multiple-regression-model",
     "title": "Assignment 03: ML Exercise",
     "section": "1. Multiple Regression Model",
-    "text": "1. Multiple Regression Model\nI am using votetsai as the dependent variable and Age, Education, and Income as predictors.\nrrr model &lt;- lm(votetsai ~ Age + Edu + income, data = TEDS_2016) summary(model)}"
+    "text": "1. Multiple Regression Model\nUsing votetsai as the dependent variable and age, edu, and income as predictors.\n\n\nCode\nmodel &lt;- lm(votetsai ~ age + edu + income, data = TEDS_2016)\nsummary(model)\n\n\n\nCall:\nlm(formula = votetsai ~ age + edu + income, data = TEDS_2016)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-0.8095 -0.5806  0.3123  0.3751  0.6035 \n\nCoefficients:\n             Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)  1.085494   0.085071  12.760  &lt; 2e-16 ***\nage         -0.005045   0.001058  -4.766 2.10e-06 ***\nedu         -0.055280   0.012286  -4.499 7.45e-06 ***\nincome      -0.004692   0.005155  -0.910    0.363    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.4789 on 1253 degrees of freedom\n  (433 observations deleted due to missingness)\nMultiple R-squared:  0.02362,   Adjusted R-squared:  0.02128 \nF-statistic:  10.1 on 3 and 1253 DF,  p-value: 1.407e-06"
   },
   {
     "objectID": "assignment03.html#the-regplot-function",
     "href": "assignment03.html#the-regplot-function",
     "title": "Assignment 03: ML Exercise",
     "section": "2. The regplot Function",
-    "text": "2. The regplot Function\nNow I am creating a function that combines lm(), plot(), and abline() to plot a regression fit line.\nrrr regplot &lt;- function(x, y) {   fit &lt;- lm(y ~ x)   plot(x, y)   abline(fit, col = \"red\") }"
+    "text": "2. The regplot Function\nCreating a function that combines lm(), plot(), and abline() to plot a regression fit line.\n\n\nCode\nregplot &lt;- function(x, y) {\n  fit &lt;- lm(y ~ x)\n  plot(x, y)\n  abline(fit, col = \"red\")\n}"
   },
   {
     "objectID": "assignment03.html#running-regplot-on-the-dependent-variable",
     "href": "assignment03.html#running-regplot-on-the-dependent-variable",
     "title": "Assignment 03: ML Exercise",
     "section": "3. Running regplot on the Dependent Variable",
-    "text": "3. Running regplot on the Dependent Variable\n\na. Vote Choice by Age\nrrr regplot(TEDS_2016$Age, TEDS_2016$votetsai) title(main = \"Vote Choice (Tsai) by Age\", xlab = \"Age\", ylab = \"Vote (0 = Other, 1 = Tsai)\")}\n\n\nb. Vote Choice by Education\nrrr regplot(TEDS_2016$Edu, TEDS_2016$votetsai) title(main = \"Vote Choice (Tsai) by Education\", xlab = \"Education\", ylab = \"Vote (0 = Other, 1 = Tsai)\")}\n\n\nc. Vote Choice by Income\nrrr regplot(TEDS_2016$income, TEDS_2016$votetsai) title(main = \"Vote Choice (Tsai) by Income\", xlab = \"Income\", ylab = \"Vote (0 = Other, 1 = Tsai)\")}"
+    "text": "3. Running regplot on the Dependent Variable\n\na. Vote Choice by Age\n\n\nCode\nregplot(TEDS_2016$age, TEDS_2016$votetsai)\ntitle(main = \"Vote Choice (Tsai) by Age\",\n      xlab = \"Age\", ylab = \"Vote (0 = Other, 1 = Tsai)\")\n\n\n\n\n\n\n\n\n\n\n\nb. Vote Choice by Education\n\n\nCode\nregplot(TEDS_2016$edu, TEDS_2016$votetsai)\ntitle(main = \"Vote Choice (Tsai) by Education\",\n      xlab = \"Education\", ylab = \"Vote (0 = Other, 1 = Tsai)\")\n\n\n\n\n\n\n\n\n\n\n\nc. Vote Choice by Income\n\n\nCode\nregplot(TEDS_2016$income, TEDS_2016$votetsai)\ntitle(main = \"Vote Choice (Tsai) by Income\",\n      xlab = \"Income\", ylab = \"Vote (0 = Other, 1 = Tsai)\")"
   },
   {
     "objectID": "assignment03.html#what-is-the-problem-why",
     "href": "assignment03.html#what-is-the-problem-why",
     "title": "Assignment 03: ML Exercise",
     "section": "4. What is the Problem? Why?",
-    "text": "4. What is the Problem? Why?\nThe problem is that the dependent variable votetsai is binary (0 = voted for other candidate, 1 = voted for Tsai Ing-wen). Linear regression assumes the outcome is continuous, so applying it to a binary variable produces several issues:\n\nThe regression line can predict values outside the range of 0 and 1, which are not valid probabilities\nThe relationship between predictors and a binary outcome is inherently non-linear\nThe assumption of normally distributed residuals is violated since the DV only takes two values\nThis makes the regression line a poor and misleading fit, as visible in the plots above"
+    "text": "4. What is the Problem? Why?\nThe problem is that the dependent variable votetsai is binary (0 = voted for other candidate, 1 = voted for Tsai Ing-wen). Linear regression assumes the outcome is continuous, so applying it to a binary variable produces several issues:\n\nThe regression line can predict values outside the range of 0 and 1, which are not valid probabilities\nThe relationship between predictors and a binary outcome is inherently non-linear\nThe assumption of normally distributed residuals is violated since the DV only takes two values\nThis makes the regression line a poor and misleading fit, as visible in the plots above where data points cluster at 0 and 1 but the fitted line cuts through the middle"
   },
   {
     "objectID": "assignment03.html#what-can-be-done-to-improve-prediction",
     "href": "assignment03.html#what-can-be-done-to-improve-prediction",
     "title": "Assignment 03: ML Exercise",
     "section": "5. What Can Be Done to Improve Prediction?",
-    "text": "5. What Can Be Done to Improve Prediction?\nSince the dependent variable is binary, logistic regression is the appropriate model. It models the log-odds of the outcome and constrains predictions between 0 and 1.\nrrr logit_model &lt;- glm(votetsai ~ Age + Edu + income,                    data = TEDS_2016,                    family = binomial) summary(logit_model)}\nWe can visualize the logistic fit for Age:\nrrr TEDS_2016_clean &lt;- TEDS_2016 %&gt;%   dplyr::select(votetsai, Age, Edu, income) %&gt;%   drop_na()  ggplot(TEDS_2016_clean, aes(x = Age, y = votetsai)) +   geom_jitter(height = 0.05, alpha = 0.3, color = \"steelblue\") +   geom_smooth(method = \"glm\",               method.args = list(family = binomial),               se = TRUE,               color = \"red\") +   labs(title = \"Logistic Regression: Vote Choice (Tsai) by Age\",        x = \"Age\", y = \"Probability of Voting for Tsai\") +   theme_minimal(base_size = 16)}\nrrr ggplot(TEDS_2016_clean, aes(x = Edu, y = votetsai)) +   geom_jitter(height = 0.05, alpha = 0.3, color = \"steelblue\") +   geom_smooth(method = \"glm\",               method.args = list(family = binomial),               se = TRUE,               color = \"red\") +   labs(title = \"Logistic Regression: Vote Choice (Tsai) by Education\",        x = \"Education\", y = \"Probability of Voting for Tsai\") +   theme_minimal(base_size = 16)}\nrrr ggplot(TEDS_2016_clean, aes(x = income, y = votetsai)) +   geom_jitter(height = 0.05, alpha = 0.3, color = \"steelblue\") +   geom_smooth(method = \"glm\",               method.args = list(family = binomial),               se = TRUE,               color = \"red\") +   labs(title = \"Logistic Regression: Vote Choice (Tsai) by Income\",        x = \"Income\", y = \"Probability of Voting for Tsai\") +   theme_minimal(base_size = 16)}"
+    "text": "5. What Can Be Done to Improve Prediction?\nSince the dependent variable is binary, logistic regression is the appropriate model. It models the log-odds of the outcome and constrains all predictions between 0 and 1.\n\n\nCode\nlogit_model &lt;- glm(votetsai ~ age + edu + income,\n                   data = TEDS_2016,\n                   family = binomial)\nsummary(logit_model)\n\n\n\nCall:\nglm(formula = votetsai ~ age + edu + income, family = binomial, \n    data = TEDS_2016)\n\nCoefficients:\n             Estimate Std. Error z value Pr(&gt;|z|)    \n(Intercept)  2.508583   0.379569   6.609 3.87e-11 ***\nage         -0.021731   0.004656  -4.668 3.05e-06 ***\nedu         -0.238448   0.054069  -4.410 1.03e-05 ***\nincome      -0.020470   0.022460  -0.911    0.362    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n(Dispersion parameter for binomial family taken to be 1)\n\n    Null deviance: 1661.8  on 1256  degrees of freedom\nResidual deviance: 1632.0  on 1253  degrees of freedom\n  (433 observations deleted due to missingness)\nAIC: 1640\n\nNumber of Fisher Scoring iterations: 4\n\n\n\nLogistic Regression Plots\n\n\nCode\nTEDS_2016_clean &lt;- TEDS_2016 %&gt;%\n  dplyr::select(votetsai, age, edu, income) %&gt;%\n  drop_na()\n\n\n\n\nCode\nggplot(TEDS_2016_clean, aes(x = age, y = votetsai)) +\n  geom_jitter(height = 0.05, alpha = 0.3, color = \"steelblue\") +\n  geom_smooth(method = \"glm\",\n              method.args = list(family = binomial),\n              se = TRUE,\n              color = \"red\") +\n  labs(title = \"Logistic Regression: Vote Choice (Tsai) by Age\",\n       x = \"Age\", y = \"Probability of Voting for Tsai\") +\n  theme_minimal(base_size = 16)\n\n\n\n\n\n\n\n\n\n\n\nCode\nggplot(TEDS_2016_clean, aes(x = edu, y = votetsai)) +\n  geom_jitter(height = 0.05, alpha = 0.3, color = \"steelblue\") +\n  geom_smooth(method = \"glm\",\n              method.args = list(family = binomial),\n              se = TRUE,\n              color = \"red\") +\n  labs(title = \"Logistic Regression: Vote Choice (Tsai) by Education\",\n       x = \"Education\", y = \"Probability of Voting for Tsai\") +\n  theme_minimal(base_size = 16)\n\n\n\n\n\n\n\n\n\n\n\nCode\nggplot(TEDS_2016_clean, aes(x = income, y = votetsai)) +\n  geom_jitter(height = 0.05, alpha = 0.3, color = \"steelblue\") +\n  geom_smooth(method = \"glm\",\n              method.args = list(family = binomial),\n              se = TRUE,\n              color = \"red\") +\n  labs(title = \"Logistic Regression: Vote Choice (Tsai) by Income\",\n       x = \"Income\", y = \"Probability of Voting for Tsai\") +\n  theme_minimal(base_size = 16)"
   },
   {
     "objectID": "assignment01.html",
