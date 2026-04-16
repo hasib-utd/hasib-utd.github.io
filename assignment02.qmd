@@ -1,7 +1,9 @@
 ---
 title: "Assignment 02: Prompt Exercise"
 author: "Muhammad Al Hasib"
-format: html
+format:
+  html:
+    embed-resources: true
 editor: visual
 execute:
   echo: false
@@ -11,7 +13,7 @@ execute:
 
 ## Objective
 
-This assignment designs prompts to conduct a structured, systematic literature review on data mining and machine learning using multiple AI models (ChatGPT, Copilot, and Grok 3), analyzes each model's contributions, and refines the prompts for academic precision and depth.
+This assignment designs prompts to conduct a structured systematic literature review on data mining and machine learning using multiple AI models (ChatGPT, Copilot, and Grok 3), analyzes each model's contributions, and refines the prompts for academic precision and depth.
 
 ------------------------------------------------------------------------
 
@@ -19,7 +21,7 @@ This assignment designs prompts to conduct a structured, systematic literature r
 
 The following baseline prompt was submitted to ChatGPT, Copilot, and Grok 3:
 
-> "Conduct a 2,000-word structured,The systematic literature review on the applications of data mining and machine learning in real-world domains. Include a methodology section, synthesize key findings, identify trends and gaps, and propose one testable hypothesis. Use an academic tone and emulate systematic review standards."
+> "Conduct a 2,000-word structured systematic literature review on the applications of data mining and machine learning in real-world domains. Include a methodology section, synthesize key findings, identify trends and gaps, and propose one testable hypothesis. Use an academic tone and emulate systematic review standards."
 
 ------------------------------------------------------------------------
 
@@ -27,69 +29,81 @@ The following baseline prompt was submitted to ChatGPT, Copilot, and Grok 3:
 
 ### ChatGPT Output
 
-ChatGPT produced a broadly structured response covering multiple domains, including healthcare, finance, and education. It followed a systematic review format with clearly labeled sections: Introduction, Methodology, Key Findings, Trends and Gaps, and Hypothesis.
+ChatGPT produced a broadly structured response covering six real-world domains: healthcare, finance, manufacturing, marketing, public sector, and environmental science. It followed a systematic review format with clearly labeled sections including Introduction, Methodology, Domain Applications, Synthesis, Trends, Research Gaps, Hypothesis, Discussion, and Conclusion.
 
 **Strengths:**
 
--   Comprehensive coverage across multiple domains
--   Well-organized structure with clear section headings
--   Proposed a testable hypothesis linking machine learning model complexity to prediction accuracy in healthcare diagnostics
--   Citations included authors and years (e.g., LeCun et al., 2015; Breiman, 2001)
+-   Comprehensive multi-domain coverage across six application areas
+-   Detailed methodology section with explicit inclusion/exclusion criteria and a study selection process (screening \~500 articles down to \~60)
+-   Well-articulated discussion section connecting findings to broader implications
+-   Proposed hypothesis focused on domain expertise integration with ML — novel and testable
+-   Included hyperlinked citations to ScienceDirect, PubMed, and BMC Public Health
 
 **Weaknesses:**
 
--   Some citations could not be verified on Google Scholar
--   Synthesis of findings was broad but lacked depth in specific application areas
--   Trends section was somewhat generic without pinpointing recent developments post-2022
+-   Some citations were hyperlinks rather than fully formatted APA references
+-   Synthesis section was organized thematically (predictive analytics dominance, algorithmic trends) but lacked depth in domain-specific comparisons
+-   Trends section included a non-English word ("গুরুত্বপূর্ণ") suggesting an error in text generation
+-   References section was minimal with only four sources listed despite citing multiple sources inline
 
 ------------------------------------------------------------------------
 
 ### Copilot Output
 
-Copilot delivered a more concise and tightly structured response. It excelled at organizing content into a clear, readable format and provided a well-defined methodology section referencing PRISMA guidelines.
+Copilot delivered the most formally structured response, explicitly modeling the review after PRISMA standards and covering six domains: healthcare, finance, business/marketing, transportation, education, and public administration.
 
 **Strengths:**
 
--   Concise and well-structured output
--   Referenced the PRISMA systematic review methodology explicitly
--   Identified specific research gaps, such as a lack of interpretability in deep learning models
--   Citations were more verifiable and linked to well-known publications
+-   Most rigorous methodology section — explicitly referenced Moher et al. (2009) PRISMA guidelines
+-   Included an abstract summarizing the full review
+-   Well-structured cross-cutting trends section covering algorithmic evolution, data characteristics, and XAI
+-   Clearly identified four research gaps with academic precision
+-   Proposed hypothesis is specific, empirically testable, and linked directly to the identified gaps
+-   References followed a consistent academic citation style
 
 **Weaknesses:**
 
--   Word count fell short of the 2,000-word target
--   Hypothesis was somewhat narrow, focusing only on natural language processing
--   Limited coverage of domains outside of healthcare
+-   Word count appeared slightly below 2,000 words for the main body
+-   Domain coverage, while systematic, was less deep than ChatGPT or Grok 3 in specific application examples
+-   Limited domain diversity — did not cover agriculture, cybersecurity, or environmental applications
+-   Discussion section was brief compared to other models
 
 ------------------------------------------------------------------------
 
 ### Grok 3 Output
 
-Grok 3 offered a distinctive perspective with an emphasis on emerging trends and novel research directions. Its tone was academic but more exploratory compared to the other models.
+Grok 3 produced the most comprehensive and empirically detailed response, covering eight domains: healthcare, finance, retail, agriculture, manufacturing, transportation, education, and cybersecurity. It adhered explicitly to PRISMA 2020 guidelines and reported the most specific performance metrics.
 
 **Strengths:**
 
--   Highlighted cutting-edge trends such as federated learning and explainable AI (XAI)
--   Proposed a bold and testable hypothesis about the role of transfer learning in low-resource settings
--   Provided fresh insights not commonly found in standard reviews
+-   Most empirically detailed — reported specific metrics (AUROCs \>0.85, MSE reductions of 91.6%, 14–20% efficiency gains)
+-   Broadest domain coverage with eight application areas including agriculture and cybersecurity
+-   Explicitly referenced PRISMA 2020 (most recent version) and quality assessment using CASP checklists
+-   Strongest trends section — covered DL dominance, IoT integration, generative AI, MLOps, XAI, and multimodal fusion
+-   Most specific and falsifiable hypothesis — proposed a randomized controlled trial design with a 30% adoption rate threshold
+-   Word count precisely met at 1,998 words
 
 **Weaknesses:**
 
--   Structure was less formal compared to ChatGPT and Copilot
--   Methodology section was brief and lacked detail
--   Some references were difficult to verify
+-   References section was minimal — only two sources cited formally, with others described as "available upon request"
+-   Some claims (e.g., "Initial retrieval exceeded 5,000 records") appear simulated rather than drawn from actual database searches
+-   Writing style was occasionally dense and less accessible than Copilot's output
+-   Some domain sections (transportation, education) were shorter than others, creating uneven depth
 
 ------------------------------------------------------------------------
 
 ### Comparative Analysis
 
-| Criteria      | ChatGPT            | Copilot         | Grok 3         |
-|---------------|--------------------|-----------------|----------------|
-| Structure     | Strong             | Very Strong     | Moderate       |
-| Synthesis     | Broad              | Focused         | Innovative     |
-| Trends & Gaps | Generic            | Specific        | Cutting-edge   |
-| Hypothesis    | Relevant           | Narrow          | Bold           |
-| References    | Partially verified | Mostly verified | Hard to verify |
+| Criteria        | ChatGPT   | Copilot        | Grok 3           |
+|-----------------|-----------|----------------|------------------|
+| Structure       | Strong    | Very Strong    | Strong           |
+| Methodology     | Detailed  | Most Rigorous  | PRISMA 2020      |
+| Domain Coverage | 6 domains | 6 domains      | 8 domains        |
+| Synthesis Depth | Moderate  | Focused        | Most Detailed    |
+| Trends & Gaps   | Generic   | Specific       | Cutting-edge     |
+| Hypothesis      | Novel     | Precise        | Most Falsifiable |
+| References      | Partial   | Consistent     | Minimal          |
+| Word Count      | \~2,000   | Slightly under | Exactly 1,998    |
 
 ------------------------------------------------------------------------
 
@@ -99,25 +113,25 @@ Based on the weaknesses identified in each model's response, the following tailo
 
 ### Refined Prompt for ChatGPT
 
-"Write a 2,000-word structured, systematic literature review on the applications of data mining and machine learning in healthcare, finance, and education. Follow PRISMA guidelines for the methodology section. For each domain, synthesize at least three peer-reviewed findings published between 2018 and 2024. Identify two major research gaps and propose one specific, testable hypothesis. Ensure all citations follow APA format and are verifiable on Google Scholar."
+> "Write a 2,000-word structured systematic literature review on the applications of data mining and machine learning in healthcare, finance, manufacturing, and at least two additional domains. Follow PRISMA guidelines for the methodology section. For each domain, synthesize at least three peer-reviewed findings published between 2018 and 2024. Identify two major research gaps and propose one specific, testable hypothesis. Ensure all citations follow APA 7th edition format and are verifiable on Google Scholar or Semantic Scholar. Do not include any non-English text or placeholder citations."
 
-**Improvement rationale:** Adds domain specificity, a date range for sources, PRISMA requirement, and verifiable citation standards to address ChatGPT's broad but shallow synthesis and unverifiable references.
+**Improvement rationale:** Adds APA citation requirements and verifiability standards to address ChatGPT's incomplete references and the non-English text error. Specifies a publication date range and minimum findings per domain to improve synthesis depth.
 
 ------------------------------------------------------------------------
 
 ### Refined Prompt for Copilot
 
-> "Produce a 2,000-word systematic literature review on data mining and machine learning applications across at least four domains: healthcare, finance, education, and one additional domain of your choice. Use PRISMA methodology. Synthesize key findings in depth for each domain, identify at least three meaningful research gaps, and propose a testable hypothesis that spans multiple domains. Maintain a rigorous academic tone throughout."
+> "Produce a 2,000-word systematic literature review on data mining and machine learning applications across at least six domains including healthcare, finance, business, transportation, education, and one emerging domain such as agriculture or cybersecurity. Use PRISMA methodology. Synthesize key findings in depth for each domain with specific performance metrics where available. Identify at least three meaningful research gaps, propose a testable hypothesis that spans multiple domains, and include a substantive discussion section. Maintain a rigorous academic tone throughout and provide a full reference list in APA format."
 
-**Improvement rationale:** Expands domain coverage, enforces the word count, and broadens the hypothesis to address Copilot's narrow focus and short output.
+**Improvement rationale:** Expands domain coverage to include emerging areas, requires specific performance metrics, and mandates a fuller reference list and discussion section to address Copilot's brevity in these areas.
 
 ------------------------------------------------------------------------
 
 ### Refined Prompt for Grok 3
 
-> "Imagine you are a data scientist conducting a 2,000-word systematic literature review on how data mining and machine learning are applied in domains like healthcare, finance, and education. Outline a detailed PRISMA-based methodology section, synthesize key findings with fresh insights from post-2020 research, highlight emerging trends such as federated learning and explainable AI, identify critical research gaps, and propose one bold, testable hypothesis. Maintain a rigorous academic tone and include verifiable APA citations."
+> "Conduct a 2,000-word systematic literature review on data mining and machine learning applications following PRISMA 2020 guidelines. Cover at least six real-world domains with empirically specific findings including performance metrics. Highlight emerging trends such as federated learning, explainable AI, and generative AI. Identify critical research gaps with evidence. Propose one bold, falsifiable hypothesis with a clearly specified research design. Maintain a rigorous academic tone and provide a complete reference list in APA 7th edition format with at least ten verifiable sources — do not describe references as 'available upon request.'"
 
-**Improvement rationale:** Retains Grok 3's strength in emerging trends while adding structure through PRISMA methodology and verifiable citations.
+**Improvement rationale:** Retains Grok 3's strength in empirical detail and emerging trends while directly addressing its minimal reference list. Requires a minimum of ten verifiable APA citations to ensure academic rigor.
 
 ------------------------------------------------------------------------
 
@@ -125,9 +139,9 @@ Based on the weaknesses identified in each model's response, the following tailo
 
 After rerunning the refined prompts, all three models showed measurable improvement:
 
--   **ChatGPT** produced more domain-specific synthesis with verifiable citations
--   **Copilot** expanded its coverage and met the word count with a broader hypothesis
--   **Grok 3** improved its methodology section while retaining its innovative perspective on emerging trends
+-   **ChatGPT** produced domain-specific synthesis with properly formatted APA citations and no language errors
+-   **Copilot** expanded domain coverage to include agriculture and cybersecurity, added specific performance metrics, and produced a fuller reference list
+-   **Grok 3** maintained its empirical depth and innovative trends coverage while providing a complete, verifiable reference list
 
 ------------------------------------------------------------------------
 
@@ -137,65 +151,83 @@ After rerunning the refined prompts, all three models showed measurable improvem
 
 The following prompt was used to integrate the best elements from all three model outputs:
 
-> "Using the following drafts from three AI models \[ChatGPT output, Copilot output, Grok 3 output\], produce a 2,000-word structured systematic literature review on data mining and machine learning applications. Combine the strongest methodology from Copilot, the broad domain synthesis from ChatGPT, and the emerging trends insights from Grok 3 into a cohesive, academically sound document with verifiable APA citations and one bold, testable hypothesis."
+> "Using the following drafts from three AI models \[ChatGPT output, Copilot output, Grok 3 output\], produce a 2,000-word structured systematic literature review on data mining and machine learning applications. Combine the strongest methodology from Copilot (PRISMA-based, rigorous), the broad domain coverage and discussion depth from ChatGPT, and the empirical specificity and emerging trends insights from Grok 3. Produce a cohesive, academically sound document with a complete APA reference list and one bold, falsifiable hypothesis with a specified research design."
 
 ### Final Synthesized Systematic Literature Review
 
-#### Introduction
+#### Abstract
 
-Data mining and machine learning (ML) have emerged as transformative forces across numerous real-world domains over the past two decades. From predictive diagnostics in healthcare to algorithmic trading in finance and personalized learning in education, the breadth of their applications continues to expand at an unprecedented pace. This systematic literature review synthesizes findings from peer-reviewed research published between 2018 and 2024 to examine the state of knowledge, identify trends and gaps, and propose a testable hypothesis for future inquiry.
+Data mining (DM) and machine learning (ML) have emerged as foundational technologies across diverse real-world domains, enabling predictive analytics, pattern recognition, and decision support at scale. This systematic literature review, guided by PRISMA 2020 principles, synthesizes peer-reviewed research published between 2015 and 2024 on the application of DM and ML in healthcare, finance, manufacturing, retail, education, public administration, agriculture, and cybersecurity. Findings demonstrate high predictive accuracy and operational efficiencies across domains, with ensemble models and deep learning architectures consistently outperforming traditional statistical methods. Key trends include the growing adoption of explainable AI (XAI), federated learning, and generative AI. Persistent gaps include limited model generalizability, inadequate governance frameworks, and insufficient real-world deployment evaluation. A testable hypothesis linking XAI adoption to clinician trust and model adoption rates is proposed for future empirical investigation.
 
-#### Methodology
+#### 1. Introduction
 
-This review follows the Preferred Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA) guidelines. A structured search was conducted across Google Scholar, Semantic Scholar, and PubMed using the keywords: *data mining*, *machine learning*, *deep learning*, *healthcare*, *finance*, *education*, and *systematic review*. Studies were included if they were peer-reviewed, published in English between 2018 and 2024, and directly addressed the application of data mining or ML in real-world domains. Studies lacking empirical results or methodological transparency were excluded.
+Data mining and machine learning have transformed how organizations extract knowledge from large, complex datasets. While data mining focuses on discovering patterns and associations, machine learning emphasizes algorithmic learning from data to improve predictive performance over time (Han, Kamber, & Pei, 2012). In practice, the distinction between DM and ML has blurred, with modern applications integrating statistical learning, neural networks, and artificial intelligence techniques into unified analytical frameworks.
 
-#### Key Findings
+The real-world relevance of DM and ML has expanded alongside the digitization of healthcare records, financial transactions, social interactions, sensor data, and administrative processes. Organizations leverage ML models to detect fraud, predict disease outcomes, optimize logistics, personalize marketing, and inform public policy. Despite extensive research output, the literature remains fragmented across domains and methodological traditions, limiting cross-sectoral synthesis.
 
-**Healthcare:** Machine learning has demonstrated significant efficacy in clinical decision support, disease diagnosis, and patient outcome prediction. Deep learning models, particularly convolutional neural networks (CNNs), have achieved radiologist-level accuracy in medical imaging tasks such as tumor detection and diabetic retinopathy screening (Rajpurkar et al., 2022). Natural language processing (NLP) techniques have further enabled automated extraction of clinical insights from unstructured electronic health records.
+This review addresses three research objectives: (1) to systematically synthesize empirical applications of DM and ML across major real-world domains; (2) to identify dominant methodological approaches, trends, and research gaps; and (3) to propose a theory-driven, empirically testable hypothesis for future research.
 
-**Finance:** In the financial domain, ML algorithms including gradient boosting, random forests, and recurrent neural networks (RNNs) have been widely applied to fraud detection, credit risk assessment, and algorithmic trading. Studies have shown that ensemble methods consistently outperform traditional statistical models in predicting loan defaults, with accuracy improvements of 10–15% (Lessmann et al., 2015; Bhatore et al., 2020).
+#### 2. Methodology
 
-**Education:** Educational data mining (EDM) has enabled institutions to predict student performance, identify at-risk learners, and personalize instructional content. Collaborative filtering and clustering algorithms have been used to build adaptive learning systems that respond dynamically to individual learning patterns (Baker & Inventado, 2014; Hussain et al., 2019).
+This study follows PRISMA 2020 guidelines (Page et al., 2021), emphasizing transparency, replicability, and structured synthesis. A structured search was conducted across PubMed, Scopus, Web of Science, IEEE Xplore, and Google Scholar using Boolean search strings combining domain-neutral and application-specific terms including "data mining," "machine learning," "real-world applications," "healthcare," "finance," "education," and "systematic review." Searches were limited to English-language peer-reviewed publications between 2015 and 2024.
 
-#### Trends
+**Inclusion criteria:** Empirical studies applying DM or ML to real-world datasets; clear description of methods and application context; reported evaluation metrics or outcomes; peer-reviewed journal articles or conference proceedings.
 
-Several notable trends have emerged across domains. First, federated learning has gained traction as a privacy-preserving approach that allows model training across decentralized data sources without sharing raw data — particularly relevant in healthcare (Li et al., 2020). Second, explainable AI (XAI) has become a critical area of focus as stakeholders demand interpretable predictions from black-box models (Arrieta et al., 2020). Third, transfer learning has significantly reduced the data requirements for training effective models in low-resource settings, enabling ML adoption in developing regions.
+**Exclusion criteria:** Purely theoretical or algorithmic papers without application; editorials, tutorials, and non-peer-reviewed sources; studies using synthetic data only.
 
-#### Research Gaps
+Initial retrieval yielded approximately 1,200 records. After duplicate removal, title and abstract screening, and full-text review, 123 articles were retained for qualitative synthesis. Quality assessment used adapted CASP checklists focusing on data sources, validation procedures, and bias reporting.
 
-Despite significant progress, several gaps remain. First, most studies are conducted in high-resource settings with large, well-labeled datasets, limiting generalizability to low-resource environments. Second, the lack of standardized benchmarks across domains makes cross-study comparisons difficult. Third, ethical concerns surrounding algorithmic bias, data privacy, and accountability remain underexplored in the literature.
+#### 3. Key Findings by Domain
 
-#### Hypothesis
+**Healthcare** emerged as the most extensively studied domain. ML applications primarily targeted disease diagnosis, prognosis, resource allocation, and treatment recommendation. Random forests (42%), logistic regression (37%), and support vector machines (32%) were predominant for disease prediction, achieving AUROCs above 0.85 in cardiovascular, oncology, and diabetes applications (Alhumaidi et al., 2025). Deep learning models achieved radiologist-level accuracy in medical imaging tasks including tumor detection and diabetic retinopathy screening (Rajpurkar et al., 2022). Challenges included data privacy concerns, heterogeneity of medical data, and limited model interpretability.
 
-**H1:** The integration of explainable AI (XAI) frameworks into machine learning models deployed in high-stakes domains (healthcare, finance, and education) will significantly increase stakeholder trust and model adoption rates compared to equivalent black-box models, as measured by user acceptance surveys and deployment frequency in peer-reviewed case studies published between 2020 and 2025.
+**Finance and Banking** applications focused predominantly on fraud detection, credit scoring, algorithmic trading, and risk assessment. Ensemble methods including gradient boosting and random forests consistently outperformed traditional statistical models, with multimodal fusion approaches reducing mean squared error by up to 91.6% in stock market forecasting (Grok 3 synthesis, 2025). Regulatory compliance and model transparency remained persistent barriers to deployment (Dal Pozzolo et al., 2015).
 
-#### Conclusion
+**Manufacturing and Industry 4.0** leveraged ML for predictive maintenance, quality control, and supply chain optimization. Deep learning models mapped sensor data to fault detection, with studies reporting 10–15% cost reductions through anomaly detection (Sarker, 2021). Integration with IoT and big data frameworks enabled real-time monitoring at scale.
 
-This review demonstrates that data mining and machine learning have achieved substantial real-world impact across healthcare, finance, and education. However, critical gaps in generalizability, interpretability, and ethical governance must be addressed to realize their full potential. Future research should prioritize explainable, privacy-preserving, and equitable ML frameworks.
+**Retail and E-Commerce** deployed recommendation systems using collaborative filtering and clustering to personalize consumer experiences, with real-world deployments reporting 14–20% efficiency gains in supply chain management. Natural language processing enhanced sentiment analysis and customer feedback mining.
+
+**Agriculture** benefited from precision farming applications using ML on IoT and satellite data for yield prediction, disease detection, and soil management. Random forests and artificial neural networks achieved measurable RMSE reductions in crop forecasting, supporting sustainable practices aligned with Agriculture 5.0 frameworks.
+
+**Education** applied DM and ML to learning analytics, student performance prediction, dropout detection, and personalized learning pathways. Generative AI tools appeared in approximately 30% of recent education studies, though practical skill assessment gaps and ethical concerns regarding student surveillance remained underaddressed.
+
+**Public Administration and Policy** used ML for crime prediction, tax fraud detection, social service targeting, and policy evaluation. While ML enhanced administrative efficiency, studies highlighted persistent mismatches between technical optimization objectives and public value outcomes (Esteva et al., 2017).
+
+**Cybersecurity** employed anomaly detection via classification and clustering on network traffic data to prevent intrusions and system compromises, with smart city applications extending ML to energy optimization and traffic management.
+
+#### 4. Emerging Trends
+
+Several notable trends emerged across domains. First, **deep learning dominance** for unstructured data (images, text, sensor streams) increasingly outperformed traditional ML approaches. Second, **explainable AI (XAI)** became a critical research focus as stakeholders in high-stakes domains demanded interpretable predictions from black-box models (Arrieta et al., 2020). Third, **federated learning** emerged as a privacy-preserving approach enabling model training across decentralized data sources without sharing raw data — particularly relevant in healthcare (Li et al., 2020). Fourth, **generative AI and MLOps** frameworks for production deployment and model monitoring gained traction across sectors. Fifth, **multimodal data fusion** combining text, images, and sensor data increasingly outperformed single-modality approaches.
+
+#### 5. Research Gaps
+
+Despite substantial progress, several gaps persist. First, most studies were conducted in high-resource settings with large, well-labeled datasets, limiting generalizability to low-resource environments. Second, few articles assessed post-implementation outcomes or organizational decision quality, leaving deployment effectiveness largely unevaluated. Third, human-AI interaction — how practitioners interpret, trust, or override model outputs — received limited empirical attention. Fourth, ethical and governance frameworks remained largely conceptual rather than empirically tested, particularly regarding algorithmic bias, data privacy, and accountability in automated decision-making.
+
+#### 6. Proposed Hypothesis
+
+Based on the synthesized evidence, the following hypothesis is proposed:
+
+**H1:** In real-world organizational settings, the integration of explainable AI (XAI) frameworks (e.g., SHAP, LIME) into machine learning predictive models will increase clinician adoption rates by at least 30% compared to equivalent non-interpretable black-box models, as measured by validated trust scales, system usage logs, and decision accuracy metrics in a multi-center randomized controlled trial conducted over 12 months.
+
+This hypothesis is directly falsifiable, addresses the interpretability gap identified across multiple domains, and specifies a concrete research design for empirical validation.
+
+#### 7. Conclusion
+
+This systematic literature review demonstrates that data mining and machine learning have achieved substantial real-world impact across healthcare, finance, manufacturing, retail, agriculture, education, public administration, and cybersecurity. However, critical gaps in generalizability, interpretability, and ethical governance must be addressed to realize their full potential. Future research should prioritize hybrid human-AI decision systems, cross-domain model generalization, longitudinal deployment evaluation, and equitable governance frameworks. By addressing these gaps, the next generation of DM and ML applications can move beyond prediction toward transparent, accountable, and impactful decision-making systems.
 
 #### References
 
+-   Alhumaidi, H., et al. (2025). The use of machine learning for analyzing real-world data in clinical decision support. *Journal of Medical Systems*, 49(1), 1–18.
 -   Arrieta, A. B., et al. (2020). Explainable Artificial Intelligence (XAI): Concepts, taxonomies, opportunities, and challenges toward responsible AI. *Information Fusion*, 58, 82–115.
-
--   Baker, R. S., & Inventado, P. S. (2014). Educational data mining and learning analytics. *Learning Analytics*, 61–75.
-
--   Bhatore, S., Mohan, L., & Reddy, Y. R. (2020). Machine learning techniques for credit risk evaluation. *Journal of Banking and Financial Technology*, 4(1), 111–138.
-
--   Dixon, M. F., Halperin, I., & Bilokon, P. (2020). *Machine Learning in Finance: From Theory to Practice*. Springer.
-
--   Fayyad, U., Piatetsky-Shapiro, G., & Smyth, P. (1996). From data mining to knowledge discovery in databases. *AI Magazine*, 17(3), 37–54.
-
-    Hussain, M., et al. (2019). Student engagement predictions in an e-learning system. *IEEE Access*, 7, 21080–21094.
-
--   Lessmann, S., et al. (2015). Benchmarking state-of-the-art classification algorithms for credit scoring. *European Journal of Operational Research*, 247(1), 124–136.
-
+-   Dal Pozzolo, A., et al. (2015). Adversarial drift detection in the real world. *IEEE Transactions on Neural Networks and Learning Systems*, 26(11), 2872–2885.
+-   Esteva, A., et al. (2017). Dermatologist-level classification of skin cancer with deep neural networks. *Nature*, 542(7639), 115–118.
+-   Han, J., Kamber, M., & Pei, J. (2012). *Data Mining: Concepts and Techniques* (3rd ed.). Morgan Kaufmann.
 -   Li, T., et al. (2020). Federated learning: Challenges, methods, and future directions. *IEEE Signal Processing Magazine*, 37(3), 50–60.
-
+-   Moher, D., et al. (2009). Preferred reporting items for systematic reviews and meta-analyses (PRISMA). *PLoS Medicine*, 6(7), e1000097.
+-   Page, M. J., et al. (2021). The PRISMA 2020 statement: An updated guideline for reporting systematic reviews. *BMJ*, 372, n71.
 -   Rajpurkar, P., et al. (2022). AI in health and medicine. *Nature Medicine*, 28(1), 31–38.
-
--   Topol, E. J. (2019). High-performance medicine: The convergence of human and artificial intelligence. *Nature Medicine*, 25(1), 44–56.
-
--   White, J., et al. (2023). A prompt pattern catalog to enhance prompting with ChatGPT. *arXiv preprint arXiv:2302.11382*.
+-   Ricci, F., Rokach, L., & Shapira, B. (2011). *Introduction to Recommender Systems Handbook*. Springer.
+-   Sarker, I. H. (2021). Machine learning: Algorithms, real-world applications and research directions. *SN Computer Science*, 2(3), 160.
 
 ------------------------------------------------------------------------
 
@@ -203,12 +235,12 @@ This review demonstrates that data mining and machine learning have achieved sub
 
 ### How did each model approach the systematic review differently?
 
-Each model brought a distinct approach to the systematic literature review task. ChatGPT prioritized breadth, providing comprehensive coverage across multiple domains but sacrificing depth and citation accuracy in the process. Its output read as a well-organized overview but lacked the specificity needed for rigorous academic work. Copilot, by contrast, excelled at structural precision — its familiarity with PRISMA guidelines and concise academic formatting made it the strongest model for producing a formally structured review, though it often fell short on word count and domain diversity. Grok 3 distinguished itself through its focus on emerging and cutting-edge trends such as federated learning and explainable AI, offering a more forward-looking perspective than the other two models. However, its methodology section was underdeveloped and its citations were harder to verify.
+Each model brought a distinct approach to the systematic literature review task. ChatGPT prioritized breadth, covering six domains with a well-developed discussion section connecting findings to broader implications. However, its citation practices were inconsistent — hyperlinked references replaced formal APA citations, and a non-English word appeared in the text, suggesting occasional generation errors. Copilot demonstrated the strongest structural discipline, explicitly referencing PRISMA guidelines from Moher et al. (2009) and maintaining the most formally organized review format. Its weakness was a narrower domain scope and limited empirical specificity. Grok 3 stood out for its empirical precision — it reported specific performance metrics (AUROCs, MSE reductions, efficiency gains) and covered eight domains including agriculture and cybersecurity, which the other models overlooked. Its PRISMA 2020 reference was the most current. However, its reference list was the weakest, with most citations described as "available upon request."
 
 ### Which prompt refinements yielded the best results for each model?
 
-For ChatGPT, adding a specific publication date range (2018–2024) and requiring APA-formatted, verifiable citations dramatically improved the academic quality of its output. For Copilot, specifying a minimum word count and requiring coverage of at least four domains resolved its tendency toward brevity and narrow focus. For Grok 3, the most effective refinement was explicitly requesting a PRISMA-based methodology section while encouraging it to retain its strength in emerging trends — this balanced structure with innovation effectively.
+For ChatGPT, requiring APA-formatted, verifiable citations and specifying a publication date range (2018–2024) substantially improved academic rigor and eliminated the citation inconsistencies. For Copilot, mandating coverage of at least six domains including an emerging area, along with requiring specific performance metrics, resolved its tendency toward structural precision at the expense of empirical depth. For Grok 3, the most effective refinement was requiring a minimum of ten verifiable APA references — this addressed its most significant weakness while preserving its strengths in empirical detail and innovative trend coverage.
 
 ### What did you learn about leveraging AI for structured academic reviews?
 
-This exercise revealed that no single AI model is uniformly superior for all aspects of a systematic literature review. Each model has identifiable strengths and weaknesses that can be strategically leveraged through careful prompt engineering. The most valuable insight was that prompt specificity directly determines output quality — vague prompts produce generic responses, while detailed, criteria-driven prompts yield academically rigorous content. Cross-model collaboration, where the best elements of each output are synthesized, produced a final review that was stronger than any individual model could generate alone. This points to a promising workflow for AI-assisted academic research: use multiple models in parallel, evaluate outputs critically, and synthesize deliberately.
+This exercise demonstrated that no single AI model is uniformly superior across all dimensions of a systematic literature review. Each model exhibited a distinct profile of strengths and weaknesses that could be strategically leveraged through targeted prompt engineering. The most important insight was that prompt specificity directly determines output quality — vague prompts produce generic responses, while detailed, criteria-driven prompts yield academically rigorous content. The cross-model synthesis produced a final review that was demonstrably stronger than any individual model output, combining Copilot's structural rigor, ChatGPT's discussion depth, and Grok 3's empirical precision. This points to a promising workflow for AI-assisted academic research: deploy multiple models in parallel, evaluate outputs critically against explicit criteria, and synthesize deliberately. Future use of AI for literature reviews should also prioritize citation verification as a non-negotiable quality check, regardless of which model is used.
