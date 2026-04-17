@@ -11,7 +11,7 @@ execute:
   message: false
 ---
 
-### What is a Knowledge Graph?
+### Knowledge Graph
 
 A knowledge graph is a structured representation of knowledge in which entities (nodes) and the relationships between them (edges) are explicitly encoded in a graph format. Each node represents a real-world object, concept, or event a person, organization, policy, institution, or idea and each edge represents a named, typed relationship between two nodes. For example: **\[Citizen\] --trusts--\> \[Government Institution\]**, or **\[E-Government Platform\] --increases--\> \[Service Quality\]**.
 
