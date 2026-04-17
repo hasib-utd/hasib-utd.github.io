@@ -120,9 +120,11 @@ knitr::kable(results, digits = 3,
 
 ------------------------------------------------------------------------
 
-## Error Analysis: What Did Accuracy Alone Miss? How Does Overfitting Relate to Knowledge vs. Noise?
+## Error analysis
 
-### What Error Analysis Revealed
+## The use of accuracy alone and overfitting to knowledge vs. noise
+
+### Error analysis
 
 Accuracy alone is an incomplete measure of model performance, particularly when classes are imbalanced or when the costs of different error types differ.
 
@@ -133,15 +135,15 @@ Error analysis through the confusion matrix reveals two types of errors:
 -   **False Positives (Type I Error):** Predicting "Tsai" when the respondent voted for another candidate
 -   **False Negatives (Type II Error):** Predicting "Other" when the respondent actually voted for Tsai
 
-The **sensitivity** and **specificity** from the confusion matrix reveal that the three models differ meaningfully in how they distribute these errors — even when their overall accuracy is similar. The decision tree showed higher sensitivity but lower specificity than logistic regression, meaning it was better at identifying Tsai voters but more likely to misclassify non-Tsai voters. This tradeoff is invisible if we only examine accuracy.
+The **sensitivity** and **specificity** from the confusion matrix reveal that the three models differ meaningfully in how they distribute these errors, even when their overall accuracy is similar. The decision tree showed higher sensitivity but lower specificity than logistic regression, meaning it was better at identifying Tsai voters but more likely to misclassify non-Tsai voters. This tradeoff is invisible if we only examine accuracy.
 
-**Kappa** — which corrects for chance agreement — provides a more honest assessment of model performance than raw accuracy under class imbalance.
+**Kappa**, which corrects for chance agreement, provides a more honest assessment of model performance than raw accuracy under class imbalance.
 
-### Overfitting: Knowledge vs. Noise
+### Overfitting: knowledge vs. noise
 
 Overfitting occurs when a model learns the noise and idiosyncratic patterns in the training data rather than the underlying generalizable signal. An overfit model performs well on training data but poorly on unseen test data.
 
--   **Knowledge** refers to stable, generalizable patterns — the real relationships between variables and outcomes that hold across contexts (e.g., DPP partisanship predicts Tsai support)
+-   **Knowledge** refers to stable, generalizable patterns the real relationships between variables and outcomes that hold across contexts (e.g., DPP partisanship predicts Tsai support)
 -   **Noise** refers to random variation, measurement error, and sample-specific quirks that do not generalize
 
 An overfit model mistakes noise for knowledge. Cross-validation, regularization, and ensemble methods like random forests address overfitting by averaging across multiple models, reducing variance without sacrificing too much bias. In this pipeline, the random forest's ensemble approach makes it more robust to overfitting than the single decision tree, evident in its higher test accuracy and more balanced error profile.

@@ -23,16 +23,16 @@ library(ggplot2)
 
 ------------------------------------------------------------------------
 
-## Part 1: US Presidential Inaugural Speeches
+## US Presidential Inaugural Speeches
 
-### Build Corpus
+### Build corpus
 
 ```{r}
 corp_inaug <- corpus(data_corpus_inaugural)
 summary(corp_inaug, 10)
 ```
 
-### Similarities and Differences Over Time
+### Similarities and differences over time
 
 ```{r}
 # Tokenize and create DFM
@@ -47,14 +47,14 @@ dfm_inaug <- dfm(toks_inaug)
 dfm_inaug
 ```
 
-### Top Features
+### Top features
 
 ```{r}
 # Top 20 most frequent words overall
 topfeatures(dfm_inaug, 20)
 ```
 
-### Wordcloud of Inaugural Speeches
+### Wordcloud of inaugural speeches
 
 ```{r}
 set.seed(6323)
@@ -63,7 +63,7 @@ textplot_wordcloud(dfm_inaug,
                    color = c("#2980b9", "#27ae60", "#e74c3c"))
 ```
 
-### Word Frequency Over Time
+### Word frequency over time
 
 ```{r}
 # Track key words over time
@@ -84,7 +84,7 @@ ggplot(words_time, aes(x = Year, y = count, color = word)) +
   theme_minimal(base_size = 14)
 ```
 
-### Keyness: Recent vs. Early Presidents
+### Keyness: recent vs. early presidents
 
 ```{r}
 # Compare post-2000 vs pre-2000 speeches
@@ -97,7 +97,7 @@ textplot_keyness(keyness, n = 20) +
   labs(title = "Keyness: Post-2000 vs Pre-2000 Inaugural Speeches")
 ```
 
-### Document Similarity Among Presidents
+### Document similarity among presidents
 
 ```{r}
 # Cosine similarity between speeches
@@ -117,9 +117,9 @@ knitr::kable(sim_df, caption = "Top 10 Most Similar Inaugural Speech Pairs (Cosi
 
 ------------------------------------------------------------------------
 
-## Part 2: US Department of Defense Reports on China (1999–2025)
+## US Department of Defense Reports on China (1999–2025)
 
-### Load and Build Corpus from PDFs
+### Load and build corpus from PDFs
 
 ```{r}
 # Set path to USDOD folder
@@ -153,7 +153,7 @@ corp_dod <- corpus(dod_texts,
 summary(corp_dod)
 ```
 
-### Tokenize and Build DFM
+### Tokenize and build DFM
 
 ```{r}
 toks_dod <- tokens(corp_dod,
@@ -169,13 +169,13 @@ dfm_dod <- dfm(toks_dod)
 dfm_dod
 ```
 
-### Top Features in DOD Reports
+### Top features in DOD reports
 
 ```{r}
 topfeatures(dfm_dod, 20)
 ```
 
-### Wordcloud of DOD Reports
+### Wordcloud of DOD reports
 
 ```{r}
 set.seed(6323)
@@ -184,7 +184,7 @@ textplot_wordcloud(dfm_dod,
                    color = c("#2980b9", "#e74c3c", "#e67e22"))
 ```
 
-### Key Terms Over Time
+### Key terms over time
 
 ```{r}
 key_terms <- c("taiwan", "nuclear", "cyber", "space", "missil", "naval", "technolog")
@@ -208,7 +208,7 @@ ggplot(term_trends, aes(x = year, y = count, color = term)) +
 
 ------------------------------------------------------------------------
 
-## Part 3: What is Wordfish?
+## Wordfish
 
 Wordfish is an unsupervised text scaling model used to estimate the ideological or positional placement of documents along a single latent dimension — without requiring any reference texts or prior labels. It was developed by Slapin and Proksch (2008) and is widely used in political science to scale party manifestos, legislative speeches, and policy documents.
 
@@ -221,7 +221,7 @@ The model assumes that word counts follow a Poisson distribution and estimates:
 
 In the context of DOD reports, Wordfish can reveal how the rhetorical framing of China's military threat has shifted across administrations and years.
 
-### Run Wordfish on DOD Reports
+### Run Wordfish on DOD reports
 
 ```{r}
 # Trim low-frequency terms for stability
@@ -233,7 +233,7 @@ wf_model <- textmodel_wordfish(dfm_dod_trim)
 summary(wf_model)
 ```
 
-### Visualize Document Positions (θ)
+### Visualize document positions (θ)
 
 ```{r}
 # Extract document positions
@@ -257,7 +257,7 @@ ggplot(wf_positions, aes(x = year, y = theta)) +
   theme_minimal(base_size = 14)
 ```
 
-### Word-Level Discrimination (β)
+### Word-Level discrimination (β)
 
 ```{r}
 # Plot word features by position
@@ -272,7 +272,7 @@ textplot_scale1d(wf_model,
 
 ------------------------------------------------------------------------
 
-## Part 4: Comparing Positions — Wordfish and Scaling Methods
+## Comparing positions- Wordfish and Scaling Methods
 
 Position comparison across documents can be achieved using several scaling methods in quanteda:
 

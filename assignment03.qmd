@@ -9,7 +9,7 @@ execute:
   message: false
 ---
 
-## Setup: Packages and Data
+## Setup: Packages and data
 
 ```{r}
 library(haven)
@@ -22,7 +22,7 @@ TEDS_2016 <- read_stata("https://github.com/datageneration/home/blob/master/Data
 
 ------------------------------------------------------------------------
 
-## 1. Multiple Regression Model
+## Multiple regression model
 
 Using `votetsai` as the dependent variable and `age`, `edu`, and `income` as predictors.
 
@@ -33,7 +33,7 @@ summary(model)
 
 ------------------------------------------------------------------------
 
-## 2. The `regplot` Function
+## The `regplot` Function
 
 Creating a function that combines `lm()`, `plot()`, and `abline()` to plot a regression fit line.
 
@@ -47,7 +47,7 @@ regplot <- function(x, y) {
 
 ------------------------------------------------------------------------
 
-## 3. Running `regplot` on the Dependent Variable
+## Running `regplot` on the dependent variable
 
 ### a. Vote Choice by Age
 
@@ -75,18 +75,18 @@ title(main = "Vote Choice (Tsai) by Income",
 
 ------------------------------------------------------------------------
 
-## 4. What is the Problem? Why?
+## The problem
 
 The problem is that the dependent variable `votetsai` is **binary** (0 = voted for other candidate, 1 = voted for Tsai Ing-wen). Linear regression assumes the outcome is **continuous**, so applying it to a binary variable produces several issues:
 
 -   The regression line can predict values **outside the range of 0 and 1**, which are not valid probabilities
 -   The relationship between predictors and a binary outcome is inherently **non-linear**
 -   The assumption of **normally distributed residuals** is violated since the DV only takes two values
--   This makes the regression line a poor and misleading fit, as visible in the plots above where data points cluster at 0 and 1 but the fitted line cuts through the middle
+-   This makes the regression line a poor and misleading fit, as visible in the plots above, where data points cluster at 0 and 1 but the fitted line cuts through the middle
 
 ------------------------------------------------------------------------
 
-## 5. What Can Be Done to Improve Prediction?
+## Measures to improve prediction
 
 Since the dependent variable is binary, **logistic regression** is the appropriate model. It models the **log-odds** of the outcome and constrains all predictions between 0 and 1.
 
@@ -97,7 +97,7 @@ logit_model <- glm(votetsai ~ age + edu + income,
 summary(logit_model)
 ```
 
-### Logistic Regression Plots
+### Logistic regression plots
 
 ```{r}
 TEDS_2016_clean <- TEDS_2016 %>%

@@ -7,8 +7,6 @@ format:
 editor: visual
 ---
 
-## What can LLMs do well, and where do they fail?
-
 ### What LLMs do well
 
 Large language models have demonstrated remarkable capabilities across a wide range of knowledge-intensive tasks. Drawing on the transformer architecture introduced by Vaswani et al. (2017) and the bidirectional pre-training paradigm of BERT (Devlin et al., 2019), modern LLMs have achieved near-human or superhuman performance on several classes of problems:
@@ -39,9 +37,9 @@ Despite their capabilities, LLMs exhibit several well-documented failure modes. 
 
 ------------------------------------------------------------------------
 
-## How generative AI will reshape Public Administration research in the next five years
+## Generative AI and Public Administration research in the next five years
 
-### The discipline: Public Administration and Behavioral Public Administration
+### Discipline: Public Administration and Behavioral Public Administration
 
 Public administration as a field sits at the intersection of political science, organizational theory, psychology, and policy analysis. Its research methods range from quantitative survey analysis and administrative data mining to qualitative case studies and ethnographic fieldwork. Generative AI will reshape this discipline unevenly - transforming some research tasks dramatically while others must remain fundamentally human-driven.
 
@@ -61,7 +59,7 @@ Public administration as a field sits at the intersection of political science, 
 
 ------------------------------------------------------------------------
 
-### What Should Remain Human-Driven
+### What should remain human-driven
 
 **1. Normative and ethical judgment:** Public administration is fundamentally a normative discipline; it is concerned not only with what governments do but with what they should do. Questions about equity, democratic accountability, public value, and the ethics of governance cannot be delegated to AI systems that have no stake in the outcomes and no capacity for genuine moral reasoning. Researchers must retain the interpretive and evaluative authority to make normative claims.
 
@@ -75,7 +73,7 @@ Public administration as a field sits at the intersection of political science, 
 
 ------------------------------------------------------------------------
 
-### A Personal Research Perspective
+### A personal research perspective
 
 For my own research on public trust in government and e-government adoption, generative AI will most substantially change how I collect and analyze citizen feedback data, synthesize interdisciplinary literature, and pre-test survey instruments. However, the core intellectual contributions theorizing the mechanisms through which technology shapes trust, designing causal identification strategies, and making normative arguments about what transparent and accountable digital government should look like must remain mine. AI is a powerful research assistant. It is not, and should not become, a substitute for the researcher.
 

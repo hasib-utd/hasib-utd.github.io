@@ -23,7 +23,7 @@ execute:
 
 ------------------------------------------------------------------------
 
-## Causal Diagram: Technology Adoption and Public Trust
+## Causal diagram: Technology adoption and public trust
 
 The diagram below illustrates a relationship central to my research in Technology and Public Management.
 
@@ -75,18 +75,18 @@ ggplot() +
         legend.position = "bottom")
 ```
 
-### Key Variables
+### Key variables
 
 -   **Treatment:** E-Government Technology Adoption
 -   **Outcome:** Public Trust in Government
 -   **Mediator:** Perceived Service Quality
 -   **Confounders:** Digital Literacy, Socioeconomic Status
 
-### Distinguishing Causal Claims from Predictive Associations
+### Distinguishing causal claims from predictive associations
 
 A predictive association establishes that adoption and trust co-occur. This could arise from true causation, reverse causation, or confounding. To establish causation:
 
 -   **RCTs:** Randomly assign citizens to use or not use e-government services
--   **Instrumental Variables:** Use exogenous broadband infrastructure variation as instrument
+-   **Instrumental variables:** Use exogenous broadband infrastructure variation as an instrument
 -   **Difference-in-Differences:** Compare trust changes across jurisdictions adopting at different times
 -   **SEM:** Explicitly model the mediating role of perceived service quality

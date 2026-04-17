@@ -1,5 +1,5 @@
 ---
-title: "Assignment 01: Brush Up R and Quarto"
+title: "Assignment 01: Brush-up R and Quarto"
 author: "Muhammad Al Hasib"
 format: html
 editor: visual
@@ -9,7 +9,7 @@ execute:
   message: false
 ---
 
-## Setup: Packages and Data
+## Setup: Packages and data
 
 ```{r}
 library(haven)
@@ -22,9 +22,9 @@ TEDS_2016 <- haven::read_dta("https://github.com/datageneration/home/blob/master
 
 ------------------------------------------------------------------------
 
-## Exploratory Data Analysis
+## Exploratory data analysis
 
-### Data Overview
+### Data overview
 
 ```{r}
 dim(TEDS_2016)
@@ -38,7 +38,7 @@ summary(TEDS_2016)
 
 ------------------------------------------------------------------------
 
-## Q4. What Problems Do You Encounter When Working with the Dataset?
+## Problems encountered when working with the dataset
 
 Several issues arise when working with the TEDS 2016 dataset:
 
@@ -76,7 +76,7 @@ TEDS_2016 %>%
 
 ------------------------------------------------------------------------
 
-## Q5. How to Deal with Missing Values?
+## Deal with missing values
 
 There are several strategies for handling missing values depending on context:
 
@@ -99,7 +99,7 @@ cat("Rows removed:", nrow(TEDS_2016) - nrow(teds_clean), "\n")
 
 ------------------------------------------------------------------------
 
-## Q6. Exploring the Relationship Between Tondu and Other Variables
+## Exploring the relationship between tondu and other variables
 
 To explore the relationship between `Tondu` (unification-independence preference) and other variables, the following methods are appropriate:
 
@@ -224,7 +224,7 @@ TEDS_2016 %>%
 
 ------------------------------------------------------------------------
 
-## Q7. The votetsai Variable
+## The votetsai variable
 
 The `votetsai` variable captures whether a respondent voted for DPP candidate Tsai Ing-wen (1 = Yes, 0 = No). It is a binary outcome variable, making it suitable for logistic regression rather than linear regression.
 
@@ -260,7 +260,7 @@ TEDS_2016 %>%
 
 ------------------------------------------------------------------------
 
-## Q8. Frequency Table and Barchart of Tondu
+## Frequency table and bar chart of Tondu
 
 ```{r}
 # Frequency table

@@ -4005,10 +4005,11 @@ vertical-align: -.125em;
   <li><a href="#model-3-random-forest" id="toc-model-3-random-forest" class="nav-link" data-scroll-target="#model-3-random-forest">Model 3: Random Forest</a></li>
   <li><a href="#model-comparison" id="toc-model-comparison" class="nav-link" data-scroll-target="#model-comparison">Model Comparison</a></li>
   </ul></li>
-  <li><a href="#error-analysis-what-did-accuracy-alone-miss-how-does-overfitting-relate-to-knowledge-vs.-noise" id="toc-error-analysis-what-did-accuracy-alone-miss-how-does-overfitting-relate-to-knowledge-vs.-noise" class="nav-link" data-scroll-target="#error-analysis-what-did-accuracy-alone-miss-how-does-overfitting-relate-to-knowledge-vs.-noise">Error Analysis: What Did Accuracy Alone Miss? How Does Overfitting Relate to Knowledge vs. Noise?</a>
+  <li><a href="#error-analysis" id="toc-error-analysis" class="nav-link" data-scroll-target="#error-analysis">Error analysis</a></li>
+  <li><a href="#the-use-of-accuracy-alone-and-overfitting-to-knowledge-vs.-noise" id="toc-the-use-of-accuracy-alone-and-overfitting-to-knowledge-vs.-noise" class="nav-link" data-scroll-target="#the-use-of-accuracy-alone-and-overfitting-to-knowledge-vs.-noise">The use of accuracy alone and overfitting to knowledge vs. noise</a>
   <ul class="collapse">
-  <li><a href="#what-error-analysis-revealed" id="toc-what-error-analysis-revealed" class="nav-link" data-scroll-target="#what-error-analysis-revealed">What Error Analysis Revealed</a></li>
-  <li><a href="#overfitting-knowledge-vs.-noise" id="toc-overfitting-knowledge-vs.-noise" class="nav-link" data-scroll-target="#overfitting-knowledge-vs.-noise">Overfitting: Knowledge vs. Noise</a></li>
+  <li><a href="#error-analysis-1" id="toc-error-analysis-1" class="nav-link" data-scroll-target="#error-analysis-1">Error analysis</a></li>
+  <li><a href="#overfitting-knowledge-vs.-noise" id="toc-overfitting-knowledge-vs.-noise" class="nav-link" data-scroll-target="#overfitting-knowledge-vs.-noise">Overfitting: knowledge vs. noise</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -4324,10 +4325,13 @@ Prediction Other Tsai
 <hr>
 </section>
 </section>
-<section id="error-analysis-what-did-accuracy-alone-miss-how-does-overfitting-relate-to-knowledge-vs.-noise" class="level2">
-<h2 class="anchored" data-anchor-id="error-analysis-what-did-accuracy-alone-miss-how-does-overfitting-relate-to-knowledge-vs.-noise">Error Analysis: What Did Accuracy Alone Miss? How Does Overfitting Relate to Knowledge vs. Noise?</h2>
-<section id="what-error-analysis-revealed" class="level3">
-<h3 class="anchored" data-anchor-id="what-error-analysis-revealed">What Error Analysis Revealed</h3>
+<section id="error-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="error-analysis">Error analysis</h2>
+</section>
+<section id="the-use-of-accuracy-alone-and-overfitting-to-knowledge-vs.-noise" class="level2">
+<h2 class="anchored" data-anchor-id="the-use-of-accuracy-alone-and-overfitting-to-knowledge-vs.-noise">The use of accuracy alone and overfitting to knowledge vs. noise</h2>
+<section id="error-analysis-1" class="level3">
+<h3 class="anchored" data-anchor-id="error-analysis-1">Error analysis</h3>
 <p>Accuracy alone is an incomplete measure of model performance, particularly when classes are imbalanced or when the costs of different error types differ.</p>
 <p>In this pipeline, the TEDS 2016 dataset has an imbalanced vote distribution: approximately 63% of respondents voted for Tsai and 37% for other candidates. A naive model that always predicted “Tsai” would achieve 63% accuracy without learning anything meaningful. Accuracy alone would not expose this failure.</p>
 <p>Error analysis through the confusion matrix reveals two types of errors:</p>
@@ -4335,14 +4339,14 @@ Prediction Other Tsai
 <li><strong>False Positives (Type I Error):</strong> Predicting “Tsai” when the respondent voted for another candidate</li>
 <li><strong>False Negatives (Type II Error):</strong> Predicting “Other” when the respondent actually voted for Tsai</li>
 </ul>
-<p>The <strong>sensitivity</strong> and <strong>specificity</strong> from the confusion matrix reveal that the three models differ meaningfully in how they distribute these errors — even when their overall accuracy is similar. The decision tree showed higher sensitivity but lower specificity than logistic regression, meaning it was better at identifying Tsai voters but more likely to misclassify non-Tsai voters. This tradeoff is invisible if we only examine accuracy.</p>
-<p><strong>Kappa</strong> — which corrects for chance agreement — provides a more honest assessment of model performance than raw accuracy under class imbalance.</p>
+<p>The <strong>sensitivity</strong> and <strong>specificity</strong> from the confusion matrix reveal that the three models differ meaningfully in how they distribute these errors, even when their overall accuracy is similar. The decision tree showed higher sensitivity but lower specificity than logistic regression, meaning it was better at identifying Tsai voters but more likely to misclassify non-Tsai voters. This tradeoff is invisible if we only examine accuracy.</p>
+<p><strong>Kappa</strong>, which corrects for chance agreement, provides a more honest assessment of model performance than raw accuracy under class imbalance.</p>
 </section>
 <section id="overfitting-knowledge-vs.-noise" class="level3">
-<h3 class="anchored" data-anchor-id="overfitting-knowledge-vs.-noise">Overfitting: Knowledge vs. Noise</h3>
+<h3 class="anchored" data-anchor-id="overfitting-knowledge-vs.-noise">Overfitting: knowledge vs. noise</h3>
 <p>Overfitting occurs when a model learns the noise and idiosyncratic patterns in the training data rather than the underlying generalizable signal. An overfit model performs well on training data but poorly on unseen test data.</p>
 <ul>
-<li><strong>Knowledge</strong> refers to stable, generalizable patterns — the real relationships between variables and outcomes that hold across contexts (e.g., DPP partisanship predicts Tsai support)</li>
+<li><strong>Knowledge</strong> refers to stable, generalizable patterns the real relationships between variables and outcomes that hold across contexts (e.g., DPP partisanship predicts Tsai support)</li>
 <li><strong>Noise</strong> refers to random variation, measurement error, and sample-specific quirks that do not generalize</li>
 </ul>
 <p>An overfit model mistakes noise for knowledge. Cross-validation, regularization, and ensemble methods like random forests address overfitting by averaging across multiple models, reducing variance without sacrificing too much bias. In this pipeline, the random forest’s ensemble approach makes it more robust to overfitting than the single decision tree, evident in its higher test accuracy and more balanced error profile.</p>
