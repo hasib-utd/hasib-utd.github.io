@@ -1,0 +1,112 @@
+---
+title: "Reflection (Class 5): Knowledge, Information, and AI Failures"
+author: "Muhammad Al Hasib"
+format:
+  html:
+    embed-resources: true
+editor: visual
+---
+
+## Reading Notebook: Strategy and Routine
+
+### My Reading Routine
+
+Academic reading in a PhD program is not passive consumption; it is an active, structured process of building knowledge that accumulates across courses, papers, and research projects. I have developed the following reading routine to maximize retention and analytical utility:
+
+**Before reading:** - Skim the abstract, introduction, and conclusion first to establish the paper's central argument and contribution before engaging with the details - Write down one question I want the paper to answer. This focuses attention and prevents passive reading - Check the citation count and venue to calibrate how much weight to give the paper in the broader literature
+
+**During reading:** - Annotate directly in the PDF using three categories: key claims (highlighted), methodological notes (underlined), and questions/critiques (margin notes) - For quantitative papers, pay special attention to identification strategies, sample characteristics, and robustness checks for theoretical papers, map the logical structure of what assumptions lead to what conclusions
+
+**After reading:** - Write a 3-sentence summary: (1) what the paper argues, (2) what evidence it provides, and (3) what gap or question it leaves open - Add the paper to my Zotero library with tags for research area, method, and theoretical contribution - Note connections to other papers I have read. Knowledge accumulates through relationships between ideas, not isolated facts
+
+### Text Data Topic: AI Governance and Public Sector
+
+For text analysis, I am interested in analyzing government AI use case inventories, specifically the OMB Consolidated AI Use Case Inventories from 2022 to 2025. These documents contain structured and unstructured descriptions of how federal agencies are deploying AI, making them ideal for text mining to track how governance language, risk framing, and transparency disclosure have evolved.
+
+**Data source:** OMB AI Use Case Inventories (publicly available at ai.gov and data.gov)
+
+**How to get the data:** The inventories are available as downloadable CSV and Excel files. Text fields describing AI use cases can be extracted and analyzed using `tidytext` in R for topic modeling, keyword frequency analysis, and sentiment analysis of risk and accountability language.
+
+------------------------------------------------------------------------
+
+## How Do Humans Find Knowledge? How Is Knowledge Different from Information?
+
+### The Distinction Between Information and Knowledge
+
+The distinction between information and knowledge is foundational to knowledge mining as a field and to understanding both the power and the limitations of AI systems that process information at scale.
+
+**Information** is structured, transmissible data that reduces uncertainty about a state of the world. A weather report that says "temperature: 72°F" is information. A database record showing that a citizen filed a tax return online is information. Information can be stored, transmitted, copied, and processed without being understood. It is syntactic; it has form and structure, but it is not inherently meaningful.
+
+**Knowledge** is information that has been interpreted, contextualized, and integrated into a framework of understanding that enables reasoning, judgment, and action. Knowing that it is 72°F is useful, but knowing that 72°F in Dallas in January is unusually warm and understanding what that implies for seasonal patterns, agricultural planning, or energy consumption is knowledge. Knowledge is semantic; it carries meaning, and it is relational: it exists in connection with other knowledge, not in isolation.
+
+The philosopher Edmund Gettier famously challenged the classical definition of knowledge as "justified true belief," demonstrating that the relationship between evidence and knowledge is more complex than simple justification. For our purposes, what matters is that knowledge involves not just having information but understanding its significance, its relationships, and its implications for action.
+
+### How Humans Find Knowledge
+
+Humans acquire knowledge through several interconnected processes that are qualitatively different from information retrieval:
+
+**1. Pattern recognition across experience.** Humans identify patterns by accumulating experience over time and recognizing regularities that recur across different contexts. A public administrator who has observed many bureaucratic reform initiatives develops a pattern recognition capacity, knowledge about which reforms tend to succeed, which tend to fail, and why that cannot be fully articulated as explicit rules but informs judgment reliably.
+
+**2. Abductive reasoning:** Humans generate knowledge through abductive reasoning from incomplete evidence to the most plausible explanation. When a researcher observes that citizens who use e-government services report higher institutional trust, they do not simply record this correlation as information; they reason about the most plausible causal mechanism and generate a hypothesis that can be tested. This inferential leap from data to explanation is a distinctly human form of knowledge generation.
+
+**3. Social and collaborative construction** Much human knowledge is socially constructed through dialogue, debate, peer review, and collective sense-making. Scientific knowledge in particular is produced through communities of practice that evaluate evidence, challenge claims, and reach provisional consensus. This social process filters out errors and biases that individual reasoners might miss.
+
+**4. Embodied and tacit knowledge.** Following Michael Polanyi's concept of tacit knowledge, "we know more than we can tell," much human knowledge is embodied in practice, skill, and intuition rather than explicit propositions. An experienced researcher's sense of when a finding "doesn't feel right," or a clinician's intuition about a patient's condition, represents knowledge that cannot be fully reduced to information.
+
+**5. Integration and synthesis** Humans find knowledge by connecting disparate pieces of information into coherent frameworks, theories, models, and narratives that make sense of complex phenomena. This synthetic capacity is what distinguishes knowledge from mere information accumulation.
+
+### Implications for AI and Knowledge Mining
+
+AI systems, including large language models, are extraordinarily powerful information processors. They can retrieve, summarize, classify, and generate text at scales and speeds that far exceed human capacity. But they do not, in the full sense described above, *know* things. They process statistical patterns in training data without the embodied experience, abductive reasoning, social accountability, or genuine understanding that characterize human knowledge.
+
+This is not merely a philosophical point it has practical implications for how AI systems should be used in research. AI is best understood as a powerful tool for *information processing* that can assist human *knowledge construction*, not a replacement for the reasoning, judgment, and interpretive capacity that knowledge requires.
+
+------------------------------------------------------------------------
+
+## AI Discrepancies and Failures: A Catalog and Pattern Analysis
+
+The following list documents specific AI failures and discrepancies I have encountered or identified through research, organized by failure type.
+
+### Hallucination (Factual Fabrication)
+
+-   **Citation fabrication:** Multiple LLMs have generated fully formatted academic citation author names, journal titles, volume numbers, and page ranges that correspond to no real publication. The citations appear syntactically correct and topically plausible, making them dangerous for researchers who do not verify independently.
+-   **Biographical errors:** LLMs have generated confident but incorrect biographical details about real researchers, wrong institutional affiliations, incorrect publication dates, and fabricated awards.
+-   **Statistical confabulation:** When asked about specific statistics (e.g., "what percentage of federal agencies use AI for benefits determination?"), LLMs sometimes generate precise-sounding numbers that are not traceable to any real source.
+
+### Reasoning Errors
+
+-   **Conjunction fallacy:** LLMs sometimes assign higher probability to specific conjunctions than to their components, a well-known human reasoning bias that appears to be replicated in model outputs.
+-   **Causal confusion:** Models frequently conflate correlation with causation, presenting observational associations as causal claims without acknowledging the identification problem.
+-   **Inconsistency across prompts:** The same factual question posed with slightly different wording can produce contradictory answers from the same model in the same session.
+
+### Bias and Representation Failures
+
+-   **Western-centric defaults:** When asked about government institutions, public administration practices, or cultural norms without specifying a context, models default to Western (primarily American or European) frameworks, producing systematically biased outputs for non-Western research contexts.
+-   **Recency bias:** Models trained on large web corpora overrepresent recent, English-language, high-visibility sources, systematically underrepresenting older scholarship, non-English literature, and work published in lower-prestige venues.
+-   **Gender and racial bias:** Text generation tasks involving professional roles show that systematic bias models more frequently associate certain professional roles with specific demographic groups in ways that reflect historical biases in training data.
+
+### Temporal and Knowledge Cutoff Failures
+
+-   **Outdated information presented as current:** Models present information from their training cutoff as current without flagging that developments may have occurred since training, particularly problematic for rapidly evolving fields like AI governance and public sector technology policy.
+-   **Inability to acknowledge uncertainty about recency:** When asked about recent events, models sometimes confabulate plausible-sounding recent developments rather than acknowledging that they may not have reliable information.
+
+### Pattern Analysis
+
+Several patterns emerge from this catalog:
+
+**Confidence without calibration** is the most pervasive failure pattern. LLMs generate all outputs with a similar apparent confidence level, regardless of whether they are recalling well-established facts or confabulating uncertain details. This miscalibration is the root cause of many downstream failures. Hallucinated citations look identical to real ones because the model presents both with equal certainty.
+
+**Statistical pattern matching without semantic understanding** underlies most reasoning errors. Models generate outputs that are statistically consistent with patterns in training data but do not reflect a genuine understanding of the logical relationships between concepts. The model produces text that *looks like* correct reasoning without the underlying inferential process that would make it reliable.
+
+**Training data reflects human biases,** including geographic, linguistic, demographic, and temporal biases, that are replicated and sometimes amplified in model outputs. AI systems do not eliminate human bias; they encode and scale it.
+
+The practical implication for researchers is consistent: treat AI outputs as a starting point that requires critical evaluation, independent verification, and contextual judgment, not as authoritative information that can be trusted without scrutiny.
+
+------------------------------------------------------------------------
+
+## References
+
+-   Polanyi, M. (1966). *The Tacit Dimension*. Doubleday.
+-   Silge, J., & Robinson, D. (2019). *Text Mining with R: A Tidy Approach*. O'Reilly Media. https://www.tidytextmining.com/
+-   Chang, Y., et al. (2024). A survey on the evaluation of large language models. *ACM Transactions on Intelligent Systems and Technology*, 15, 31–45.
+-   Breiman, L. (2001). Statistical modeling: The two cultures. *Statistical Science*, 16(3), 199–231.
