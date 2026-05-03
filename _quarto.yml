@@ -37,10 +37,13 @@ website:
             href: assignment03.html
             
           - text: "Assignment 04"
-            href: assignment04.html
+            href: assignment04.
             
           - text: "— Reflections —"
             href: assignments.html
+               
+          - text: "Reading Review: Breiman & Shmueli"
+            href: review_breiman_shmueli.html
             
           - text: "Reflection Week 01"
             href: reflection01.html
