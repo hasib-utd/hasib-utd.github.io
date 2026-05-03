@@ -1,0 +1,109 @@
+---
+title: "Review: Breiman (2001) and Shmueli (2010) — Two Cultures, Two Goals"
+author: "Muhammad Al Hasib"
+format:
+  html:
+    embed-resources: true
+editor: visual
+---
+
+## Introduction
+
+Two landmark papers in statistical and data science methodology, Leo Breiman's "Statistical Modeling: The Two Cultures" (2001) and Galit Shmueli's "To Explain or to Predict?" (2010) together define a foundational debate about the purpose of quantitative modeling. While Breiman focuses on the divide between statistical modeling traditions, Shmueli refines and extends this debate by drawing a principled distinction between explanation and prediction as distinct scientific goals. Read together, these papers provide an essential framework for understanding methodological choices in knowledge mining, machine learning, and social science research.
+
+------------------------------------------------------------------------
+
+## Breiman (2001): The Two Cultures
+
+Breiman's central argument is that statisticians have historically operated within a single dominant paradigm, the data-modeling culture in which the analyst assumes a stochastic data-generating model (e.g., linear regression or logistic regression) and uses data to estimate its parameters. This culture prioritizes interpretability, inference, and hypothesis testing, but Breiman argues it has led statisticians to work on problems that are "irrelevant" to data-modeling culture in which the analyst assumes a stochastic data-generating model (e.g., linear or the real challenges of prediction and pattern recognition in complex data.
+
+Against this, Breiman advocates for the algorithmic modeling culture, which treats the data-generating process as unknown and unknowable, and instead focuses on developing algorithms that produce accurate predictions from input data. Random forests, boosting, and neural networks exemplify this approach. Breiman presents evidence primarily from prediction competitions and practical applications that algorithmic models consistently outperform data models on predictive accuracy, particularly in high-dimensional settings.
+
+Breiman's critique is sharp: he argues that the statistics profession's commitment to data models has led to a dangerous narrowing of focus, causing statisticians to miss the most important developments in machine learning and to provide poor guidance to applied researchers who need accurate predictions rather than elegant models.
+
+### Key Contributions
+
+-   Introduced the influential "two cultures" framing that has shaped subsequent methodological debates
+-   Provided empirical evidence for the predictive superiority of algorithmic models in applied settings
+-   Challenged the statistics profession to broaden its methodological toolkit
+-   Highlighted the tension between model interpretability and predictive accuracy
+
+### Limitations
+
+-   Conflates the goal of prediction with the goal of understanding treating predictive accuracy as the primary criterion for model evaluation, without adequately addressing when explanation matters
+-   Provides limited guidance on how to choose between cultures for a given research problem
+-   The "two cultures" framing is somewhat binary, obscuring the continuum of modeling approaches between the extremes
+
+------------------------------------------------------------------------
+
+## Shmueli (2010): To Explain or to Predict?
+
+Where Breiman diagnoses a methodological divide, Shmueli provides a conceptual framework for resolving it. Her central contribution is the distinction between explanatory modeling and predictive modeling as distinct scientific activities with different goals, criteria, and appropriate methods.
+
+**Explanatory modeling** uses statistical models to test causal hypotheses and estimate the strength of relationships between variables. The goal is to understand *why* an outcome occurs to identify the mechanisms that drive phenomena of interest. Theory guides variable selection, model specification, and interpretation. Fit to existing data (in-sample performance) is the primary criterion of success.
+
+**Predictive modeling** uses statistical or algorithmic models to generate accurate forecasts for new, unseen observations. The goal is to know *what will happen* to produce reliable predictions that can inform decisions. Out-of-sample performance is the primary criterion of success, and theoretical interpretability is secondary.
+
+Shmueli argues that these two goals require fundamentally different methodological choices at every stage of the research process, from variable selection and model specification to performance evaluation and validation. A model optimized for explanation may perform poorly for prediction, and vice versa. Crucially, she identifies a third category, descriptive modeling, which aims to summarize or represent data structure without causal or predictive intent.
+
+### Key Contributions
+
+-   Provides a principled, operational distinction between explanation and prediction that Breiman's framework lacks
+-   Demonstrates that the explanation-prediction gap is not merely philosophical but has concrete methodological implications — affecting variable selection, model evaluation, and validation strategies
+-   Introduces the concept of predictive power as distinct from explanatory power, and shows that commonly used fit statistics (R², AIC) are not appropriate for evaluating predictive models
+-   Argues that both goals are scientifically legitimate and that researchers should be explicit about which goal they are pursuing
+
+### Limitations
+
+-   The distinction between explanation and prediction, while conceptually valuable, is harder to maintain in practice many research questions involve both goals simultaneously
+-   Does not fully address how causal inference methods (e.g., instrumental variables, difference-in-differences) relate to her framework
+-   The paper focuses primarily on regression-based settings and does not fully engage with the algorithmic modeling approaches that Breiman advocates
+
+------------------------------------------------------------------------
+
+## Comparative Analysis
+
+### Points of Agreement
+
+Both papers agree that the statistics profession has been insufficiently attentive to the practical goal of accurate prediction. Breiman argues this has led statisticians to prefer elegant but poorly fitting models; Shmueli argues it has led researchers to conflate in-sample fit with out-of-sample predictive accuracy. Both call for greater methodological pluralism and more explicit attention to the goals that models are meant to serve.
+
+Both papers also agree that model evaluation criteria should be matched to research goals. Breiman's emphasis on cross-validation and out-of-sample testing aligns with Shmueli's argument that predictive models must be evaluated on held-out data rather than in-sample fit statistics.
+
+### Points of Divergence
+
+The most important difference between the two papers is in their treatment of *explanation*. Breiman is largely dismissive of explanatory modeling, treating predictive accuracy as the primary criterion of model quality and arguing that the search for interpretable mechanisms is often misguided. Shmueli, by contrast, treats explanation as a fully legitimate and irreducibly important scientific goal, one that is simply different from prediction, not inferior to it.
+
+This difference has significant implications for social science research. In public administration and behavioral public administration, my own research area, the goal is typically to understand *why* citizens behave as they do toward government institutions, not merely to predict their behavior. A machine learning model that predicts citizen distrust with 90% accuracy but provides no insight into the mechanisms driving distrust is less useful for policy design than an explanatory model that identifies the causal pathways, even if the latter fits the data less well.
+
+Shmueli's framework is therefore more directly applicable to social science research than Breiman's, because it provides principled guidance for choosing between methodological approaches based on research goals rather than treating predictive accuracy as universally paramount.
+
+### Complementarity
+
+Despite their differences, the two papers are best read as complementary rather than contradictory. Breiman's contribution is to establish that algorithmic modeling approaches deserve a central place in the analyst's toolkit, that the assumption of a specific data-generating model is often unjustified, and that purely algorithmic approaches can deliver superior predictive performance. Shmueli's contribution is to clarify *when* predictive accuracy is the right criterion and when it is not.
+
+Together, they suggest a research design framework in which the analyst first asks: "Is my goal explanation or prediction?" If prediction, algorithmic methods, and cross-validated performance metrics are appropriate. If explanation, theory-driven model specification, causal identification strategies, and inferential statistics are appropriate. If, as is often the case in applied social science, the analyst must be transparent about the tradeoffs and report results from both perspectives.
+
+------------------------------------------------------------------------
+
+## Implications for Knowledge Mining and Public Administration Research
+
+For researchers working at the intersection of knowledge mining and public administration, these two papers define the methodological landscape:
+
+-   **Machine learning methods** (random forests, gradient boosting, neural networks) excel at prediction but provide limited causal insight. They are appropriate for operational decision support, early warning systems, and pattern detection in large administrative datasets.
+-   **Regression-based explanatory models** excel at testing theoretical hypotheses and estimating causal effects, but may sacrifice predictive accuracy. They are appropriate for policy evaluation, theory testing, and understanding mechanisms.
+-   **Hybrid approaches** such as using machine learning for variable selection followed by regression-based estimation, or using causal forests for heterogeneous treatment effect estimation, increasingly bridge the two cultures.
+
+The most important practical lesson from both papers is the one Shmueli states most clearly: researchers must be explicit about their goals before choosing their methods. Confusing explanation and prediction using in-sample fit to evaluate a predictive model, or interpreting a predictive model's coefficients as causal effects, leads to methodological errors that undermine the validity of research conclusions.
+
+------------------------------------------------------------------------
+
+## Conclusion
+
+Breiman (2001) and Shmueli (2010) together constitute a foundational dialogue about the purpose and practice of statistical modeling. Breiman disrupts the data modeling monoculture by demonstrating the power of algorithmic approaches; Shmueli provides the conceptual framework needed to deploy these approaches wisely. For researchers in knowledge mining and behavioral public administration, the core lesson is this: choose your methods based on your goals, be transparent about that choice, and do not mistake predictive accuracy for causal understanding or vice versa.
+
+------------------------------------------------------------------------
+
+## References
+
+-   Breiman, L. (2001). Statistical modeling: The two cultures (with comments and a rejoinder by the author). *Statistical Science*, 16(3), 199–231.
+-   Shmueli, G. (2010). To explain or to predict? *Statistical Science*, 25(3), 289–310.
