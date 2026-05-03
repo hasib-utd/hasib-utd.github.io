@@ -19,8 +19,6 @@ At its core, AI for Science rests on three premises:
 2.  **Pattern discovery:** AI systems can identify subtle, high-dimensional patterns in complex data that human researchers might not think to look for, generating hypotheses that can then be tested through conventional scientific methods.
 3.  **Acceleration:** AI can compress research timelines, reducing the time from data collection to insight, from hypothesis to experimental test, from literature search to synthesis, enabling faster iteration across the scientific cycle.
 
-------------------------------------------------------------------------
-
 ### Agentic AI
 
 A **single-prompt LLM interaction** is stateless and reactive: the researcher submits a query, the model generates a response, and the interaction ends. The model has no memory of prior exchanges, no ability to take actions in the world, and no capacity to plan across multiple steps. It is a powerful tool for answering questions but not for conducting research.
@@ -31,8 +29,6 @@ An **agentic AI system** is fundamentally different. It combines an LLM with:
 -   **Tool use:** The ability to call external tools, web search, code execution, database queries, API calls, file reading, and writing to gather information and take actions in the world
 -   **Memory:** The ability to maintain state across steps, storing intermediate results and using them to inform subsequent decisions
 -   **Multi-step reasoning:** The ability to evaluate intermediate outputs, decide whether they are sufficient, and iterate, retrying failed steps, revising plans, and adjusting strategies based on what has been learned
-
-------------------------------------------------------------------------
 
 ### Agentic AI and changes in the research workflow
 
@@ -60,8 +56,6 @@ Agentic systems can evaluate their own intermediate outputs and decide whether t
 
 Agentic pipelines can be designed to execute entire research workflows, including data collection, preprocessing, analysis, visualization, and reporting in a documented, reproducible sequence. For computational social science research, this enables the kind of transparent, end-to-end reproducibility that is increasingly expected in the field.
 
-------------------------------------------------------------------------
-
 ### Implications for my research project
 
 For my research on public trust and e-government adoption, a project pipeline integrating agentic AI would look like:
@@ -74,15 +68,13 @@ For my research on public trust and e-government adoption, a project pipeline in
 
 **Synthesis:** The agent integrates quantitative outputs (sentiment scores, topic distributions) with qualitative context (retrieved policy excerpts, theoretical literature) into a coherent analytical narrative.
 
-This architecture moves beyond any single tool it is a coordinated system in which each component performs the task it is best suited for, orchestrated by an agent that maintains the overall research goal across multiple steps.
-
-------------------------------------------------------------------------
+This architecture moves beyond any single tool; it is a coordinated system in which each component performs the task it is best suited for, orchestrated by an agent that maintains the overall research goal across multiple steps.
 
 ### Limitations and the continued role of human judgment
 
 Agentic AI systems introduce new risks alongside their capabilities. Autonomous multi-step systems can compound errors; a flawed early decision propagates through subsequent steps in ways that are harder to catch than single-prompt errors. Tool use introduces security and privacy risks, particularly when agents access external systems or handle sensitive research data. And the opacity of agentic planning processes raises accountability questions: when an agent makes a methodological decision autonomously, the researcher may not be aware of the choice that was made.
 
-The fundamental principle remains: agentic AI systems are powerful research assistants, but the intellectual and ethical responsibility for research outputs rests with the human researcher. Agentic workflows require more careful human oversight, not less the researcher must understand what the agent is doing at each step, evaluate the quality of its decisions, and be prepared to intervene when the agent makes errors or takes inappropriate shortcuts.
+The fundamental principle remains: agentic AI systems are powerful research assistants, but the intellectual and ethical responsibility for research outputs rests with the human researcher. Agentic workflows require more careful human oversight, not less. The researcher must understand what the agent is doing at each step, evaluate the quality of its decisions, and be prepared to intervene when the agent makes errors or takes inappropriate shortcuts.
 
 ------------------------------------------------------------------------
 

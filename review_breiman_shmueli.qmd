@@ -30,7 +30,7 @@ Breiman's critique is sharp: he argues that the statistics profession's commitme
 
 ### Limitations
 
--   Conflates the goal of prediction with the goal of understanding treating predictive accuracy as the primary criterion for model evaluation, without adequately addressing when explanation matters
+-   Conflates the goal of prediction with the goal of understanding, treating predictive accuracy as the primary criterion for model evaluation, without adequately addressing when explanation matters
 -   Provides limited guidance on how to choose between cultures for a given research problem
 -   The "two cultures" framing is somewhat binary, obscuring the continuum of modeling approaches between the extremes
 
@@ -49,7 +49,7 @@ Shmueli argues that these two goals require fundamentally different methodologic
 ### Key Contributions
 
 -   Provides a principled, operational distinction between explanation and prediction that Breiman's framework lacks
--   Demonstrates that the explanation-prediction gap is not merely philosophical but has concrete methodological implications — affecting variable selection, model evaluation, and validation strategies
+-   Demonstrates that the explanation-prediction gap is not merely philosophical but has concrete methodological implications affecting variable selection, model evaluation, and validation strategies
 -   Introduces the concept of predictive power as distinct from explanatory power, and shows that commonly used fit statistics (R², AIC) are not appropriate for evaluating predictive models
 -   Argues that both goals are scientifically legitimate and that researchers should be explicit about which goal they are pursuing
 

@@ -48,28 +48,28 @@ website:
           - text: "Reflection: Using AI for Research"
             href: reflection-class04.html
             
-          - text: "Reflection Week 01"
+          - text: "Reflection: AI and Originality"
             href: reflection01.html
             
-          - text: "Reflection Week 02"
+          - text: "Reflection: ML Pipeline"
             href: reflection02.html
             
-          - text: "Reflection Week 03"
+          - text: "Reflection: Prediction vs. Explanation"
             href: reflection03.html
             
-          - text: "Reflection 04 (Class 8)"
+          - text: "Reflection: NLP and LLMs"
             href: reflection04.html
             
-          - text: "Reflection 05 (Class 9)"
+          - text: "Reflection: LLMs and Research"
             href: reflection05.html
             
-          - text: "Reflection 06 (Class 10)"
+          - text: "Reflection: RAG"
             href: reflection06.html
             
-          - text: "Reflection 07 (Class 11)"
+          - text: "Reflection: Knowledge Graph"
             href: reflection07.html
             
-          - text: "Reflection 08 (Class 12)"
+          - text: "Reflection: AI for Science and Agentic AI"
             href: reflection08.html
             
           - text: "— Labs —"
