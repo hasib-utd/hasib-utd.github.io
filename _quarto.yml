@@ -45,6 +45,9 @@ website:
           - text: "Reading Review: Breiman & Shmueli"
             href: review_breiman_shmueli.html
             
+          - text: "Reflection: Using AI for Research"
+            href: reflection-class04.html
+            
           - text: "Reflection Week 01"
             href: reflection01.html
             
