@@ -1,0 +1,70 @@
+---
+title: "Reflection (Class 4): Using AI for Research"
+author: "Muhammad Al Hasib"
+format:
+  html:
+    embed-resources: true
+editor: visual
+---
+
+## Q1. How to Start Using AI for Your Project?
+
+Starting to use AI effectively for academic research requires a deliberate and structured approach not simply opening a chatbot and asking it to "write my literature review." Based on my experience across this course, I have developed the following workflow for integrating AI into my research on public trust, e-government adoption, and behavioral public administration.
+
+**Step 1: Define the task before opening the tool.** AI performs best when given specific, well-scoped tasks. Before using any AI tool, I identify precisely what I need a summary of a specific paper, help debugging R code, a first draft of a conceptual framework, or suggestions for search terms. Vague requests produce generic outputs; specific requests produce useful ones.
+
+**Step 2: Use AI for literature scoping, not literature replacement.** I use AI models to identify relevant bodies of literature and key concepts, then verify every suggestion against Google Scholar or Semantic Scholar before including it in my work. AI is useful for mapping a field I am unfamiliar with it is not a substitute for reading primary sources.
+
+**Step 3: Use AI for code assistance and debugging.** For my quantitative work in R — SEM, hierarchical regression, and scale reliability analysis, AI significantly accelerates the coding process. I describe what I want to accomplish analytically, ask the model to suggest the appropriate R functions and syntax, then verify and adapt the output based on my own understanding of the analysis.
+
+**Step 4: Use AI for drafting, not writing.** I use AI to generate first drafts of sections I find difficult to start — introductions, transitions, method descriptions then substantially revise them in my own voice. I never submit AI-generated text without significant editing and critical evaluation.
+
+**Step 5: Verify everything independently.** Every factual claim, citation, and analytical conclusion generated with AI assistance is independently verified before it enters my research. AI tools are powerful but unreliable narrators they hallucinate confidently and require human oversight at every step.
+
+------------------------------------------------------------------------
+
+## Q2. Which Two AI Models Are You Using and How Can You Leverage Them?
+
+### Model 1: Claude (Anthropic)
+
+I use Claude primarily for **literature synthesis, conceptual framework development, and writing assistance**. Claude's ability to engage with long, complex documents and maintain coherent reasoning across extended conversations makes it particularly well-suited for the kind of interdisciplinary synthesis my research requires connecting behavioral public administration theory with technology adoption models, institutional trust theory, and algorithmic governance scholarship.
+
+**Specific use cases in my research:**
+
+-   **Literature mapping:** I describe my research questions and ask Claude to identify the key theoretical traditions, foundational papers, and recent developments I should engage with. I then verify these suggestions against database searches.
+-   **Conceptual framework development:** When developing my Algorithmic Accountability Framework (AAF) for the MiDAS case, I used Claude to stress-test the logical structure of my framework, asking it to identify gaps, alternative explanations, and potential objections that I then addressed in my writing.
+-   **Writing assistance:** I use Claude to generate first drafts of difficult sections, which I then revise substantially. Claude is particularly useful for translating complex methodological decisions into accessible prose for non-specialist readers.
+-   **Code debugging:** For my R analyses using SEM and scale reliability methods, Claude helps me debug error messages and suggests alternative analytical approaches when my initial specification produces unexpected results.
+
+**Limitations I have encountered:** Claude occasionally generates plausible-sounding but unverifiable citations. I have learned to always verify references independently and to prompt Claude explicitly to flag uncertainty rather than generate confident but potentially incorrect claims.
+
+------------------------------------------------------------------------
+
+### Model 2: ChatGPT (OpenAI)
+
+I use ChatGPT primarily for quantitative analysis support, data exploration, and prompt iteration. ChatGPT's Code Interpreter (Advanced Data Analysis) feature is particularly useful for exploratory data analysis and visualization when I want to quickly inspect a dataset before conducting more rigorous analysis in R.
+
+**Specific use cases in my research:**
+
+-   **Exploratory data analysis:** I upload datasets, including my federal AI governance dataset built from OMB Consolidated AI Use Case Inventories, and use ChatGPT's code interpreter to generate quick summaries, missingness assessments, and preliminary visualizations that inform my subsequent R analysis.
+-   **Survey instrument development:** I use ChatGPT to generate alternative phrasings for survey items, evaluate potential sources of item bias, and simulate how different respondent populations might interpret ambiguous questions.
+-   **Prompt refinement:** As demonstrated in Assignment 02, I use ChatGPT as one of three models for systematic literature review tasks, leveraging its broad domain coverage while compensating for its tendency toward shallow synthesis with more specific prompts.
+-   **Data cleaning logic:** For complex data cleaning tasks, such as recoding variables, handling missing data patterns, and merging datasets, I describe my data structure and cleaning goals to ChatGPT and use its suggested code as a starting point for my R workflow.
+
+**Limitations I have encountered:** ChatGPT tends toward breadth over depth in literature synthesis tasks, and its citations require more rigorous verification than Claude's. Its responses are also more sensitive to prompt wording, requiring more iteration to obtain academically rigorous outputs.
+
+------------------------------------------------------------------------
+
+## Leveraging Both Models Strategically
+
+The most effective approach is to use Claude and ChatGPT in complementary roles rather than treating them as interchangeable. Claude excels at sustained, nuanced reasoning across complex interdisciplinary material, which is my primary tool for conceptual work. ChatGPT excels at quick exploratory analysis and broad scoping. It is my primary tool for data work and initial literature mapping.
+
+For any given research task, I typically begin with ChatGPT for broad scoping and exploratory analysis, then use Claude for deeper synthesis and framework development. I verify all outputs independently and treat both models as powerful but fallible assistants rather than authoritative sources.
+
+------------------------------------------------------------------------
+
+## References
+
+-   Breiman, L. (2001). Statistical modeling: The two cultures. *Statistical Science*, 16(3), 199–231.
+-   Shmueli, G. (2010). To explain or to predict? *Statistical Science*, 25(3), 289–310.
+-   Chang, Y., et al. (2024). A survey on evaluation of large language models. *ACM Transactions on Intelligent Systems and Technology*, 15, 31–45.
