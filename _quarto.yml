@@ -51,6 +51,9 @@ website:
           - text: "Reflection: AI and Originality"
             href: reflection01.html
             
+          - text: "Reflection: Human and Knowledge"
+            href: reflection-class05
+            
           - text: "Reflection: ML Pipeline"
             href: reflection02.html
             
