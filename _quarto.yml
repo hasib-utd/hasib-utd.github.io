@@ -37,7 +37,7 @@ website:
             href: assignment03.html
             
           - text: "Assignment 04"
-            href: assignment04.
+            href: assignment04.html
             
           - text: "— Reflections —"
             href: assignments.html
@@ -52,7 +52,7 @@ website:
             href: reflection01.html
             
           - text: "Reflection: Human and Knowledge"
-            href: reflection-class05
+            href: reflection-class05.html
             
           - text: "Reflection: ML Pipeline"
             href: reflection02.html
