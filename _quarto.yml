@@ -39,6 +39,9 @@ website:
           - text: "Assignment 04"
             href: assignment04.html
             
+          - text: "AI Disclosure: Course Project"
+            href: Gohl_AI_Documentation.pdf
+            
           - text: "— Reflections —"
             href: assignments.html
                
