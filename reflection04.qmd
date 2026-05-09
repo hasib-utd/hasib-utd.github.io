@@ -56,7 +56,7 @@ My research focuses on **public trust in government, e-government adoption, and 
 ## Limitations and solutions
 
 | Limitation | Solution |
-|------------------------------------|------------------------------------|
+|----|----|
 | **Hallucination**: LLMs generate confident but factually incorrect claims | Always verify citations and factual claims against primary sources; use RAG systems that ground outputs in retrievable documents |
 | **Training data bias**: Models trained predominantly on Western, English-language text | Use domain-adapted or multilingual models; critically examine outputs for cultural and linguistic bias |
 | **Lack of causal reasoning**: LLMs identify associations, not causal relationships | Combine LLM-assisted text analysis with causal inference designs (IV, DiD, RCT) |

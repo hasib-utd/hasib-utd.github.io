@@ -7,7 +7,7 @@ format:
 editor: visual
 ---
 
-## Q1. How to Start Using AI for Your Project?
+## How to Start Using AI for a Project
 
 Starting to use AI effectively for academic research requires a deliberate and structured approach not simply opening a chatbot and asking it to "write my literature review." Based on my experience across this course, I have developed the following workflow for integrating AI into my research on public trust, e-government adoption, and behavioral public administration.
 
@@ -19,11 +19,11 @@ Starting to use AI effectively for academic research requires a deliberate and s
 
 **Step 4: Use AI for drafting, not writing.** I use AI to generate first drafts of sections I find difficult to start — introductions, transitions, method descriptions then substantially revise them in my own voice. I never submit AI-generated text without significant editing and critical evaluation.
 
-**Step 5: Verify everything independently.** Every factual claim, citation, and analytical conclusion generated with AI assistance is independently verified before it enters my research. AI tools are powerful but unreliable narrators they hallucinate confidently and require human oversight at every step.
+**Step 5: Verify everything independently.** Every factual claim, citation, and analytical conclusion generated with AI assistance is independently verified before it enters my research. AI tools are powerful but unreliable narrators; they hallucinate confidently and require human oversight at every step.
 
 ------------------------------------------------------------------------
 
-## Q2. Which Two AI Models Are You Using and How Can You Leverage Them?
+## AI Models Are Being Used, and How Can I Leverage Them
 
 ### Model 1: Claude (Anthropic)
 
