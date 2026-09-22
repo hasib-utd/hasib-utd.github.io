@@ -90,16 +90,16 @@ website:
           - text: "Lab ML01: Simple and Multiple Linear Regression"
             href: Lab_ML01.html
 
-      - text: "EPPS 6356"
+            - text: "EPPS 6356"
         menu:
           - text: "Coursework"
-            href: assignment01.html
+            href: epps6356/assignment01.html
             
           - text: "— Assignments —"
-            href: assignment01.html
+            href: epps6356/assignment01.html
             
           - text: "Assignment 01"
-            href: assignment01.html
+            href: epps6356/assignment01.html
         
   page-footer:
     center: "© 2026 Muhammad Al Hasib"
