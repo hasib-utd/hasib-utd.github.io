@@ -136,28 +136,51 @@ ggplot() +
 
 ### Selected Chart
 
-> **Source:** [INSERT SOURCE — book, article, or news website]
+> **Source:** Fox News (2009), as critiqued by Nathan Yau, FlowingData.
+> Retrieved from: https://flowingdata.com/2009/11/26/fox-news-makes-the-best-pie-chart-ever/
 
-![Chart selected for critique](chart.png)
+![Fox News Pie Chart: Republican Presidential Candidate Support (2009)](chart.png)
 
 ### Critique
 
+The chart above is a pie chart broadcast by Fox News in 2009 showing Republican
+voter support for three potential 2012 presidential candidates: Sarah Palin (70%),
+Mike Huckabee (63%), and Mitt Romney (60%). Nathan Yau highlighted this chart on
+FlowingData as a textbook example of how pie charts can fail both mathematically
+and visually (Yau, 2024).
+
 **What works:**
 
-[2-3 sentences on strengths — clarity, labeling, appropriate chart type, color use]
+The chart uses distinct colors for each candidate, making the three categories
+immediately distinguishable. Percentage labels are placed directly on the slices,
+eliminating the need for a separate legend and reducing cognitive effort.
 
 **What does not work:**
 
-[2-3 sentences on weaknesses — clutter, misleading axes, poor color, missing context]
+The most fundamental problem is mathematical: the three slices sum to 193% rather
+than 100%, violating the core principle of a pie chart. The slice sizes also do
+not correspond to the labeled percentages, meaning the visual encoding directly
+contradicts the data. Beyond the arithmetic error, the chart misrepresents the
+poll itself — the original question asked about favorability ratings, not
+presidential support (Bartosik, 2009).
 
 **How to improve it:**
 
-[2-3 sentences following Nathan Yau's principles — simplify, annotate, use better chart type]
+A simple horizontal bar chart would immediately resolve all problems. Bar length
+accurately encodes magnitude without requiring values to sum to 100%, and
+comparisons across candidates are easier to read. Adding a clear axis title
+specifying the question asked — "% of Republicans with favorable opinion" — would
+further prevent misinterpretation (Yau, 2024).
 
 ---
 
 ## References
 
-Anscombe, F. J. (1973). Graphs in statistical analysis. *The American Statistician, 27*(1), 17-21.
+Anscombe, F. J. (1973). Graphs in statistical analysis. *The American
+Statistician, 27*(1), 17-21.
 
-Yau, N. (2011). *Visualize this: The FlowingData guide to design, visualization, and statistics.* Wiley.
+Bartosik, M. (2009, November 25). Fox News chart fails math. *NBC Chicago.*
+https://www.nbcchicago.com/news/local/fox-news-chart-fails-math/2094314/
+
+Yau, N. (2024). *Visualize this: The FlowingData guide to design, visualization,
+and statistics* (2nd ed.). Wiley.
