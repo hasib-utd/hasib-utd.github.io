@@ -90,7 +90,7 @@ website:
           - text: "Lab ML01: Simple and Multiple Linear Regression"
             href: Lab_ML01.html
 
-            - text: "EPPS 6356"
+      - text: "EPPS 6356"
         menu:
           - text: "Coursework"
             href: epps6356/assignment01.html
