@@ -126,8 +126,6 @@ ggplot() +
   labs(caption = "Fall Leaf | Custom Color: Deep Crimson (#8B1A1A)")
 ```
 
-> Note: The Fall.R plot is computationally intensive and takes 1-2 minutes to generate. Run the code in RStudio to view the output, then save and embed the image below.
-
 ![Fall Leaf visualization with custom deep crimson color palette](fall_plot.png)
 
 ---
