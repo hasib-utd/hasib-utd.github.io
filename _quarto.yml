@@ -100,6 +100,9 @@ website:
             
           - text: "Assignment 01"
             href: epps6356/assignment01.html
+
+          - text: "Assignment 02"
+            href: epps6356/assignment02.html
         
   page-footer:
     center: "© 2026 Muhammad Al Hasib"
