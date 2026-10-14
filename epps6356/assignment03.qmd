@@ -1,0 +1,407 @@
+---
+title: "Assignment 03: Anatomy of a Chart"
+subtitle: "EPPS 6356 Data Visualization | University of Texas at Dallas"
+author: "Muhammad Al Hasib"
+date: "2026-10-13"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: true
+    theme: cosmo
+    highlight-style: github
+---
+
+## Part 1: Documenting murrell01.R — Anscombe's Quartet Panel
+
+This section documents the base R code that produces Anscombe's Quartet as a 2×2 panel plot, explaining each line's role in the chart's anatomy.
+
+```{r}
+#| label: part1-anscombe-documented
+#| warning: false
+#| message: false
+#| fig-cap: "Anscombe's Quartet — Documented Base R Panel"
+#| fig-width: 8
+#| fig-height: 6
+
+## ── Step 1: Load the built-in dataset ────────────────────────────────────────
+data(anscombe)
+# R ships with Anscombe (1973)'s four paired (x, y) datasets.
+# Each column is named x1–x4 and y1–y4; all 11 rows per pair.
+
+## ── Step 2: Define a generic formula template ─────────────────────────────────
+ff <- y ~ x
+# A formula object. The loop below rewrites its LHS (y) and RHS (x)
+# at each iteration, reusing this single object instead of writing
+# four separate formulas.
+
+## ── Step 3: Fit four OLS models with a loop ───────────────────────────────────
+mods <- setNames(as.list(1:4), paste0("lm", 1:4))
+# Creates a named list: list(lm1=1, lm2=2, lm3=3, lm4=4).
+# setNames() assigns names so we can later call mods[["lm1"]], etc.
+
+for (i in 1:4) {
+  ff[2:3] <- lapply(paste0(c("y", "x"), i), as.name)
+  # ff[2] is the response (LHS); ff[3] is the predictor (RHS).
+  # paste0("y",1) → "y1"; as.name() turns the string into a symbol.
+  # So ff becomes y1~x1, then y2~x2, etc.
+
+  mods[[i]] <- lm(ff, data = anscombe)
+  # Fits OLS: score = β0 + β1·x + ε for each of the four pairs.
+  # The result (coefficients, residuals, fitted values) is stored in mods.
+}
+
+## ── Step 4: Set up a 2×2 plot canvas ─────────────────────────────────────────
+op <- par(mfrow = c(2, 2),           # 2 rows × 2 columns of panels
+          mar  = 0.1 + c(4, 4, 1, 1), # inner margins: bottom, left, top, right
+          oma  = c(0, 0, 2, 0))        # outer margin: 2 lines at top for title
+# par() sets global graphics parameters; op saves the old settings
+# so we can restore them afterward with par(op).
+
+## ── Step 5: Draw each scatter plot and regression line ────────────────────────
+for (i in 1:4) {
+  ff[2:3] <- lapply(paste0(c("y", "x"), i), as.name)
+  # Rebuild the formula for this panel (same logic as Step 3).
+
+  plot(ff, data = anscombe,
+       col  = "red",     # border color of each point symbol
+       pch  = 21,        # symbol: filled circle with separate border/fill
+       bg   = "orange",  # fill color inside pch=21
+       cex  = 1.2,       # point size (1.2× the default)
+       xlim = c(3, 19),  # fixed x-axis range — identical across all 4 panels
+       ylim = c(3, 13))  # fixed y-axis range — enables direct visual comparison
+
+  abline(mods[[i]], col = "blue")
+  # Draws the OLS regression line using the intercept and slope stored in mods.
+  # All four lines are visually nearly identical — the key Anscombe lesson.
+}
+
+## ── Step 6: Add an outer title spanning all panels ────────────────────────────
+mtext("Anscombe's 4 Regression data sets", outer = TRUE, cex = 1.5)
+# mtext() writes text in the outer margin (outer=TRUE).
+# cex=1.5 makes it 1.5× larger than the default font size.
+
+## ── Step 7: Restore original graphics parameters ──────────────────────────────
+par(op)
+# Resets mfrow, mar, oma to whatever they were before Step 4.
+# Good practice to avoid side-effects on subsequent plots.
+```
+
+### What the code teaches
+
+The loop pattern (`ff[2:3] <- lapply(...)`) is a compact, DRY approach to fitting and plotting multiple models without repeating nearly identical code four times. The fixed `xlim` and `ylim` across all panels is intentional: it makes the structural differences between datasets visible at a glance rather than being masked by auto-scaled axes. The outer margin title (`mtext(..., outer=TRUE)`) is a base R technique for labeling a multi-panel figure with a single call.
+
+---
+
+## Part 2: Regression Comparison Across Anscombe's Four Datasets
+
+This part demonstrates that identical regression statistics can hide fundamentally different data structures.
+
+```{r}
+#| label: part2-regression-comparison
+#| warning: false
+#| message: false
+
+## Fit all four models
+data(anscombe)
+ff   <- y ~ x
+mods <- setNames(as.list(1:4), paste0("lm", 1:4))
+for (i in 1:4) {
+  ff[2:3]  <- lapply(paste0(c("y", "x"), i), as.name)
+  mods[[i]] <- lm(ff, data = anscombe)
+}
+
+## Extract key statistics into a summary table
+stats_list <- lapply(seq_along(mods), function(i) {
+  s <- summary(mods[[i]])
+  data.frame(
+    Dataset     = paste0("Dataset ", i),
+    Intercept   = round(coef(s)[1, 1], 3),
+    Slope       = round(coef(s)[2, 1], 3),
+    R_squared   = round(s$r.squared, 3),
+    F_statistic = round(s$fstatistic[1], 2),
+    p_value     = format.pval(pf(s$fstatistic[1], s$fstatistic[2],
+                                  s$fstatistic[3], lower.tail = FALSE),
+                               digits = 3)
+  )
+})
+
+stats_df <- do.call(rbind, stats_list)
+
+knitr::kable(stats_df,
+             caption = "Table 1. OLS Regression Statistics — Anscombe's Quartet",
+             col.names = c("Dataset", "Intercept", "Slope",
+                           "R²", "F-statistic", "p-value"),
+             align = "lrrrrr")
+```
+
+```{r}
+#| label: part2-four-panel-plot
+#| warning: false
+#| message: false
+#| fig-cap: "Figure 1. Anscombe's Quartet: Identical Statistics, Different Structures"
+#| fig-width: 8
+#| fig-height: 6
+
+op <- par(mfrow = c(2, 2), mar = 0.1 + c(4, 4, 1, 1), oma = c(0, 0, 2, 0))
+
+for (i in 1:4) {
+  ff[2:3] <- lapply(paste0(c("y", "x"), i), as.name)
+  plot(ff, data = anscombe,
+       col = "red", pch = 21, bg = "orange", cex = 1.2,
+       xlim = c(3, 19), ylim = c(3, 13),
+       main = paste("Dataset", i))
+  abline(mods[[i]], col = "blue")
+}
+
+mtext("Anscombe's Quartet: Same Statistics, Different Structures",
+      outer = TRUE, cex = 1.2)
+par(op)
+```
+
+### Interpretation
+
+As Table 1 shows, all four datasets share nearly identical intercepts (~3.00), slopes (~0.50), R² values (~0.667), and p-values (~0.002). Yet Figure 1 reveals entirely different structures: Dataset I is a clean linear relationship; Dataset II follows a quadratic curve; Dataset III is linear with a single influential outlier; Dataset IV has a degenerate x distribution with one leverage point. This is the central lesson of Anscombe's Quartet — summary statistics must never substitute for visual inspection.
+
+---
+
+## Part 3: Base R Fine-Tuning
+
+This part applies typographic and aesthetic refinements to the Anscombe panel using base R's graphics parameters.
+
+```{r}
+#| label: part3-finetuned
+#| warning: false
+#| message: false
+#| fig-cap: "Figure 2. Fine-Tuned Anscombe Panel (Serif Font, Custom Colors, Star Symbol)"
+#| fig-width: 8
+#| fig-height: 6
+
+data(anscombe)
+ff   <- y ~ x
+mods <- setNames(as.list(1:4), paste0("lm", 1:4))
+for (i in 1:4) {
+  ff[2:3]  <- lapply(paste0(c("y", "x"), i), as.name)
+  mods[[i]] <- lm(ff, data = anscombe)
+}
+
+## Fine-tuning parameters
+op <- par(
+  mfrow  = c(2, 2),
+  mar    = 0.1 + c(4, 4, 1.5, 1),
+  oma    = c(0, 0, 3, 0),
+  family = "serif"          # serif font throughout (Times-style)
+)
+
+for (i in 1:4) {
+  ff[2:3] <- lapply(paste0(c("y", "x"), i), as.name)
+
+  plot(ff, data = anscombe,
+       col  = "#006666",    # teal border for points
+       pch  = 8,            # asterisk / star symbol
+       cex  = 1.3,
+       xlim = c(3, 19),
+       ylim = c(3, 13),
+       main = paste("Dataset", i),
+       xlab = paste0("x", i),
+       ylab = paste0("y", i))
+
+  abline(mods[[i]],
+         col = "#CC0000",   # crimson regression line
+         lty = 2,           # dashed line style
+         lwd = 1.8)
+}
+
+mtext("Anscombe's Quartet — Fine-Tuned Base R Version",
+      outer = TRUE, cex = 1.3, font = 2)   # font=2 → bold
+par(op)
+```
+
+### Fine-Tuning Choices
+
+| Parameter | Value | Effect |
+|-----------|-------|--------|
+| `family = "serif"` | `"serif"` | Times-style font for academic publication look |
+| `pch` | `8` | Star/asterisk symbol — distinctive, not the default circle |
+| `col` | `"#006666"` | Teal — distinct from regression line, colorblind-safe |
+| `abline col` | `"#CC0000"` | Crimson — high contrast against teal points |
+| `lty` | `2` | Dashed line — visually separates fit line from data |
+| `lwd` | `1.8` | Slightly thicker line for legibility |
+
+---
+
+## Part 4: ggplot2 Reproduction
+
+This part reproduces the fine-tuned Anscombe panel using ggplot2, and documents the mapping from base R to ggplot2 grammar.
+
+```{r}
+#| label: part4-ggplot2
+#| warning: false
+#| message: false
+#| fig-cap: "Figure 3. ggplot2 Reproduction of the Fine-Tuned Anscombe Panel"
+#| fig-width: 8
+#| fig-height: 6
+
+library(tidyverse)
+
+## Reshape Anscombe to long format for ggplot2
+data(anscombe)
+
+anscombe_long <- data.frame(
+  dataset = rep(1:4, each = 11),
+  x = c(anscombe$x1, anscombe$x2, anscombe$x3, anscombe$x4),
+  y = c(anscombe$y1, anscombe$y2, anscombe$y3, anscombe$y4)
+)
+
+## Build the faceted plot
+ggplot(anscombe_long, aes(x = x, y = y)) +
+
+  # Points — teal, star shape (shape=8)
+  geom_point(color = "#006666", shape = 8, size = 2.5) +
+
+  # Regression line — crimson, dashed
+  geom_smooth(method = "lm", se = FALSE,
+              color = "#CC0000", linetype = "dashed", linewidth = 0.9) +
+
+  # One panel per dataset
+  facet_wrap(~ paste("Dataset", dataset), nrow = 2) +
+
+  # Axis limits matching base R version
+  coord_cartesian(xlim = c(3, 19), ylim = c(3, 13)) +
+
+  # Titles and labels
+  labs(
+    title    = "Anscombe's Quartet — ggplot2 Reproduction",
+    subtitle = "Identical regression statistics; visually distinct structures",
+    x = "x",
+    y = "y"
+  ) +
+
+  # Theme matching the serif, clean academic style
+  theme_bw(base_family = "serif") +
+  theme(
+    plot.title    = element_text(face = "bold", size = 13),
+    plot.subtitle = element_text(size = 10, color = "grey40"),
+    strip.text    = element_text(face = "bold"),
+    panel.grid.minor = element_blank()
+  )
+```
+
+### Base R → ggplot2 Mapping
+
+| Base R | ggplot2 Equivalent | Notes |
+|--------|--------------------|-------|
+| `plot(ff, data=anscombe, col=..., pch=8)` | `geom_point(color=..., shape=8)` | Data layer |
+| `abline(mod, col=..., lty=2)` | `geom_smooth(method="lm", linetype="dashed")` | Fit layer |
+| `par(mfrow=c(2,2))` | `facet_wrap(~dataset, nrow=2)` | Panel layout |
+| `xlim=`, `ylim=` | `coord_cartesian(xlim=, ylim=)` | Axis limits |
+| `mtext(..., outer=TRUE)` | `labs(title=...)` | Figure title |
+| `par(family="serif")` | `theme_bw(base_family="serif")` | Typography |
+| `abline col="#CC0000"` | `geom_smooth(color="#CC0000")` | Line color |
+
+---
+
+## Part 5: COVID-19 Daily Deaths in Europe — Replication
+
+This part replicates a chart of COVID-19 daily deaths in Europe using Our World in Data, following the style of the reference visualization: one point per country-day, colored in deep pink, with country labels on outlier peaks.
+
+```{r}
+#| label: part5-covid-data
+#| warning: false
+#| message: false
+
+library(tidyverse)
+
+## ── Download OWID COVID data ──────────────────────────────────────────────────
+## Source: https://ourworldindata.org/covid-deaths
+## File:   https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv
+
+covid_url <- "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv"
+
+## Read directly from URL (requires internet)
+covid_raw <- tryCatch(
+  read_csv(covid_url,
+           col_types = cols(
+             iso_code          = col_character(),
+             continent         = col_character(),
+             location          = col_character(),
+             date              = col_date(format = "%Y-%m-%d"),
+             new_deaths        = col_double(),
+             new_deaths_smoothed = col_double(),
+             .default          = col_skip()
+           ),
+           show_col_types = FALSE),
+  error = function(e) NULL
+)
+
+if (!is.null(covid_raw)) {
+
+  ## Filter to European countries, 2020-2022
+  europe_deaths <- covid_raw %>%
+    filter(
+      continent == "Europe",
+      !is.na(new_deaths_smoothed),
+      date >= as.Date("2020-01-01"),
+      date <= as.Date("2022-12-31")
+    ) %>%
+    select(location, date, new_deaths_smoothed)
+
+  ## Identify peak observations per country for labeling
+  country_peaks <- europe_deaths %>%
+    group_by(location) %>%
+    slice_max(new_deaths_smoothed, n = 1) %>%
+    ungroup() %>%
+    filter(new_deaths_smoothed > 500)   # only label prominent peaks
+
+  ## ── Plot ──────────────────────────────────────────────────────────────────
+  ggplot(europe_deaths, aes(x = date, y = new_deaths_smoothed)) +
+
+    geom_point(color = "#FF1493", alpha = 0.25, size = 0.6) +
+
+    geom_text(data = country_peaks,
+              aes(label = location),
+              size = 2.5, vjust = -0.5, hjust = 0.5,
+              color = "grey20", check_overlap = TRUE) +
+
+    scale_x_date(date_breaks = "3 months", date_labels = "%b %Y") +
+    scale_y_continuous(labels = scales::comma) +
+
+    labs(
+      title    = "Daily COVID-19 Deaths in Europe (7-day smoothed)",
+      subtitle = "Each point represents one country on one day, 2020–2022",
+      x        = NULL,
+      y        = "New deaths (7-day smoothed)",
+      caption  = "Source: Our World in Data · ourworldindata.org/covid-deaths"
+    ) +
+
+    theme_minimal(base_family = "sans") +
+    theme(
+      plot.title      = element_text(face = "bold", size = 13),
+      plot.subtitle   = element_text(size = 10, color = "grey40"),
+      plot.caption    = element_text(size = 8, color = "grey50"),
+      axis.text.x     = element_text(angle = 45, hjust = 1, size = 8),
+      panel.grid.minor = element_blank()
+    )
+
+} else {
+  message("Could not download OWID data. Please run this chunk with internet access.")
+}
+```
+
+### Design Notes
+
+The chart uses `geom_point()` with `alpha = 0.25` to handle overplotting — many countries overlap in time, so transparency reveals the density of the distribution without hiding individual observations. The color `#FF1493` (deep pink) provides high contrast against the white background while evoking the urgency of the subject. Country labels are placed only on the most prominent peaks (`new_deaths_smoothed > 500`) to avoid clutter, following Yau's (2011) principle of labeling only what the reader needs to orient themselves. The 7-day smoothed series (rather than raw daily counts) removes weekend-reporting artifacts that would otherwise dominate the visual.
+
+---
+
+## References
+
+Anscombe, F. J. (1973). Graphs in statistical analysis. *The American Statistician, 27*(1), 17–21.
+
+Murrell, P. (2011). *R graphics* (2nd ed.). CRC Press.
+
+Our World in Data. (2024). *COVID-19 dataset*. https://ourworldindata.org/covid-deaths
+
+Wilkinson, L. (2005). *The grammar of graphics* (2nd ed.). Springer.
+
+Yau, N. (2011). *Visualize this: The FlowingData guide to design, visualization, and statistics.* Wiley.
