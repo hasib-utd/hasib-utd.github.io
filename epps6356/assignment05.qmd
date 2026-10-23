@@ -1,0 +1,579 @@
+---
+title: "Assignment 5: Base Graphics and ggplot2"
+subtitle: "EPPS 6356 Data Visualization | University of Texas at Dallas"
+author: "Muhammad Al Hasib"
+date: "2026-10-23"
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: true
+    code-tools: true
+    self-contained: true
+execute:
+  warning: false
+  message: false
+---
+
+```{r setup, include=FALSE}
+library(ggplot2)
+library(readxl)
+
+# ── Load data ─────────────────────────────────────────────────────────────────
+texas <- read.csv("data/texas.csv", stringsAsFactors = FALSE)
+size_levels <- c("Rural (under 10,000)", "Small (10,000 to 49,999)",
+                 "Mid-size (50,000 to 249,999)", "Large (250,000 or more)")
+texas$size_class <- factor(texas$size_class, levels = size_levels)
+
+# Short labels for plotting
+size_short <- c("Rural", "Small", "Mid-size", "Large")
+texas$size_short <- factor(
+  dplyr::recode(as.character(texas$size_class),
+    "Rural (under 10,000)"       = "Rural",
+    "Small (10,000 to 49,999)"   = "Small",
+    "Mid-size (50,000 to 249,999)" = "Mid-size",
+    "Large (250,000 or more)"    = "Large"),
+  levels = size_short)
+
+source_note <- "Source: CDC PLACES, Texas county-level estimates (crude prevalence, % of adults). 254 counties."
+
+# ── Shared palette (4 size groups) ───────────────────────────────────────────
+# Teal-to-amber accessible palette, used in both parts
+pal4 <- c("#2C7BB6", "#ABD9E9", "#FDAE61", "#D7191C")
+names(pal4) <- size_short
+```
+
+## Data
+
+All charts use CDC PLACES county-level health estimates for all 254 Texas counties. Variables are crude prevalence (% of adults) for eight health outcomes. Counties are grouped into four size classes by population: Rural (under 10,000), Small (10,000 to 49,999), Mid-size (50,000 to 249,999), and Large (250,000 or more).
+
+---
+
+## Part 1: Base Graphics
+
+All five charts share a consistent style set through a helper function `my_par()` that applies a custom `par()` state and restores the previous one on exit.
+
+```{r base-style}
+# Custom par helper — call at the top of each base chart block
+my_par <- function() {
+  op <- par(
+    family  = "sans",          # font family
+    cex     = 0.88,            # global text scaling
+    cex.main = 1.05,
+    cex.lab  = 0.92,
+    cex.axis = 0.82,
+    col.main = "#1a1a2e",      # near-black title
+    col.lab  = "#333333",
+    col.axis = "#555555",
+    fg       = "#555555",      # axis tick colour
+    las      = 1,              # horizontal axis labels
+    mgp      = c(2.2, 0.6, 0),# axis title, label, line positions
+    mar      = c(5, 4.5, 4, 1.5),  # bottom, left, top, right margins
+    bty      = "l",            # L-shaped box
+    tcl      = -0.3            # shorter tick marks
+  )
+  op   # return old state so caller can restore
+}
+
+source_mtext <- function() {
+  mtext(source_note, side = 1, line = 3.8,
+        cex = 0.65, col = "#888888", adj = 0)
+}
+```
+
+### 1a. Histogram
+
+```{r hist-base, fig.width=7, fig.height=4.5}
+op <- my_par()
+
+hist(texas$obesity,
+     breaks = 18,
+     col    = "#2C7BB6",
+     border = "white",
+     main   = "Distribution of adult obesity rates across Texas counties",
+     xlab   = "Adults with obesity (% of adults)",
+     ylab   = "Number of counties")
+
+# Annotation: vertical mean line
+abline(v   = mean(texas$obesity, na.rm = TRUE),
+       col = "#D7191C", lwd = 2, lty = 2)
+
+# Label the mean line
+text(x      = mean(texas$obesity, na.rm = TRUE) + 0.4,
+     y      = 28,
+     labels = paste0("Mean = ",
+                     round(mean(texas$obesity, na.rm = TRUE), 1), "%"),
+     col    = "#D7191C", cex = 0.78, adj = 0)
+
+source_mtext()
+par(op)
+```
+
+*Base R makes histograms simple: `hist()` with `breaks` and colour is all that is needed. The mean line added with `abline()` shows that the distribution is slightly right-skewed, with a cluster of high-obesity rural counties pulling the tail.*
+
+### 1b-i. Bar chart (vertical)
+
+```{r bar-v-base, fig.width=7, fig.height=4.5}
+op <- my_par()
+par(mar = c(5, 4.5, 4, 1.5))
+
+# Mean obesity by size group
+grp_means <- tapply(texas$obesity, texas$size_short, mean, na.rm = TRUE)
+grp_means <- grp_means[size_short]   # enforce order
+
+bp <- barplot(grp_means,
+              col    = pal4,
+              border = NA,
+              ylim   = c(0, max(grp_means) * 1.18),
+              names.arg = size_short,
+              main   = "Mean adult obesity rate by county size group",
+              xlab   = "County size group",
+              ylab   = "Mean obesity rate (% of adults)")
+
+# Annotation: value labels on top of each bar
+text(x      = bp,
+     y      = grp_means + 0.5,
+     labels = paste0(round(grp_means, 1), "%"),
+     cex    = 0.80, col = "#1a1a2e")
+
+source_mtext()
+par(op)
+```
+
+### 1b-ii. Bar chart (horizontal)
+
+```{r bar-h-base, fig.width=7, fig.height=4.5}
+op <- my_par()
+par(mar = c(5, 7, 4, 2))
+
+bp_h <- barplot(grp_means,
+                col    = pal4,
+                border = NA,
+                horiz  = TRUE,
+                xlim   = c(0, max(grp_means) * 1.18),
+                names.arg = size_short,
+                main   = "Mean adult obesity rate by county size group",
+                xlab   = "Mean obesity rate (% of adults)",
+                ylab   = "")
+
+# Annotation: value labels at end of each bar
+text(x      = grp_means + 0.4,
+     y      = bp_h,
+     labels = paste0(round(grp_means, 1), "%"),
+     cex    = 0.80, col = "#1a1a2e", adj = 0)
+
+source_mtext()
+par(op)
+```
+
+### 1c. Pie chart
+
+```{r pie-base, fig.width=6.5, fig.height=5.5}
+op <- my_par()
+par(mar = c(2, 2, 3, 2))
+
+# Count of counties per size group
+grp_counts <- table(texas$size_short)[size_short]
+pct        <- round(100 * grp_counts / sum(grp_counts), 1)
+pie_labels <- paste0(size_short, "\n(", pct, "%)")
+
+pie(grp_counts,
+    labels  = pie_labels,
+    col     = pal4,
+    border  = "white",
+    main    = "Share of Texas counties by population size group",
+    cex     = 0.82)
+
+mtext(source_note, side = 1, line = 0.5,
+      cex = 0.65, col = "#888888", adj = 0)
+par(op)
+```
+
+### 1d. Boxplot
+
+```{r box-base, fig.width=7, fig.height=4.8}
+op <- my_par()
+par(mar = c(5, 5, 4, 1.5))
+
+# Build a list so we can control group order and colors
+grp_list <- lapply(size_short, function(g)
+  texas$obesity[texas$size_short == g & !is.na(texas$obesity)])
+names(grp_list) <- size_short
+
+bp_box <- boxplot(grp_list,
+                  col      = pal4,
+                  border   = "#333333",
+                  outline  = TRUE,
+                  outcex   = 0.6,
+                  outpch   = 16,
+                  whisklty = 1,
+                  staplelty= 0,
+                  main     = "Distribution of adult obesity rates by county size group",
+                  xlab     = "County size group",
+                  ylab     = "Adults with obesity (% of adults)")
+
+# Annotation: overall median line
+abline(h   = median(texas$obesity, na.rm = TRUE),
+       lty = 2, col = "#888888", lwd = 1.2)
+mtext("Overall median", side = 4, at = median(texas$obesity, na.rm = TRUE),
+      cex = 0.68, col = "#888888", las = 1, line = 0.3)
+
+source_mtext()
+par(op)
+```
+
+### 1e. Scatterplot
+
+```{r scatter-base, fig.width=7, fig.height=5}
+op <- my_par()
+par(mar = c(5, 5, 4, 1.5))
+
+# Map size_short to colors for each point
+pt_col <- pal4[as.character(texas$size_short)]
+
+plot(texas$smoking, texas$obesity,
+     col  = pt_col,
+     pch  = 16,
+     cex  = 0.7,
+     main = "Smoking rate vs. obesity rate across 254 Texas counties",
+     xlab = "Adults who currently smoke (% of adults)",
+     ylab = "Adults with obesity (% of adults)")
+
+# Regression line annotation
+abline(lm(obesity ~ smoking, data = texas),
+       col = "#555555", lwd = 1.8, lty = 2)
+
+# Spearman rho annotation
+rho <- cor(texas$smoking, texas$obesity, method = "spearman", use = "complete.obs")
+text(x = max(texas$smoking, na.rm = TRUE) - 1,
+     y = min(texas$obesity, na.rm = TRUE) + 1,
+     labels = paste0("Spearman rho = ", round(rho, 2)),
+     col = "#333333", cex = 0.78, adj = 1)
+
+legend("topleft",
+       legend = size_short,
+       col    = pal4,
+       pch    = 16,
+       pt.cex = 0.9,
+       bty    = "n",
+       cex    = 0.78,
+       title  = "County size")
+
+source_mtext()
+par(op)
+```
+
+---
+
+## Part 2: ggplot2
+
+All five charts use the same custom theme function `theme_hasib()`, built on `theme_minimal()`, and the same four-color palette used in Part 1.
+
+```{r ggplot-theme}
+theme_hasib <- function(base_size = 12) {
+  theme_minimal(base_size = base_size, base_family = "sans") +
+    theme(
+      # Title and subtitle
+      plot.title      = element_text(size   = base_size * 1.05,
+                                     face   = "bold",
+                                     color  = "#1a1a2e",
+                                     margin = margin(b = 4)),
+      plot.subtitle   = element_text(size  = base_size * 0.82,
+                                     color = "#555555",
+                                     margin = margin(b = 8)),
+      plot.caption    = element_text(size  = base_size * 0.65,
+                                     color = "#888888",
+                                     hjust = 0,
+                                     margin = margin(t = 6)),
+      # Axes
+      axis.title      = element_text(size  = base_size * 0.88,
+                                     color = "#333333"),
+      axis.text       = element_text(size  = base_size * 0.80,
+                                     color = "#555555"),
+      axis.line       = element_line(color = "#cccccc", linewidth = 0.4),
+      axis.ticks      = element_line(color = "#cccccc", linewidth = 0.3),
+      # Grid
+      panel.grid.major = element_line(color = "#eeeeee", linewidth = 0.35),
+      panel.grid.minor = element_blank(),
+      # Legend
+      legend.title    = element_text(size  = base_size * 0.82,
+                                     face  = "bold",
+                                     color = "#333333"),
+      legend.text     = element_text(size  = base_size * 0.78,
+                                     color = "#555555"),
+      legend.key.size = unit(0.55, "lines"),
+      legend.position = "top",
+      # Plot margins
+      plot.margin     = margin(10, 14, 10, 10)
+    )
+}
+
+# Named color scale for size groups
+scale_fill_hasib  <- function(...) scale_fill_manual(values  = pal4, ...)
+scale_color_hasib <- function(...) scale_color_manual(values = pal4, ...)
+```
+
+### 2a. Histogram
+
+```{r hist-gg, fig.width=7, fig.height=4.5}
+mean_ob <- mean(texas$obesity, na.rm = TRUE)
+
+ggplot(texas, aes(x = obesity)) +
+  geom_histogram(bins = 18, fill = "#2C7BB6", color = "white", linewidth = 0.3) +
+  geom_vline(xintercept = mean_ob, color = "#D7191C",
+             linetype = "dashed", linewidth = 0.9) +
+  annotate("text",
+           x     = mean_ob + 0.3,
+           y     = 27,
+           label = paste0("Mean = ", round(mean_ob, 1), "%"),
+           color = "#D7191C", size = 3, hjust = 0) +
+  labs(title   = "Distribution of adult obesity rates across Texas counties",
+       x       = "Adults with obesity (% of adults)",
+       y       = "Number of counties",
+       caption = source_note) +
+  theme_hasib()
+```
+
+**Comparison:** Base R's `hist()` is faster to write for a quick look, but ggplot2 makes the layering logic (bars, then line, then label) cleaner and more explicit. Adjusting bin width and color is equally easy in both, but ggplot2's annotation system is more consistent.
+
+### 2b-i. Bar chart (vertical)
+
+```{r bar-v-gg, fig.width=7, fig.height=4.5}
+grp_df <- data.frame(
+  size  = factor(size_short, levels = size_short),
+  mean_ob = as.numeric(grp_means)
+)
+
+ggplot(grp_df, aes(x = size, y = mean_ob, fill = size)) +
+  geom_col(width = 0.65, show.legend = FALSE) +
+  geom_text(aes(label = paste0(round(mean_ob, 1), "%")),
+            vjust = -0.5, size = 3.1, color = "#1a1a2e") +
+  scale_fill_hasib() +
+  scale_y_continuous(limits = c(0, max(grp_df$mean_ob) * 1.15),
+                     expand = expansion(mult = c(0, 0))) +
+  labs(title   = "Mean adult obesity rate by county size group",
+       x       = "County size group",
+       y       = "Mean obesity rate (% of adults)",
+       caption = source_note) +
+  theme_hasib() +
+  theme(legend.position = "none")
+```
+
+### 2b-ii. Bar chart (horizontal)
+
+```{r bar-h-gg, fig.width=7, fig.height=4.5}
+ggplot(grp_df, aes(x = mean_ob, y = size, fill = size)) +
+  geom_col(width = 0.6, show.legend = FALSE) +
+  geom_text(aes(label = paste0(round(mean_ob, 1), "%")),
+            hjust = -0.2, size = 3.1, color = "#1a1a2e") +
+  scale_fill_hasib() +
+  scale_x_continuous(limits = c(0, max(grp_df$mean_ob) * 1.15),
+                     expand = expansion(mult = c(0, 0))) +
+  labs(title   = "Mean adult obesity rate by county size group",
+       x       = "Mean obesity rate (% of adults)",
+       y       = NULL,
+       caption = source_note) +
+  theme_hasib() +
+  theme(legend.position = "none",
+        axis.text.y = element_text(size = 10))
+```
+
+**Comparison:** Both systems produce clean bar charts, but flipping orientation in ggplot2 is a single `coord_flip()` call (or just swap `x` and `y` aesthetics), while base R requires re-specifying `horiz = TRUE` and adjusting margins separately. ggplot2 is more consistent here.
+
+### 2c. Pie chart
+
+```{r pie-gg, fig.width=6.5, fig.height=5.5}
+pie_df <- data.frame(
+  size  = factor(size_short, levels = size_short),
+  count = as.integer(grp_counts),
+  pct   = as.numeric(pct)
+)
+
+ggplot(pie_df, aes(x = "", y = count, fill = size)) +
+  geom_col(width = 1, color = "white", linewidth = 0.6) +
+  coord_polar(theta = "y") +
+  geom_text(aes(label = paste0(size, "\n(", pct, "%)")),
+            position = position_stack(vjust = 0.5),
+            size = 3.2, color = "white", fontface = "bold") +
+  scale_fill_hasib(name = "County size") +
+  labs(title   = "Share of Texas counties by population size group",
+       caption = source_note) +
+  theme_hasib() +
+  theme(axis.title  = element_blank(),
+        axis.text   = element_blank(),
+        axis.line   = element_blank(),
+        axis.ticks  = element_blank(),
+        panel.grid  = element_blank(),
+        legend.position = "none")
+```
+
+**Comparison:** Base R's `pie()` is one line; ggplot2 requires a `coord_polar()` workaround that is less intuitive. For a simple pie chart, base R is easier. However, ggplot2 makes it straightforward to keep the same theme and palette consistent with every other chart in the assignment.
+
+### 2d. Boxplot
+
+```{r box-gg, fig.width=7, fig.height=4.8}
+overall_med <- median(texas$obesity, na.rm = TRUE)
+
+ggplot(texas[!is.na(texas$obesity) & !is.na(texas$size_short), ],
+       aes(x = size_short, y = obesity, fill = size_short)) +
+  geom_hline(yintercept = overall_med,
+             linetype = "dashed", color = "#888888", linewidth = 0.7) +
+  geom_boxplot(outlier.shape = 16, outlier.size = 1.4,
+               outlier.alpha = 0.6, width = 0.55,
+               color = "#333333", linewidth = 0.4) +
+  annotate("text",
+           x = 4.45, y = overall_med + 0.3,
+           label = "Overall median", size = 2.8,
+           color = "#888888", hjust = 1) +
+  scale_fill_hasib(name = "County size") +
+  labs(title   = "Distribution of adult obesity rates by county size group",
+       x       = "County size group",
+       y       = "Adults with obesity (% of adults)",
+       caption = source_note) +
+  theme_hasib() +
+  theme(legend.position = "none")
+```
+
+**Comparison:** ggplot2 produces grouped boxplots from a tidy data frame in a single `geom_boxplot()` call, which is simpler than constructing a list and passing it to base R's `boxplot()`. Styling individual outlier points is also more consistent in ggplot2.
+
+### 2e. Scatterplot
+
+```{r scatter-gg, fig.width=7, fig.height=5}
+rho_val <- round(cor(texas$smoking, texas$obesity,
+                     method = "spearman", use = "complete.obs"), 2)
+rho_label <- paste0("Spearman rho = ", rho_val)
+
+ggplot(texas, aes(x = smoking, y = obesity, color = size_short)) +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE,
+              color = "#555555", linetype = "dashed", linewidth = 0.8) +
+  geom_point(alpha = 0.75, size = 1.8) +
+  annotate("text",
+           x = max(texas$smoking, na.rm = TRUE) - 0.5,
+           y = min(texas$obesity, na.rm = TRUE) + 0.8,
+           label = rho_label, size = 3, color = "#333333", hjust = 1) +
+  scale_color_hasib(name = "County size") +
+  labs(title   = "Smoking rate vs. obesity rate across 254 Texas counties",
+       x       = "Adults who currently smoke (% of adults)",
+       y       = "Adults with obesity (% of adults)",
+       caption = source_note) +
+  theme_hasib() +
+  theme(legend.position = "top")
+```
+
+**Comparison:** ggplot2 handles the legend automatically from the color aesthetic, while base R requires a manual `legend()` call with matched colors. Adding the regression line is one `geom_smooth()` call in ggplot2 versus `abline(lm(...))` in base R. ggplot2 is clearly more efficient for layered scatterplots.
+
+---
+
+## Part 3: Output Formats
+
+The scatterplot (1e and 2e) is exported in all six formats at 6.5 by 4 inches (raster formats at 300 dpi).
+
+```{r exports, eval=FALSE}
+# ── Base R scatterplot exports ────────────────────────────────────────────────
+base_plot <- function() {
+  op <- my_par()
+  par(mar = c(5, 5, 4, 1.5))
+  pt_col <- pal4[as.character(texas$size_short)]
+  plot(texas$smoking, texas$obesity,
+       col = pt_col, pch = 16, cex = 0.7,
+       main = "Smoking rate vs. obesity rate across 254 Texas counties",
+       xlab = "Adults who currently smoke (% of adults)",
+       ylab = "Adults with obesity (% of adults)")
+  abline(lm(obesity ~ smoking, data = texas),
+         col = "#555555", lwd = 1.8, lty = 2)
+  rho <- cor(texas$smoking, texas$obesity,
+             method = "spearman", use = "complete.obs")
+  text(x = max(texas$smoking, na.rm = TRUE) - 1,
+       y = min(texas$obesity, na.rm = TRUE) + 1,
+       labels = paste0("Spearman rho = ", round(rho, 2)),
+       col = "#333333", cex = 0.78, adj = 1)
+  legend("topleft", legend = size_short, col = pal4, pch = 16,
+         pt.cex = 0.9, bty = "n", cex = 0.78, title = "County size")
+  source_mtext()
+  par(op)
+}
+
+pdf("outputs/scatter_base.pdf", width = 6.5, height = 4); base_plot(); dev.off()
+svg("outputs/scatter_base.svg", width = 6.5, height = 4); base_plot(); dev.off()
+png("outputs/scatter_base.png", width = 6.5, height = 4,
+    units = "in", res = 300); base_plot(); dev.off()
+jpeg("outputs/scatter_base.jpg", width = 6.5, height = 4,
+     units = "in", res = 300, quality = 95); base_plot(); dev.off()
+tiff("outputs/scatter_base.tiff", width = 6.5, height = 4,
+     units = "in", res = 300, compression = "lzw"); base_plot(); dev.off()
+bmp("outputs/scatter_base.bmp", width = 6.5, height = 4,
+    units = "in", res = 300); base_plot(); dev.off()
+
+# ── ggplot2 scatterplot exports ───────────────────────────────────────────────
+gg_scatter <- ggplot(texas, aes(x = smoking, y = obesity, color = size_short)) +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE,
+              color = "#555555", linetype = "dashed", linewidth = 0.8) +
+  geom_point(alpha = 0.75, size = 1.8) +
+  annotate("text",
+           x = max(texas$smoking, na.rm = TRUE) - 0.5,
+           y = min(texas$obesity, na.rm = TRUE) + 0.8,
+           label = paste0("Spearman rho = ", rho_val),
+           size = 3, color = "#333333", hjust = 1) +
+  scale_color_hasib(name = "County size") +
+  labs(title   = "Smoking rate vs. obesity rate across 254 Texas counties",
+       x       = "Adults who currently smoke (% of adults)",
+       y       = "Adults with obesity (% of adults)",
+       caption = source_note) +
+  theme_hasib() +
+  theme(legend.position = "top")
+
+ggsave("outputs/scatter_gg.pdf",  gg_scatter, width = 6.5, height = 4, device = "pdf")
+ggsave("outputs/scatter_gg.svg",  gg_scatter, width = 6.5, height = 4, device = "svg")
+ggsave("outputs/scatter_gg.png",  gg_scatter, width = 6.5, height = 4,
+       dpi = 300, device = "png")
+ggsave("outputs/scatter_gg.jpg",  gg_scatter, width = 6.5, height = 4,
+       dpi = 300, device = "jpeg")
+ggsave("outputs/scatter_gg.tiff", gg_scatter, width = 6.5, height = 4,
+       dpi = 300, device = "tiff")
+ggsave("outputs/scatter_gg.bmp",  gg_scatter, width = 6.5, height = 4,
+       dpi = 300, device = "bmp")
+
+# ── File sizes ────────────────────────────────────────────────────────────────
+files_base <- paste0("outputs/scatter_base.",
+                     c("pdf", "svg", "png", "jpg", "tiff", "bmp"))
+files_gg   <- paste0("outputs/scatter_gg.",
+                     c("pdf", "svg", "png", "jpg", "tiff", "bmp"))
+
+size_kb <- function(f) round(file.size(f) / 1024, 1)
+cat("Base R file sizes (KB):\n")
+print(setNames(sapply(files_base, size_kb), basename(files_base)))
+cat("\nggplot2 file sizes (KB):\n")
+print(setNames(sapply(files_gg, size_kb), basename(files_gg)))
+```
+
+### Format comparison
+
+| Format | Type   | Compression | Transparency | Zoom behavior |
+|--------|--------|-------------|--------------|---------------|
+| PDF    | Vector | N/A (vector)| Yes          | Stays perfectly sharp at any zoom; text and lines are mathematically defined |
+| SVG    | Vector | N/A (vector)| Yes          | Same as PDF: infinitely scalable; text remains selectable in a browser |
+| PNG    | Raster | Lossless    | Yes          | At 400%: slight pixelation on diagonal lines; text edges soften but remain legible at 300 dpi |
+| JPG    | Raster | Lossy       | No           | At 400%: visible compression artifacts (ringing) around fine lines and text edges; worst of the raster formats for charts |
+| TIFF   | Raster | Lossless (LZW) | Yes       | Same pixel quality as PNG at identical dpi; larger file; standard for print workflows |
+| BMP    | Raster | None (raw)  | No           | Same pixel quality as PNG but file is dramatically larger; rarely used in practice |
+
+**Best format by destination:**
+
+- **Journal article:** PDF (vector, infinitely scalable, universally accepted by publishers; SVG as alternative if the journal's submission system accepts it).
+- **Web page:** PNG for charts with transparency or crisp lines; SVG for charts that need to scale responsively across screen sizes.
+- **PowerPoint slide:** PNG at 300 dpi (PowerPoint embeds rasters cleanly; PDF is not reliably rendered across different versions of PowerPoint; SVG support is inconsistent on Windows).
+
+---
+
+## Reflection
+
+Cleveland and McGill (1984) established a hierarchy of perceptual accuracy for encoding quantitative information: position along a common scale is most accurate, while angle and area, which pie charts rely on, fall near the bottom. Murrell acknowledges this yet includes pie charts in *R Graphics*, recognizing they remain part of the standard toolkit.
+
+A pie chart is defensible when two conditions both hold. First, the task is part-of-whole, not magnitude comparison: the viewer needs to see that a set of categories exhausts 100% of a total, not to rank or subtract values. Second, there are few slices (four or fewer) and they differ substantially in size so the angles are clearly distinguishable.
+
+My pie chart of Texas county size groups meets both conditions. The question it answers is: "What share of the state's 254 counties falls into each population tier?" The four slices are unequal enough to read without labels, and the part-of-whole framing is the whole point. A bar chart would make the counts easier to rank precisely, but it would lose the immediate sense that rural counties account for nearly half of all counties in the state. That compositional message is what justifies the pie here.
+
+---
+
+*Posted to: [hasib-utd.github.io](https://hasib-utd.github.io)*
