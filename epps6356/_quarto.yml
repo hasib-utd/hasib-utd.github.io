@@ -1,0 +1,125 @@
+project:
+  type: website
+  output-dir: .
+
+website:
+  title: "Muhammad Al Hasib"
+
+  navbar:
+    left:
+      - text: Home
+        href: index.qmd
+        
+      - text: About
+        href: about.qmd
+        
+      - text: Research
+        href: research.qmd
+
+      - text: CV
+        href: cv.qmd
+
+      - text: "EPPS 6323"
+        menu:
+          - text: "Coursework"
+            href: assignments.html
+            
+          - text: "— Assignments —"
+            href: assignments.html
+            
+          - text: "Assignment 01"
+            href: assignment01.html
+            
+          - text: "Assignment 02"
+            href: assignment02.html
+            
+          - text: "Assignment 03"
+            href: assignment03.html
+            
+          - text: "Assignment 04"
+            href: assignment04.html
+            
+          - text: "AI Disclosure: Course Project"
+            href: Gohl_AI_Documentation.pdf
+            
+          - text: "— Reflections —"
+            href: assignments.html
+               
+          - text: "Reading Review: Breiman & Shmueli"
+            href: review_breiman_shmueli.html
+            
+          - text: "Reflection: Using AI for Research"
+            href: reflection-class04.html
+            
+          - text: "Reflection: AI and Originality"
+            href: reflection01.html
+            
+          - text: "Reflection: Human and Knowledge"
+            href: reflection-class05.html
+            
+          - text: "Reflection: ML Pipeline"
+            href: reflection02.html
+            
+          - text: "Reflection: Prediction vs. Explanation"
+            href: reflection03.html
+            
+          - text: "Reflection: NLP and LLMs"
+            href: reflection04.html
+            
+          - text: "Reflection: LLMs and Research"
+            href: reflection05.html
+            
+          - text: "Reflection: RAG"
+            href: reflection06.html
+            
+          - text: "Reflection: Knowledge Graph"
+            href: reflection07.html
+            
+          - text: "Reflection: AI for Science and Agentic AI"
+            href: reflection08.html
+            
+          - text: "— Labs —"
+            href: assignments.html
+            
+          - text: "Lab 01: R Programming Basics I"
+            href: Lab01.html
+            
+          - text: "Lab 02: R Programming Basics II"
+            href: Lab02.html
+            
+          - text: "Lab ML01: Simple and Multiple Linear Regression"
+            href: Lab_ML01.html
+
+      - text: "EPPS 6356"
+        menu:
+          - text: "Coursework"
+            href: epps6356/index.html
+            
+          - text: "— Assignments —"
+            href: epps6356/index.html
+            
+          - text: "Assignment 01"
+            href: epps6356/assignment01.html
+
+          - text: "Assignment 02"
+            href: epps6356/assignment02.html
+
+          - text: "Assignment 03"
+            href: epps6356/assignment03.html
+
+          - text: "Assignment 04"
+            href: epps6356/assignment04.html
+
+          - text: "Assignment 5"
+            href: epps6356/assignment05.html
+          
+  page-footer:
+    center: "© 2026 Muhammad Al Hasib"
+
+format:
+  html:
+    embed-resources: true
+    theme: cosmo
+    css: styles.css
+    toc: true
+    code-fold: true
